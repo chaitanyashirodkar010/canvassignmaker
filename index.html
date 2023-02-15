@@ -42,8 +42,11 @@
                         <form class="d-flex mt-3" role="search">
                             <input id="edValue" class="form-control me-2" placeholder="Enter sign letters" type="text"
                                 onKeyPress="edValueKeyPress()" onKeyUp="edValueKeyPress()">
-                            <button class="btn btn-primary" onclick="changeitallic()">Itallic</button>
+
+                            
                         </form>
+                        <br>
+                        <button class="btn btn-primary" onclick="changeitallic()">Itallic</button>
                     </div>
                 </div>
             </div>
@@ -70,10 +73,13 @@
 
         function edValueKeyPress() {
             var edValue = document.getElementById("edValue");
+
+            
             var canvavalue = edValue.value;
+            context.clearRect(0,0,canvas.width,canvas.height);
             context.fillText(canvavalue, 150, 120);
         }
-        function changeitallic(){
+        function changeitallic() {
             context.font = 'italic 80pt Calibri, sans-serif';
         }
 
