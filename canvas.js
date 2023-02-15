@@ -9,7 +9,7 @@ console.log(window.innerHeight);
 
 function edValueKeyPress(){
     text = document.getElementById("edValue").value;
-    draw();
+    draw("120px Arial");
 }
 
 // ctx.moveTo(0, 0);
@@ -21,14 +21,18 @@ function edValueKeyPress(){
 // ctx.beginPath();
 // ctx.arc(c.width/2, c.height/2, 40, 0, 2 * Math.PI);
 // ctx.stroke();
-function draw(){
+function draw(fontStyle){
     ctx.clearRect(0,0,c.width,c.height);
-    ctx.font = "120px Arial";
+    ctx.font = fontStyle;
     ctx.fillStyle = "green"
     ctx.fillText(text, c.width/2 - 50 , c.height/2);
-    ctx.font = "120px Arial";
+    ctx.font = fontStyle;
     ctx.strokeStyle = "red";
     ctx.lineWidth = 5;
     ctx.strokeText(text, c.width/2 - 50, c.height/2);
     ctx.stroke();
+}
+
+function changeitallic() {
+    draw('italic 80pt Calibri, sans-serif');
 }
