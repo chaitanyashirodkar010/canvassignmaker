@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/b73881b7c2.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="scss/style.css">
+</head>
+
+<body>
+
+
+    <div class="banner position-relative">
+        <nav class="navbar bg-body-tertiary ">
+            <div class="container-fluid">
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <div class="navbar-toggler-icon"></div>
+                </button>
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
+                    aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <form>
+                            <div class="d-flex align-items-center"><img
+                                    src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/categories/channel-letters-and-logos.jpg"
+                                    width="180">
+                                <div class="mx-3">Lit Letters logos</div>
+                                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                            </div>
+
+                        </form>
+                        <form class="d-flex mt-3" role="search">
+                            <input id="edValue" class="form-control me-2" placeholder="Enter sign letters" type="text"
+                                onKeyPress="edValueKeyPress()" onKeyUp="edValueKeyPress()">
+                            <button class="btn btn-primary" onclick="changeitallic()">Itallic</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="banner">
+            <img src="banner.webp" class="w-100 d-block" alt="">
+            <div class="work-area">
+                <canvas id="exampleCanvas" height="200" width="600">
+                    <!-- OPTION 1: leave a message here if browser doesn't support canvas -->
+                    Your browser doesn’t currently support HTML5 Canvas. Please check caniuse.com/#feat=canvas for
+                    information on browser support for canvas.
+
+                    <!-- OPTION 2: put fallback content (text, image, Flash, etc.) if the browser doesn't support canvas -->
+                </canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        var canvas = document.getElementById('exampleCanvas'),
+            context = canvas.getContext('2d');
+        context.font = '80pt Calibri, sans-serif';
+
+        function edValueKeyPress() {
+            var edValue = document.getElementById("edValue");
+            var canvavalue = edValue.value;
+            context.fillText(canvavalue, 150, 120);
+        }
+        function changeitallic(){
+            context.font = 'italic 80pt Calibri, sans-serif';
+        }
+
+
+    </script>
+</body>
+
+</html>
