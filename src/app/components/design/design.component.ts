@@ -30,25 +30,31 @@ export class DesignComponent {
     this.draw(data);
   }
 
-// ctx.moveTo(0, 0);
-// ctx.lineTo(200, 100);
-// ctx.lineTo(300, 400);
-// ctx.lineTo(40, 40);
-// ctx.lineTo(700, 100);
-// ctx.stroke();
-// ctx.beginPath();
-// ctx.arc(c.width/2, c.height/2, 40, 0, 2 * Math.PI);
-// ctx.stroke();
-draw(data:ITextData) {
-  this.ctx.clearRect(0, 0, this.c.width,this.c.height);
-  this.ctx.font = ` ${data.size} ${data.font}`;
-  this.ctx.fillStyle = data.color
-  this.ctx.fillText(data.value, this.c.width / 2 - 50, this.c.height / 2);
-  // this.ctx.font = `500px  ${data.font}`;
-  // this.ctx.strokeStyle = "red";
-  // this.ctx.lineWidth = 5;
-  // this.ctx.strokeText(data.value, this.c.width / 2 - 50, this.c.height / 2);
-  // this.ctx.stroke();
-}
+  // ctx.moveTo(0, 0);
+  // ctx.lineTo(200, 100);
+  // ctx.lineTo(300, 400);
+  // ctx.lineTo(40, 40);
+  // ctx.lineTo(700, 100);
+  // ctx.stroke();
+  // ctx.beginPath();
+  // ctx.arc(c.width/2, c.height/2, 40, 0, 2 * Math.PI);
+  // ctx.stroke();
+  draw(data: ITextData) {
+    this.ctx.clearRect(0, 0, this.c.width, this.c.height);
+    this.ctx.font = ` ${data.size} ${data.font}`;
+    this.ctx.shadowColor = "black";
+    // this.ctx.fillStyle = data.color
+    // this.ctx.fillText(data.value, this.c.width / 2 - 50, this.c.height / 2);
+    // this.ctx.font = `500px  ${data.font}`;
+    // this.ctx.strokeStyle = "red";
+    // this.ctx.lineWidth = 5;
+    // this.ctx.strokeText(data.value, this.c.width / 2 - 50, this.c.height / 2);
+    // this.ctx.stroke();
+    this.ctx.lineWidth = 8;
+    this.ctx.strokeText(data.value, this.c.width / 2 - 50, this.c.height / 2);
+    this.ctx.shadowBlur = 0;
+    this.ctx.fillStyle = data.color;
+    this.ctx.fillText(data.value, this.c.width / 2 - 60, this.c.height / 2);
+  }
 
 }

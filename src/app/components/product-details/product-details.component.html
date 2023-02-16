@@ -10,16 +10,16 @@
     <mat-step [stepControl]="secondFormGroup" >
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button matStepperNext>Next</button>
-      <h1>Choose Type Style</h1>
+      <h1>Choose Type font</h1>
       <mat-action-list>
-        <button mat-list-item (click)="fontSelect()">Standard Bold</button>
-        <button mat-list-item (click)="fontSelect()">Serif Bold</button>
-        <button mat-list-item (click)="fontSelect()">Brush</button>
-        <button mat-list-item (click)="fontSelect()">Free Style</button>
-        <button mat-list-item (click)="fontSelect()">Standard Condensed</button>
-        <button mat-list-item (click)="fontSelect()">Standard Round</button>
-        <button mat-list-item (click)="fontSelect()">Cape Cod</button>
-        <button mat-list-item (click)="fontSelect()">Boxer</button>
+        <button mat-list-item (click)="fontSelect('1')">Standard Bold</button>
+        <button mat-list-item (click)="fontSelect('2')">Serif Bold</button>
+        <button mat-list-item (click)="fontSelect('3')">Brush</button>
+        <button mat-list-item (click)="fontSelect('4')">Free Style</button>
+        <button mat-list-item (click)="fontSelect('1')">Standard Condensed</button>
+        <button mat-list-item (click)="fontSelect('1')">Standard Round</button>
+        <button mat-list-item (click)="fontSelect('1')">Cape Cod</button>
+        <button mat-list-item (click)="fontSelect('1')">Boxer</button>
       </mat-action-list>
       
       <!-- <mat-selection-list #shoes>
@@ -76,7 +76,7 @@
     <mat-step >
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button matStepperNext>Next</button>
-      <h1>Choose Type Size</h1>
+      <h1>Choose Type color</h1>
       <mat-action-list>
         <button mat-list-item (click)="colorSelect('green')">Standard Bold</button>
         <button mat-list-item (click)="colorSelect('red')">Serif Bold</button>

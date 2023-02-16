@@ -41,8 +41,20 @@ export class ProductDetailsComponent implements OnInit{
     this.bckEvt.emit(true);
   }
 
-  fontSelect(){
-    this.data.font = "sans-serif";
+  fontSelect(value: string){
+    let myFont: any;
+    debugger
+    if(value == "1"){
+      myFont = new FontFace('myFont', 'url(Praise-Regular.ttf)').family;
+    }
+    else if(value == "2"){
+      myFont = new FontFace('freeStyleFont', 'url(BullettoKilla.ttf)').family;
+    }
+    else{
+      myFont = "Arial"
+    }
+    // var freeStyleFont = new FontFace('freeStyleFont', 'url(BullettoKilla.ttf)');
+    this.data.font = myFont;
     // this.data.font = new FontFace('myFont', 'url(Praise-Regular.ttf)');
     this.ValueChange.emit(this.data)
   }
