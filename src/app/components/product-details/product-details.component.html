@@ -1,0 +1,117 @@
+<mat-stepper #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+        <button mat-button matStepperPrevious (click)="exit()">Back</button>
+        <button mat-button matStepperNext>Next</button>
+      <form [formGroup]="firstFormGroup" class="d-flex mt-3" role="search">
+        <input id="edValue" class="form-control me-2" placeholder="Enter sign letters" type="text"
+          formControlName="firstCtrl" >
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" >
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      <h1>Choose Type Style</h1>
+      <mat-action-list>
+        <button mat-list-item (click)="fontSelect()">Standard Bold</button>
+        <button mat-list-item (click)="fontSelect()">Serif Bold</button>
+        <button mat-list-item (click)="fontSelect()">Brush</button>
+        <button mat-list-item (click)="fontSelect()">Free Style</button>
+        <button mat-list-item (click)="fontSelect()">Standard Condensed</button>
+        <button mat-list-item (click)="fontSelect()">Standard Round</button>
+        <button mat-list-item (click)="fontSelect()">Cape Cod</button>
+        <button mat-list-item (click)="fontSelect()">Boxer</button>
+      </mat-action-list>
+      
+      <!-- <mat-selection-list #shoes>
+        <mat-list-option >
+            Pepper
+        </mat-list-option>
+        <mat-list-option >
+            Pepper
+        </mat-list-option>
+        <mat-list-option >
+            Pepper
+        </mat-list-option>
+      </mat-selection-list> -->
+
+      <!-- <mat-list>
+        <mat-list-item>Pepper</mat-list-item>
+        <mat-list-item>Salt</mat-list-item>
+        <mat-list-item>Paprika</mat-list-item>
+       </mat-list> -->
+    </mat-step>
+    <mat-step >
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      <h1>Choose Type Size</h1>
+      <mat-action-list>
+        <button mat-list-item (click)="sizeSelect('50px')">Standard Bold</button>
+        <button mat-list-item (click)="sizeSelect('100px')">Serif Bold</button>
+        <button mat-list-item (click)="sizeSelect('150px')">Brush</button>
+        <button mat-list-item (click)="sizeSelect('200px')">Free Style</button>
+        <button mat-list-item (click)="sizeSelect('250px')">Standard Condensed</button>
+        <button mat-list-item (click)="sizeSelect('300px')">Standard Round</button>
+        <button mat-list-item (click)="sizeSelect('350px')">Cape Cod</button>
+        <button mat-list-item (click)="sizeSelect('400px')">Boxer</button>
+      </mat-action-list>
+      
+      <!-- <mat-selection-list #shoes>
+        <mat-list-option >
+            Pepper
+        </mat-list-option>
+        <mat-list-option >
+            Pepper
+        </mat-list-option>
+        <mat-list-option >
+            Pepper
+        </mat-list-option>
+      </mat-selection-list> -->
+
+      <!-- <mat-list>
+        <mat-list-item>Pepper</mat-list-item>
+        <mat-list-item>Salt</mat-list-item>
+        <mat-list-item>Paprika</mat-list-item>
+       </mat-list> -->
+    </mat-step>
+    <mat-step >
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      <h1>Choose Type Size</h1>
+      <mat-action-list>
+        <button mat-list-item (click)="colorSelect('green')">Standard Bold</button>
+        <button mat-list-item (click)="colorSelect('red')">Serif Bold</button>
+        <button mat-list-item (click)="colorSelect('blue')">Brush</button>
+        <button mat-list-item (click)="colorSelect('black')">Free Style</button>
+        <button mat-list-item (click)="colorSelect('white')">Standard Condensed</button>
+        <button mat-list-item (click)="colorSelect('orange')">Standard Round</button>
+        <button mat-list-item (click)="colorSelect('yellow')">Cape Cod</button>
+        <button mat-list-item (click)="colorSelect('purple')">Boxer</button>
+      </mat-action-list>
+      
+      <!-- <mat-selection-list #shoes>
+        <mat-list-option >
+            Pepper
+        </mat-list-option>
+        <mat-list-option >
+            Pepper
+        </mat-list-option>
+        <mat-list-option >
+            Pepper
+        </mat-list-option>
+      </mat-selection-list> -->
+
+      <!-- <mat-list>
+        <mat-list-item>Pepper</mat-list-item>
+        <mat-list-item>Salt</mat-list-item>
+        <mat-list-item>Paprika</mat-list-item>
+       </mat-list> -->
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done.</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-stepper>

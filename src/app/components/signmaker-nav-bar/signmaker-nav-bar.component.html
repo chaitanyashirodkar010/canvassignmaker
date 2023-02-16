@@ -1,0 +1,32 @@
+<nav class="navbar bg-body-tertiary ">
+    <div class="container-fluid">
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+            aria-controls="offcanvasNavbar">
+            <div class="navbar-toggler-icon"></div>
+        </button>
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
+            aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Products</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+
+                <app-products (clickEvent)="products($event)" *ngIf="selectedProduct == '';else prd"></app-products>
+                <ng-template #prd>
+                    <app-product-details (bckEvt)="prodDtls($event)" (ValueChange)="ValueChange1($event)"></app-product-details>
+                </ng-template>
+                
+                <!-- <form class="d-flex mt-3" role="search">
+                    <input id="edValue" class="form-control me-2" placeholder="Enter sign letters" type="text"
+                        onKeyPress="edValueKeyPress()">
+
+
+                </form>
+                <br>
+                <button class="btn btn-primary" onclick="changeitallic()">Itallic</button> -->
+            </div>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+.navbar {
+
+    position: relative;
+    z-index: 99;
+
+}
+
+.offcanvas {
+    left: 0;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.fa-chevron-right {
+    font-size: 20px;
+    color: #e5e5e5;
+}
+
+.work-area {
+    position: absolute;
+    top: 57px;
+    z-index: 9;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background: #bbbbbb;
+}
+
+canvas {
+    height: 105px;
+}
+.offcanvas-backdrop.show {
+    opacity: 0;
+}
