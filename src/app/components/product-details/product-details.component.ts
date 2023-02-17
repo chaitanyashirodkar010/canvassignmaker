@@ -14,10 +14,10 @@ export class ProductDetailsComponent implements OnInit{
   isLinear: boolean;
   myfont: FontFace;
   data: ITextData = {
-    value: "",
-    font:  "Arial",
-    size: "120px",
-    color: "",
+    value: "Naik",
+    font: "sans-serif",
+    size: "150pt",
+    color: "red",
   };
   
   @Output() bckEvt = new EventEmitter<boolean>();
@@ -42,19 +42,22 @@ export class ProductDetailsComponent implements OnInit{
   }
 
   fontSelect(value: string){
-    let myFont: any;
-    debugger
-    if(value == "1"){
-      myFont = new FontFace('myFont', 'url(Praise-Regular.ttf)').family;
-    }
-    else if(value == "2"){
-      myFont = new FontFace('freeStyleFont', 'url(BullettoKilla.ttf)').family;
-    }
-    else{
-      myFont = "Arial"
-    }
+    // let myFont: any;
+    // debugger
+    // if(value == "1"){
+    //   myFont = new FontFace('myFont', 'url(../assets/Praise-Regular.ttf)');
+    // }
+    // else if(value == "2"){
+    //   myFont = new FontFace('freeStyleFont', 'url(../assets/BullettoKilla.ttf)');
+    // }
+    // else if(value == "3"){
+    //   myFont = "italic serif";
+    // }
+    // else{
+    //   myFont = "Arial"
+    // }
     // var freeStyleFont = new FontFace('freeStyleFont', 'url(BullettoKilla.ttf)');
-    this.data.font = myFont;
+    this.data.font = value;
     // this.data.font = new FontFace('myFont', 'url(Praise-Regular.ttf)');
     this.ValueChange.emit(this.data)
   }

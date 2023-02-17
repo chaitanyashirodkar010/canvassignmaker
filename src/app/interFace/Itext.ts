@@ -1,6 +1,6 @@
 export interface ITextData{
     value: string,
-    font: any,
+    font: string,
     size: string,
     color: string,
   }

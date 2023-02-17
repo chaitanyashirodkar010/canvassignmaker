@@ -41,20 +41,33 @@ export class DesignComponent {
   // ctx.stroke();
   draw(data: ITextData) {
     this.ctx.clearRect(0, 0, this.c.width, this.c.height);
-    this.ctx.font = ` ${data.size} ${data.font}`;
-    this.ctx.shadowColor = "black";
-    // this.ctx.fillStyle = data.color
-    // this.ctx.fillText(data.value, this.c.width / 2 - 50, this.c.height / 2);
-    // this.ctx.font = `500px  ${data.font}`;
-    // this.ctx.strokeStyle = "red";
-    // this.ctx.lineWidth = 5;
-    // this.ctx.strokeText(data.value, this.c.width / 2 - 50, this.c.height / 2);
-    // this.ctx.stroke();
-    this.ctx.lineWidth = 8;
-    this.ctx.strokeText(data.value, this.c.width / 2 - 50, this.c.height / 2);
-    this.ctx.shadowBlur = 0;
-    this.ctx.fillStyle = data.color;
-    this.ctx.fillText(data.value, this.c.width / 2 - 60, this.c.height / 2);
+    
+    // this.ctx.fillText(data.value, 0,300);
+    // if(typeof data.font != null)
+    // {
+    //   data.font.load().then(font => {
+    //     (document as any).fonts.add(font);
+    //     this.ctx.font = `bold  ${data.size}  ${font}`;
+    //     this.ctx.shadowColor = "black";
+    //     this.ctx.lineWidth = 8;
+    //     this.ctx.strokeText(data.value,5, 154);
+    //     this.ctx.shadowBlur = 0;
+    //     this.ctx.fillStyle = data.color;
+    //     this.ctx.fillText(data.value, 0,150);
+    //   });
+    // }
+    // else
+    {
+      this.ctx.font = `bold  ${data.size}  ${data.font}`;
+      this.ctx.shadowColor = "black";
+      this.ctx.lineWidth = 8;
+      this.ctx.strokeText(data.value,5, 154);
+      this.ctx.shadowBlur = 0;
+      this.ctx.fillStyle = data.color;
+      this.ctx.fillText(data.value, 0,150);
+    }
+
+    
   }
 
 }
