@@ -18,10 +18,10 @@ export class DesignComponent {
 
     this.c.width = 3000;
     this.c.height = window.innerHeight;
-    this.draw({  value: "Naik",
-    font: "Tahoma",
-    size: "600px",
-    color: "red"});
+    // this.draw({  value: "Naik",
+    // font: "Tahoma",
+    // size: "600px",
+    // color: "red"});
     // console.log(c);
     console.log(window.innerHeight);
   }
@@ -73,7 +73,7 @@ export class DesignComponent {
       this.ctx.shadowOffsetY = 20;
 
       this.ctx.strokeStyle = "#ffffff";
-      this.ctx.lineWidth = 20;
+      // this.ctx.lineWidth = 20;
       this.ctx.strokeText(data.value,900, 540);
     
       this.ctx.fillStyle = data.color;
