@@ -16,8 +16,12 @@ export class DesignComponent {
     this.c = document.getElementById("exampleCanvas");
     this.ctx = this.c.getContext("2d");
 
-    this.c.width = window.innerWidth;
+    this.c.width = 3000;
     this.c.height = window.innerHeight;
+    this.draw({  value: "Naik",
+    font: "Tahoma",
+    size: "600px",
+    color: "red"});
     // console.log(c);
     console.log(window.innerHeight);
   }
@@ -59,12 +63,21 @@ export class DesignComponent {
     // else
     {
       this.ctx.font = `bold  ${data.size}  ${data.font}`;
+      // this.ctx.shadowColor = "white";
+
+
+
       this.ctx.shadowColor = "black";
-      this.ctx.lineWidth = 8;
-      this.ctx.strokeText(data.value,5, 154);
-      this.ctx.shadowBlur = 0;
+      this.ctx.shadowBlur = 6;
+      this.ctx.shadowOffsetX = 20;
+      this.ctx.shadowOffsetY = 20;
+
+      this.ctx.strokeStyle = "#ffffff";
+      this.ctx.lineWidth = 20;
+      this.ctx.strokeText(data.value,900, 540);
+    
       this.ctx.fillStyle = data.color;
-      this.ctx.fillText(data.value, 0,150);
+      this.ctx.fillText(data.value, 900,540);
     }
 
     

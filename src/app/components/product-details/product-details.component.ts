@@ -16,7 +16,7 @@ export class ProductDetailsComponent implements OnInit{
   data: ITextData = {
     value: "Naik",
     font: "sans-serif",
-    size: "150pt",
+    size: "600px",
     color: "red",
   };
   
