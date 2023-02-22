@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: 'comp', loadChildren: () => import('./components/components-module.module').then(m => m.ComponentsModuleModule)}, 
-  { path: '**', redirectTo: 'home' },
+  { path: '**', redirectTo: 'comp' },
 ];
 
 @NgModule({

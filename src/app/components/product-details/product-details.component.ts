@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime } from 'rxjs';
-import { ITextData } from 'src/app/interFace/Itext';
+import { IColor, Ifont, ITextData } from 'src/app/interface/Isignmaker';
 
 @Component({
   selector: 'app-product-details',
@@ -16,9 +16,27 @@ export class ProductDetailsComponent implements OnInit{
   data: ITextData = {
     value: "Naik",
     font: "sans-serif",
-    size: "600px",
+    size: "100px",
     color: "red",
   };
+
+  fontArray: Array<Ifont> = [
+    {name: "Tahoma", imgpath: "../../../assets/images/standard.png"},
+    {name: "Serif", imgpath: "../../../assets/images/serifbold.png"},
+    {name: "Brush Script MT", imgpath: "../../../assets/images/brush.png"},
+    {name: "Freehand", imgpath: "../../../assets/images/freestyle.png"},
+    {name: "Oswald", imgpath: "../../../assets/images/standard-condemed.png"},
+    {name: "Varela Round ", imgpath: "../../../assets/images/standard-round.png"},
+    {name: "Courier New", imgpath: "../../../assets/images/boxer.png"},
+  ];
+
+  colorArray: Array<IColor> = [
+    {name: "green"},
+    {name: "red"},
+    {name: "blue"},
+    {name: "yellow"},
+    {name: "purple"},
+  ];
   
   @Output() bckEvt = new EventEmitter<boolean>();
   @Output() ValueChange = new EventEmitter<ITextData>();

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { ITextData } from 'src/app/interFace/Itext';
+import { ITextData } from 'src/app/interface/Isignmaker';
 import { DesignComponent } from '../design/design.component';
 import { SignmakerNavBarComponent } from '../signmaker-nav-bar/signmaker-nav-bar.component';
 

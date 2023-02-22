@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
-import { ITextData } from 'src/app/interFace/Itext';
+import { ITextData } from 'src/app/interface/Isignmaker';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
 
 @Component({

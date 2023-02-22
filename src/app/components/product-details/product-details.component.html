@@ -1,46 +1,22 @@
 <mat-stepper #stepper>
-    <mat-step [stepControl]="firstFormGroup">
-        <button mat-button matStepperPrevious (click)="exit()">Back</button>
-        <button mat-button matStepperNext>Next</button>
-      <form [formGroup]="firstFormGroup" class="d-flex mt-3" role="search">
-        <input id="edValue" class="form-control me-2" placeholder="Enter sign letters" type="text"
-          formControlName="firstCtrl" >
-      </form>
-    </mat-step>
-    <mat-step [stepControl]="secondFormGroup" >
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
-      <h1>Choose Type font</h1>
-      <mat-action-list>
-        <button mat-list-item (click)="fontSelect('Tahoma')"><img src="../../../assets/images/standard.png" alt=""> Standard bold</button>
-        <button mat-list-item (click)="fontSelect('Serif')"><img src="../../../assets/images/serifbold.png" alt=""> Serif Bold</button>
-        <button mat-list-item (click)="fontSelect('Brush Script MT')"><img src="../../../assets/images/brush.png" alt=""> Brush</button>
-        <button mat-list-item (click)="fontSelect('Freehand')"><img src="../../../assets/images/freestyle.png" alt=""> Free Style</button>
-        <button mat-list-item (click)="fontSelect('Oswald')"><img src="../../../assets/images/standard-condemed.png" alt=""> Standard Condensed</button>
-        <button mat-list-item (click)="fontSelect('Varela Round ')"><img src="../../../assets/images/standard-round.png" alt=""> Standard Round</button>
-        <!-- <button mat-list-item (click)="fontSelect('Garamond')"><img src="../../../assets/images/cape-cod.png" alt=""> Cape Cod</button> -->
-        <button mat-list-item (click)="fontSelect('Courier New')"><img src="../../../assets/images/boxer.png" alt=""> Boxer</button>
-      </mat-action-list>
-      
-      <!-- <mat-selection-list #shoes>
-        <mat-list-option >
-            Pepper
-        </mat-list-option>
-        <mat-list-option >
-            Pepper
-        </mat-list-option>
-        <mat-list-option >
-            Pepper
-        </mat-list-option>
-      </mat-selection-list> -->
-
-      <!-- <mat-list>
-        <mat-list-item>Pepper</mat-list-item>
-        <mat-list-item>Salt</mat-list-item>
-        <mat-list-item>Paprika</mat-list-item>
-       </mat-list> -->
-    </mat-step>
-    <!-- <mat-step >
+  <mat-step [stepControl]="firstFormGroup">
+    <button mat-button matStepperPrevious (click)="exit()">Back</button>
+    <button mat-button matStepperNext>Next</button>
+    <form [formGroup]="firstFormGroup" class="d-flex mt-3" role="search">
+      <input id="edValue" class="form-control me-2" placeholder="Enter sign letters" type="text"
+        formControlName="firstCtrl">
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <button mat-button matStepperPrevious>Back</button>
+    <button mat-button matStepperNext>Next</button>
+    <h1>Choose Type font</h1>
+    <mat-action-list>
+      <button *ngFor="let fnt of fontArray;" mat-list-item (click)="fontSelect(fnt.name)"><img [src]="fnt.imgpath" alt="">
+        {{fnt.name}}</button>
+    </mat-action-list>
+  </mat-step>
+  <!-- <mat-step >
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button matStepperNext>Next</button>
       <h1>Choose Type Size</h1>
@@ -55,43 +31,23 @@
         <button mat-list-item (click)="sizeSelect('400px')">Boxer</button>
       </mat-action-list>
     </mat-step> -->
-    <mat-step >
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
-      <h1>Choose Type color</h1>
-      <mat-action-list class="d-flex">
-        <button mat-list-item style="background-color: green;" class="green color-box" (click)="colorSelect('green')">green</button>
-        <button mat-list-item style="background-color: red;" class="red color-box" (click)="colorSelect('red')">red</button>
-        <button mat-list-item style="background-color: blue;" class="blue color-box" (click)="colorSelect('blue')">blue</button>
-        <button mat-list-item style="background-color: orange;" class="orange color-box" (click)="colorSelect('orange')">orange</button>
-        <button mat-list-item style="background-color: yellow;" class="yellow color-box" (click)="colorSelect('yellow')">yellow</button>
-        <button mat-list-item style="background-color: purple;" class="purple color-box" (click)="colorSelect('purple')">purple</button>
-      </mat-action-list>
-      
-      <!-- <mat-selection-list #shoes>
-        <mat-list-option >
-            Pepper
-        </mat-list-option>
-        <mat-list-option >
-            Pepper
-        </mat-list-option>
-        <mat-list-option >
-            Pepper
-        </mat-list-option>
-      </mat-selection-list> -->
-
-      <!-- <mat-list>
-        <mat-list-item>Pepper</mat-list-item>
-        <mat-list-item>Salt</mat-list-item>
-        <mat-list-item>Paprika</mat-list-item>
-       </mat-list> -->
-    </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      <p>You are now done.</p>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button class="Reset" (click)="stepper.reset()">Reset</button>
-      </div>
-    </mat-step>
-  </mat-stepper>
+  <mat-step>
+    <button mat-button matStepperPrevious>Back</button>
+    <button mat-button matStepperNext>Next</button>
+    <h1>Choose Type color</h1>
+    <mat-action-list class="d-flex">
+      <ng-container *ngFor="let color of colorArray;">
+        <button mat-list-item [ngStyle]="{backgroundColor: color.name}" [ngClass]="color.name" class="color-box"
+          (click)="colorSelect(color.name)">{{color.name}}</button>
+      </ng-container>
+    </mat-action-list>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>You are now done.</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button class="Reset" (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-stepper>
