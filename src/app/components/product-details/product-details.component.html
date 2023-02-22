@@ -38,7 +38,21 @@
     <mat-action-list class="d-flex">
       <ng-container *ngFor="let color of colorArray;">
         <button mat-list-item [ngStyle]="{backgroundColor: color.name}" [ngClass]="color.name" class="color-box"
-          (click)="colorSelect(color.name)">{{color.name}}</button>
+          (click)="colorSelect(color.name,'field')">{{color.name}}</button>
+      </ng-container>
+    </mat-action-list>
+    <h1>Choose border color</h1>
+    <mat-action-list class="d-flex">
+      <ng-container *ngFor="let color of colorArray;">
+        <button mat-list-item [ngStyle]="{backgroundColor: color.name}" [ngClass]="color.name" class="color-box"
+          (click)="colorSelect(color.name,'stroke')">{{color.name}}</button>
+      </ng-container>
+    </mat-action-list>
+    <h1>Choose Shadow color</h1>
+    <mat-action-list class="d-flex">
+      <ng-container *ngFor="let color of colorArray;">
+        <button mat-list-item [ngStyle]="{backgroundColor: color.name}" [ngClass]="color.name" class="color-box"
+          (click)="colorSelect(color.name,'shadow')">{{color.name}}</button>
       </ng-container>
     </mat-action-list>
   </mat-step>

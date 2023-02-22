@@ -2,10 +2,14 @@ export interface ITextData {
   value: string,
   font: string,
   size: string,
-  color: string,
+  color?: string,
   width?: number,
   scaleX?: number,
   scaleY?: number,
+  shadowColor?: string,
+  boarderColor?: string,
+  x?: number,
+  y?: number
 }
 
 export interface Ifont {

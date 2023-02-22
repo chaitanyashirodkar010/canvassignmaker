@@ -15,7 +15,7 @@ export class ProductDetailsComponent implements OnInit{
   myfont: FontFace;
   data: ITextData = {
     value: "Naik",
-    font: "sans-serif",
+    font: "Tahoma",
     size: "100px",
     color: "red",
   };
@@ -60,33 +60,22 @@ export class ProductDetailsComponent implements OnInit{
   }
 
   fontSelect(value: string){
-    // let myFont: any;
-    // debugger
-    // if(value == "1"){
-    //   myFont = new FontFace('myFont', 'url(../assets/Praise-Regular.ttf)');
-    // }
-    // else if(value == "2"){
-    //   myFont = new FontFace('freeStyleFont', 'url(../assets/BullettoKilla.ttf)');
-    // }
-    // else if(value == "3"){
-    //   myFont = "italic serif";
-    // }
-    // else{
-    //   myFont = "Arial"
-    // }
-    // var freeStyleFont = new FontFace('freeStyleFont', 'url(BullettoKilla.ttf)');
     this.data.font = value;
-    // this.data.font = new FontFace('myFont', 'url(Praise-Regular.ttf)');
     this.ValueChange.emit(this.data)
   }
   sizeSelect(value: string){
     this.data.size = value;
-    // this.data.font = new FontFace('myFont', 'url(Praise-Regular.ttf)');
     this.ValueChange.emit(this.data)
   }
-  colorSelect(color:string){
-    this.data.color = color;
-    // this.data.font = new FontFace('myFont', 'url(Praise-Regular.ttf)');
+  colorSelect(color:string,element:string){
+    switch(element){
+      case "shadow":  this.data.shadowColor = color;
+      break;
+      case "stroke":  this.data.boarderColor = color;
+      break;
+      default: this.data.color = color;
+    }
+    
     this.ValueChange.emit(this.data)
   }
 
