@@ -12,7 +12,8 @@
     <button mat-button matStepperNext>Next</button>
     <h1>Choose Type font</h1>
     <mat-action-list>
-      <button *ngFor="let fnt of fontArray;" mat-list-item (click)="fontSelect(fnt.name)"><img [src]="fnt.imgpath" alt="">
+      <button *ngFor="let fnt of fontArray;" mat-list-item (click)="fontSelect(fnt.name)"><img [src]="fnt.imgpath"
+          alt="">
         {{fnt.name}}</button>
     </mat-action-list>
   </mat-step>
@@ -54,6 +55,35 @@
         <button mat-list-item [ngStyle]="{backgroundColor: color.name}" [ngClass]="color.name" class="color-box"
           (click)="colorSelect(color.name,'shadow')">{{color.name}}</button>
       </ng-container>
+    </mat-action-list>
+    <mat-action-list>
+      <mat-accordion multi>
+        <mat-expansion-panel [expanded]="step === 0" (opened)="step = 0" >
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Premium Colors
+            </mat-panel-title>
+            <!-- <mat-panel-description>
+            </mat-panel-description> -->
+          </mat-expansion-panel-header>
+          <ng-container *ngFor="let color of colorArray;">
+            <button  [ngStyle]="{backgroundColor: color.name}" [ngClass]="color.name" class="color-box"
+              (click)="colorSelect(color.name,'stroke')"></button>
+          </ng-container>
+
+        </mat-expansion-panel>
+        <mat-expansion-panel [expanded]="step === 1" (opened)="step = 1" >
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Sherwin Willams
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-container *ngFor="let color of colorArray;">
+            <button  [ngStyle]="{backgroundColor: color.name}" [ngClass]="color.name" class="color-box"
+              (click)="colorSelect(color.name,'stroke')"></button>
+          </ng-container>
+        </mat-expansion-panel>
+      </mat-accordion>
     </mat-action-list>
   </mat-step>
   <mat-step>

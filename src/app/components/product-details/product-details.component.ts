@@ -14,11 +14,12 @@ export class ProductDetailsComponent implements OnInit{
   isLinear: boolean;
   myfont: FontFace;
   data: ITextData = {
-    value: "Naik",
+    value: "LETTERS",
     font: "Tahoma",
     size: "100px",
     color: "red",
   };
+  step: number = -1;
 
   fontArray: Array<Ifont> = [
     {name: "Tahoma", imgpath: "../../../assets/images/standard.png"},
