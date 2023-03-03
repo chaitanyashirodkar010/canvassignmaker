@@ -9,25 +9,20 @@ import { ITextData } from 'src/app/interface/Isignmaker';
 export class DesignComponent {
 
   c: any;
-  ctx: any;
-  text: string;
+  ctx: CanvasRenderingContext2D;
   mouse: { x: number, y: number } = { x: 0, y: 0 };
   txtWidth: number;
   enableDraw: boolean;
   data: ITextData;
-  // rightBottom: {x: number,y: number,offsetX: number,offsetY: number} = 
-  //   { x: -1, y: -1, offsetX: -1, offsetY: -1 };
-  // rightTop: { x: number; y: number; offsetX: number; offsetY: number; } =
-  //   { x: -1, y: -1, offsetX: -1, offsetY: -1 };
   rectOX: number;
   rectOY: number;
-  click: any;
+  click: boolean = false;
 
   ngOnInit() {
     this.c = document.getElementById("exampleCanvas");
     this.ctx = this.c.getContext("2d");
 
-    this.c.width = window.innerWidth - 50;
+    this.c.width = window.innerWidth;
     this.c.height = window.innerHeight;
     // this.c.height = "110";
     this.c.style.cursor = "move";
@@ -37,11 +32,9 @@ export class DesignComponent {
       size: "100px",
       color: "orange",
       x: this.c.width / 2,
-      y: this.c.height / 2
+      y: 75,
     };
     this.draw(this.data);
-
-
 
   }
 
@@ -60,10 +53,6 @@ export class DesignComponent {
       // console.log("left:", r.left, " top:", r.top, "right: ", r.right, " bottom:",r.bottom)
       this.mouse.x = event.clientX - r.left;
       this.mouse.y = event.clientY - r.top;
-      // console.log("x:", this.mouse.x, " y:", this.mouse.y)
-      // console.log("Recx:", this.rightBottom.x, " Recy:", this.rightBottom.y)
-      // console.log("client:", event.clientX, " client:",  event.clientY)
-      // console.log("evtx:", event.x, " evty:",  event.y)
 
       //Close Icon
       if (this.mouse.x >= ((this.data.corners?.rightTop.x ?? 0) - (this.data.corners?.rightTop.offsetX ?? 0)) &&
@@ -84,20 +73,20 @@ export class DesignComponent {
       }
 
       //Expand
+      console.log(this.data.corners)
       if (this.mouse.x >= ((this.data.corners?.rightBottom.x ?? 0) - (this.data.corners?.rightBottom.offsetX ?? 0)) &&
         this.mouse.x <= ((this.data.corners?.rightBottom.x ?? 0) - (this.data.corners?.rightBottom.offsetX ?? 0) + 20) &&
         this.mouse.y >= ((this.data.corners?.rightBottom.y ?? 0) - (this.data.corners?.rightBottom.offsetY ?? 0))
         && this.mouse.y <= ((this.data.corners?.rightBottom.y ?? 0) - (this.data.corners?.rightBottom.offsetY ?? 0) + 20)) {
         this.c.style.cursor = "nw-resize"
         if (this.enableDraw) {
-          var scalex = ((this.data.x ?? 0) / (this.rectOX));
-          var scaley = ((this.data.y ?? 0) / (this.rectOY * 100));
+          // var scalex = ((this.data.x ?? 0) / (this.rectOX));
+          var scaley = (this.mouse.x / (this.rectOY * 10));
 
           // var ypos = (this.data.y ?? 0 / (scaley * 1.25));
           this.mouse.y / this.mouse.x
           this.data = {
-            ...this.data, scaleX: scalex, scaleY: scaley,
-            x: this.data.x, y: this.data.y,
+            ...this.data, scaleX: 1, scaleY: scaley,
             skewY: 0
           };
           this.draw(this.data);
@@ -155,7 +144,10 @@ export class DesignComponent {
 
 
   inputChange(data: ITextData) {
+    let {x,y} = this.data;
     this.data = data;
+    this.data.x = x;
+    this.data.y = y;
     this.draw(data);
   }
 
@@ -163,23 +155,19 @@ export class DesignComponent {
   draw(data: ITextData) {
     // this.ctx.clearRect(0, 0, this.c.width, this.c.height);
     const img = new Image(); // Create new img element
-    img.src = "../assets/images/banner.webp";
+    img.src = "../assets/images/banner.png";
     img.onload = () => {
       this.ctx.drawImage(img, 0, 0, this.c.width, this.c.height);
 
-
-      //     const canvas = document.getElementById("canvas");
-      // const ctx = canvas.getContext("2d");
-      console.log(data.scaleY, data.scaleX)
-      this.ctx.transform(data.scaleY, 0, 0, data.scaleX, 0, 0);
-      // this.ctx.fillRect(0, 0, 100, 100);
+      // console.log(data.scaleY, data.scaleX)
+      this.ctx.save();
+      // this.ctx.transform((data.scaleY??1), 0, 0, (data.scaleX??1), 0, 0);
 
 
       this.ctx.font = `bold  ${data.size}  ${data.font}`;
-
       //Get canvas center
       let centreX = data.x != null && data.x != undefined ? data.x : this.c.width / 2;
-      let centreY = data.y != null && data.y != undefined ? data.y : this.c.height / 2;
+      let centreY = data.y != null && data.y != undefined ? data.y : 75;
 
       //Get text width
       this.txtWidth = data.width != undefined ? data.width : this.ctx.measureText(data.value).width;
@@ -187,16 +175,32 @@ export class DesignComponent {
       //Setting offset to diplay text in center
       let offsetX = this.txtWidth / 2;
       let offsetY = 32;
-      let sX = data.scaleX == null && data.scaleX == undefined ? 1 : data.scaleX;
-      let sY = data.scaleY == null && data.scaleY == undefined ? 1 : data.scaleY;
+      // let sX = data.scaleX == null && data.scaleX == undefined ? 1 : data.scaleX;
+      // let sY = data.scaleY == null && data.scaleY == undefined ? 1 : data.scaleY;
 
       // this.ctx.scale(sX, sY);
       //Displaying text
       // this.ctx.transform(0, .2, data.skewY, 0, 1, 0);
+      // Displaying Race
+      let rectX = centreX - offsetX - 10;
+      let rectY = centreY - 50;
+      if (data.raceColor != undefined && data.raceColor != null) {
+        this.ctx.save();
+        this.ctx.fillStyle = "black";
+        this.ctx.fillRect(rectX + 1, ((rectY + Number(data.size.split('p')[0]) + 5 + rectY - 30) / 2) + 1, this.txtWidth + 32, 20);
+        this.ctx.fillRect(rectX + 2, ((rectY + Number(data.size.split('p')[0]) + 5 + rectY - 30) / 2) + 2, this.txtWidth + 32, 20);
+        this.ctx.fillRect(rectX + 3, ((rectY + Number(data.size.split('p')[0]) + 5 + rectY - 30) / 2) + 3, this.txtWidth + 32, 20);
+        this.ctx.fillStyle = data.raceColor;
+        this.ctx.fillRect(rectX, (rectY + Number(data.size.split('p')[0]) + 5 + rectY - 30) / 2, this.txtWidth + 32, 20);
+        this.ctx.restore();
+      }
+
+
+
       this.ctx.save();
       // Shadow
       for (let i = 0; i < 7; i++) {
-        this.ctx.fillStyle = data.shadowColor != null && data.shadowColor != undefined ? data.shadowColor : "Black";
+        this.ctx.fillStyle = data.sideColor != null && data.sideColor != undefined ? data.sideColor : "Black";
         this.ctx.fillText(data.value, centreX - offsetX + i, centreY + offsetY + i);
       }
       // boarder/storke
@@ -205,7 +209,16 @@ export class DesignComponent {
         this.ctx.fillText(data.value, centreX - offsetX + i, centreY + offsetY + i);
       }
       //text face
-      this.ctx.fillStyle = data.color;
+      if (data.shadowColor != undefined && data.shadowColor != null) {
+        this.ctx.shadowColor = data.shadowColor;
+        this.ctx.shadowBlur = 50;
+        for (let i = 0; i < 7; i++) {
+          this.ctx.shadowOffsetX = 5 + i;
+          this.ctx.shadowOffsetY = 5 + i;
+        }
+      }
+
+      this.ctx.fillStyle = data.color ?? '';
       this.ctx.fillText(data.value, centreX - offsetX, centreY + offsetY);
 
       this.ctx.restore();
@@ -214,8 +227,8 @@ export class DesignComponent {
       this.ctx.save();
       this.ctx.setLineDash([20, 40]);
       // Setting offset so that "g" and "l" world displays within the rectangle
-      let rectX = centreX - offsetX - 10;
-      let rectY = centreY - 50;
+      // let rectX = centreX - offsetX - 10;
+      // let rectY = centreY - 50;
       if (this.rectOX == undefined || this.rectOX == null) {
         this.rectOX = rectX;
       }
@@ -247,7 +260,6 @@ export class DesignComponent {
           offsetY: 15,
         }
       }
-
       //Instead of rectangle get to draw image
       this.ctx.fillStyle = "green";
       this.ctx.fillRect(data.corners.rightBottom.x - data.corners.rightBottom.offsetX,
@@ -258,7 +270,7 @@ export class DesignComponent {
       this.ctx.fillStyle = "red";
       this.ctx.fillRect(data.corners.rightTop.x - data.corners.rightTop.offsetX,
         data.corners.rightTop.y - data.corners.rightTop.offsetY, 20, 20)
-      // this.ctx.restore();
+      this.ctx.restore();
 
     }
 

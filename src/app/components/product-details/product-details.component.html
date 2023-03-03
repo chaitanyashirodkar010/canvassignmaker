@@ -65,20 +65,20 @@
     <button mat-button matStepperNext>Next</button>
     <ul class="nav nav-tabs mt-3 justify-content-between mt-3 mb-5" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
-        <button class="nav-link p-0 m-0 active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button"
-          role="tab" aria-controls="home-tab-pane" aria-selected="true">
+        <button class="nav-link p-0 m-0 active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
+          type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">
           <img src="../../../assets/images/letter1.png" alt="">
         </button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link p-0 m-0" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button"
-          role="tab" aria-controls="profile-tab-pane" aria-selected="false"> <img
+        <button class="nav-link p-0 m-0" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
+          type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false"> <img
             src="../../../assets/images/letter2.png" alt="">
         </button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link p-0 m-0" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button"
-          role="tab" aria-controls="contact-tab-pane" aria-selected="false"> <img
+        <button class="nav-link p-0 m-0" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane"
+          type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false"> <img
             src="../../../assets/images/letter3.png" alt="">
         </button>
       </li>
@@ -97,12 +97,12 @@
             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
               data-bs-parent="#accordionExample">
               <div class="accordion-body">
-                <mat-action-list class="d-flex">
+                <div class="sc-fjdhpX fRtSug">
                   <ng-container *ngFor="let color of colorArray;">
-                    <button mat-list-item [ngStyle]="{backgroundColor: color.name}" [ngClass]="color.name"
-                      class="color-box" (click)="colorSelect(color.name,'field')">{{color.name}}</button>
+                    <button [ngStyle]="{backgroundColor: color.name}" class="color-box"
+                      (click)="colorSelect(color.name,'field')"></button>
                   </ng-container>
-                </mat-action-list>
+                </div>
               </div>
             </div>
           </div>
@@ -118,23 +118,10 @@
               <div class="accordion-body">
 
                 <div class="sc-fjdhpX fRtSug">
-                  <button class="color-box" style="background-color: rgb(249, 214, 22);"></button>
-                  <button class="color-box" style="background-color: rgb(0, 140, 66);"></button>
-                  <button class="color-box" style="background-color: rgb(148, 46, 181);"></button>
-                  <button class="color-box" style="background-color: rgb(223, 185, 122);"></button>
-                  <button class="color-box" style="background-color: rgb(0, 51, 127);"></button>
-                  <button class="color-box" style="background-color: rgb(0, 114, 114);"></button>
-                  <button class="color-box" style="background-color: rgb(170, 0, 79);"></button>
-                  <button class="color-box" style="background-color: rgb(192, 192, 192);"></button>
-                  <button class="color-box" style="background-color: rgb(0, 83, 62);"></button>
-                  <button class="color-box" style="background-color: rgb(255, 158, 27);"></button>
-                  <button class="color-box" style="background-color: rgb(235, 111, 189);"></button>
-                  <button class="color-box" style="background-color: rgb(255, 198, 30);"></button>
-                  <button class="color-box" style="background-color: rgb(127, 186, 0);"></button>
-                  <button class="color-box" style="background-color: rgb(184, 97, 37);"></button>
-                  <button class="color-box" style="background-color: rgb(242, 125, 0);"></button>
-                  <button class="color-box" style="background-color: rgb(0, 150, 94);"></button>
-                  <button class="color-box" style="background-color: rgb(255, 0, 153);"></button>
+                  <ng-container *ngFor="let color of colorArray;">
+                    <button [ngStyle]="{backgroundColor: color.name}" class="color-box"
+                      (click)="colorSelect(color.name,'field')"></button>
+                  </ng-container>
                 </div>
               </div>
             </div>
@@ -256,73 +243,42 @@
       </div>
       <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
         <h5 class="desctitle ">Choose border color</h5>
-        <mat-action-list class="d-flex">
+        <div class="accordion-body">
+          <div class="sc-fjdhpX fRtSug">
+            <ng-container *ngFor="let color of colorArray;">
+              <button [ngStyle]="{backgroundColor: color.name}" class="color-box"
+                (click)="colorSelect(color.name,'stroke')"></button>
+            </ng-container>
+          </div>
+        </div>
+        <h5 class="desctitle ">Choose shadow color</h5>
+        <div class="sc-fjdhpX fRtSug">
           <ng-container *ngFor="let color of colorArray;">
-            <button mat-list-item [ngStyle]="{backgroundColor: color.name}" [ngClass]="color.name" class="color-box"
-              (click)="colorSelect(color.name,'stroke')">{{color.name}}</button>
+            <button [ngStyle]="{backgroundColor: color.name}" class="color-box"
+              (click)="colorSelect(color.name,'shadow')"></button>
           </ng-container>
-        </mat-action-list>
+        </div>
+        <h5 class="desctitle ">Choose shadow color</h5>
+        <div class="sc-fjdhpX fRtSug">
+          <ng-container *ngFor="let color of colorArray;">
+            <button [ngStyle]="{backgroundColor: color.name}" class="color-box"
+              (click)="colorSelect(color.name,'race')"></button>
+          </ng-container>
+        </div>
+
       </div>
       <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
-        <h5 class="desctitle ">Choose Shadow color</h5>
-        <mat-action-list class="d-flex">
-          <ng-container *ngFor="let color of colorArray;">
-            <button mat-list-item [ngStyle]="{backgroundColor: color.name}" [ngClass]="color.name" class="color-box"
-              (click)="colorSelect(color.name,'shadow')">{{color.name}}</button>
-          </ng-container>
-        </mat-action-list>
+        <h5 class="desctitle ">Choose race color</h5>
+        <div class="accordion-body">
+          <div class="sc-fjdhpX fRtSug">
+            <ng-container *ngFor="let color of colorArray;">
+              <button [ngStyle]="{backgroundColor: color.name}" class="color-box"
+                (click)="colorSelect(color.name,'side')"></button>
+            </ng-container>
+          </div>
+        </div>
       </div>
     </div>
-    <h1>Choose Type color</h1>
-    <mat-action-list class="d-flex">
-      <ng-container *ngFor="let color of colorArray;">
-        <button mat-list-item [ngStyle]="{backgroundColor: color.name}" [ngClass]="color.name" class="color-box"
-          (click)="colorSelect(color.name,'field')">{{color.name}}</button>
-      </ng-container>
-    </mat-action-list>
-    <h1>Choose border color</h1>
-    <mat-action-list class="d-flex">
-      <ng-container *ngFor="let color of colorArray;">
-        <button mat-list-item [ngStyle]="{backgroundColor: color.name}" [ngClass]="color.name" class="color-box"
-          (click)="colorSelect(color.name,'stroke')">{{color.name}}</button>
-      </ng-container>
-    </mat-action-list>
-    <h1>Choose Shadow color</h1>
-    <mat-action-list class="d-flex">
-      <ng-container *ngFor="let color of colorArray;">
-        <button mat-list-item [ngStyle]="{backgroundColor: color.name}" [ngClass]="color.name" class="color-box"
-          (click)="colorSelect(color.name,'shadow')">{{color.name}}</button>
-      </ng-container>
-    </mat-action-list>
-    <mat-action-list>
-      <mat-accordion multi>
-        <mat-expansion-panel [expanded]="step === 0" (opened)="step = 0" >
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Premium Colors
-            </mat-panel-title>
-            <!-- <mat-panel-description>
-            </mat-panel-description> -->
-          </mat-expansion-panel-header>
-          <ng-container *ngFor="let color of colorArray;">
-            <button  [ngStyle]="{backgroundColor: color.name}" [ngClass]="color.name" class="color-box"
-              (click)="colorSelect(color.name,'stroke')"></button>
-          </ng-container>
-
-        </mat-expansion-panel>
-        <mat-expansion-panel [expanded]="step === 1" (opened)="step = 1" >
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Sherwin Willams
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <ng-container *ngFor="let color of colorArray;">
-            <button  [ngStyle]="{backgroundColor: color.name}" [ngClass]="color.name" class="color-box"
-              (click)="colorSelect(color.name,'stroke')"></button>
-          </ng-container>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </mat-action-list>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>

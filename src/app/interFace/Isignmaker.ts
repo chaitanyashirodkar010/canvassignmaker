@@ -6,13 +6,15 @@ export interface ITextData {
   width?: number,
   scaleX?: number,
   scaleY?: number,
-  shadowColor?: string,
+  sideColor?: string,
   boarderColor?: string,
   x?: number,
   y?: number,
   skewx?:number,
   skewY?:number,
-  corners?: position
+  corners?: position,
+  shadowColor?: string,
+  raceColor?: string,
 }
 
 export interface position{
