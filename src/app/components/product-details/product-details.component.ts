@@ -9,16 +9,19 @@ import { IColor, Ifont, ITextData } from 'src/app/interface/Isignmaker';
   styleUrls: ['./product-details.component.scss']
 })
 export class ProductDetailsComponent implements OnInit{
+  unavailable:boolean=false;
   firstFormGroup: FormGroup;
+  thirdFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   isLinear: boolean;
   myfont: FontFace;
   data: ITextData = {
-    value: "Naik",
+    value: "",
     font: "Tahoma",
     size: "100px",
     color: "red",
   };
+  toogleType: string = 'Acrylic Face';
 
   fontArray: Array<Ifont> = [
     {name: "Tahoma", imgpath: "../../../assets/images/standard.png"},
@@ -51,6 +54,10 @@ export class ProductDetailsComponent implements OnInit{
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required],
     });
+    this.thirdFormGroup = this._formBuilder.group({
+      thirdCtrl: ['', Validators.required],
+    });
+    
     this.isLinear = false;
     this.edValueKeyPress();
   }

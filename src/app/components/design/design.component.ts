@@ -30,11 +30,11 @@ export class DesignComponent {
 
     this.c.width = window.innerWidth - 50;
     // this.c.height = window.innerHeight;
-    this.c.height = "110";
+    this.c.height = "200";
     console.log("x:", this.c.width, " y:", this.c.height)
     this.c.style.cursor = "move";
     this.data = {
-      value: "Naik",
+      value: "",
       font: "Tahoma",
       size: "100px",
       color: "orange"
@@ -141,7 +141,7 @@ export class DesignComponent {
 
     //Setting offset to diplay text in center
     let offsetX = this.txtWidth / 2;
-    let offsetY = 32;
+    let offsetY = 0;
     let sX = data.scaleX == null && data.scaleX == undefined ? 1 : data.scaleX;
     let sY = data.scaleY == null && data.scaleY == undefined ? 1 : data.scaleY;
 
@@ -202,13 +202,13 @@ export class DesignComponent {
     }
 
     //Instead of rectangle get to draw image
-    this.ctx.fillStyle = "green";
-    this.ctx.fillRect(this.rightBottom.x - this.rightBottom.offsetX, this.rightBottom.y - this.rightBottom.offsetY, 20, 20)
+    // this.ctx.fillStyle = "green";
+    // this.ctx.fillRect(this.rightBottom.x - this.rightBottom.offsetX, this.rightBottom.y - this.rightBottom.offsetY, 20, 20)
     // this.ctx.restore();
 
     //Instead of rectangle get to draw image
-    this.ctx.fillStyle = "red";
-    this.ctx.fillRect(this.rightTop.x - this.rightTop.offsetX, this.rightTop.y - this.rightTop.offsetY, 20, 20)
+    // this.ctx.fillStyle = "red";
+    // this.ctx.fillRect(this.rightTop.x - this.rightTop.offsetX, this.rightTop.y - this.rightTop.offsetY, 20, 20)
     // this.ctx.restore();
 
 

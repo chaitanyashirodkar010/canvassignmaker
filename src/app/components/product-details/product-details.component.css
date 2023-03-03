@@ -29,16 +29,22 @@
 }
 
 .dual {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   height: 25px;
   width: 25px;
   padding: 0;
+}
 
-  .dual-half {
-    flex: 1;
-    border: 1px solid #000000;
-  }
+.dual .dual-half {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  border: 1px solid #000000;
 }
+
 .mat-horizontal-content-container {
-  padding: 0 ;
+  padding: 0;
 }
+/*# sourceMappingURL=product-details.component.css.map */

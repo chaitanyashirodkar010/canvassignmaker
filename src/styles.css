@@ -1,0 +1,111 @@
+/* You can add global styles to this file, and also import other style files */
+.navbar {
+  position: relative;
+  z-index: 99;
+}
+
+.offcanvas {
+  left: 0;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+.fa-chevron-right {
+  font-size: 20px;
+  color: #e5e5e5;
+}
+
+.work-area {
+  position: absolute;
+  top: 0;
+  z-index: 9;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.offcanvas-backdrop.show {
+  opacity: 0;
+}
+
+.mat-stepper-next {
+  background-color: #6941C6;
+  border: 1px solid #6941C6;
+  color: white;
+  width: 145px;
+  height: 40px;
+  border-radius: 5px;
+}
+
+.mat-stepper-previous {
+  border: 1px solid #6941C6;
+  color: #6941C6;
+  width: 145px;
+  height: 40px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.modal-backdrop.fade {
+  opacity: 0 !important;
+}
+
+.Reset {
+  border: 1px solid red;
+  color: red;
+  width: 145px;
+  height: 40px;
+}
+
+app-signmaker-nav-bar {
+  position: absolute;
+  left: 0;
+}
+
+.banner-img {
+  height: 100vh;
+}
+
+#offcanvasNavbar {
+  visibility: visible;
+  top: 0;
+  width: 30%;
+  bottom: 0;
+  height: 96%;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.offcanvas-body {
+  padding-top: 0 !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.mat-mdc-list-base {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+}
+
+ul {
+  padding-left: 0 !important;
+}
+
+ul li {
+  list-style-type: none;
+  font-size: 14px;
+}
+/*# sourceMappingURL=styles.css.map */
