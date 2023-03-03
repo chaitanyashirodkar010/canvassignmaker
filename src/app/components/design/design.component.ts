@@ -15,13 +15,12 @@ export class DesignComponent {
   txtWidth: number;
   enableDraw: boolean;
   data: ITextData;
-  rightBottom: {
-    x: number,
-    y: number,
-    offsetX: number,
-    offsetY: number,
-  } = { x: -1, y: -1, offsetX: -1, offsetY: -1 };
-  rightTop: { x: number; y: number; offsetX: number; offsetY: number; };
+  // rightBottom: {x: number,y: number,offsetX: number,offsetY: number} = 
+  //   { x: -1, y: -1, offsetX: -1, offsetY: -1 };
+  // rightTop: { x: number; y: number; offsetX: number; offsetY: number; } =
+  //   { x: -1, y: -1, offsetX: -1, offsetY: -1 };
+  rectOX: number;
+  rectOY: number;
   click: any;
 
   ngOnInit() {
@@ -29,15 +28,16 @@ export class DesignComponent {
     this.ctx = this.c.getContext("2d");
 
     this.c.width = window.innerWidth - 50;
-    // this.c.height = window.innerHeight;
-    this.c.height = "200";
-    console.log("x:", this.c.width, " y:", this.c.height)
+    this.c.height = window.innerHeight;
+    // this.c.height = "110";
     this.c.style.cursor = "move";
     this.data = {
-      value: "",
+      value: "LETTERS",
       font: "Tahoma",
       size: "100px",
-      color: "orange"
+      color: "orange",
+      x: this.c.width / 2,
+      y: this.c.height / 2
     };
     this.draw(this.data);
 
@@ -64,40 +64,74 @@ export class DesignComponent {
       // console.log("Recx:", this.rightBottom.x, " Recy:", this.rightBottom.y)
       // console.log("client:", event.clientX, " client:",  event.clientY)
       // console.log("evtx:", event.x, " evty:",  event.y)
-      if (this.mouse.x >= (this.rightTop.x - this.rightTop.offsetX) && this.mouse.x <= (this.rightTop.x - this.rightTop.offsetX + 20) &&
-        this.mouse.y >= (this.rightTop.y - this.rightTop.offsetY) && this.mouse.y <= (this.rightTop.y - this.rightTop.offsetY + 20)) {
+
+      //Close Icon
+      if (this.mouse.x >= ((this.data.corners?.rightTop.x ?? 0) - (this.data.corners?.rightTop.offsetX ?? 0)) &&
+        this.mouse.x <= ((this.data.corners?.rightTop.x ?? 0) - (this.data.corners?.rightTop.offsetX ?? 0) + 20) &&
+        this.mouse.y >= ((this.data.corners?.rightTop.y ?? 0) - (this.data.corners?.rightTop.offsetY ?? 0))
+        && this.mouse.y <= ((this.data.corners?.rightTop.y ?? 0) - (this.data.corners?.rightTop.offsetY ?? 0) + 20)) {
         this.c.style.cursor = "pointer";
         if (this.click) {
-          this.ctx.clearRect(0, 0, this.c.width, this.c.height);
+          const img = new Image(); // Create new img element
+          img.src = "../assets/images/banner.webp";
+          img.onload = () => {
+            this.ctx.drawImage(img, 0, 0, this.c.width, this.c.height);
+          }
           return;
         }
         this.click = false;
         return;
       }
 
-      if (this.mouse.x >= (this.rightBottom.x - this.rightBottom.offsetX) && this.mouse.x <= (this.rightBottom.x - this.rightBottom.offsetX + 20) &&
-        this.mouse.y >= (this.rightBottom.y - this.rightBottom.offsetY) && this.mouse.y <= (this.rightBottom.y - this.rightBottom.offsetY + 20)) {
+      //Expand
+      if (this.mouse.x >= ((this.data.corners?.rightBottom.x ?? 0) - (this.data.corners?.rightBottom.offsetX ?? 0)) &&
+        this.mouse.x <= ((this.data.corners?.rightBottom.x ?? 0) - (this.data.corners?.rightBottom.offsetX ?? 0) + 20) &&
+        this.mouse.y >= ((this.data.corners?.rightBottom.y ?? 0) - (this.data.corners?.rightBottom.offsetY ?? 0))
+        && this.mouse.y <= ((this.data.corners?.rightBottom.y ?? 0) - (this.data.corners?.rightBottom.offsetY ?? 0) + 20)) {
         this.c.style.cursor = "nw-resize"
         if (this.enableDraw) {
-          this.data = { ...this.data, scaleX: 0.1 };
+          var scalex = ((this.data.x ?? 0) / (this.rectOX));
+          var scaley = ((this.data.y ?? 0) / (this.rectOY * 100));
+
+          // var ypos = (this.data.y ?? 0 / (scaley * 1.25));
+          this.mouse.y / this.mouse.x
+          this.data = {
+            ...this.data, scaleX: scalex, scaleY: scaley,
+            x: this.data.x, y: this.data.y,
+            skewY: 0
+          };
           this.draw(this.data);
+          // this.enableDraw = false
           return;
         }
       }
       else {
         this.c.style.cursor = "move";
       }
+
+      //Drag n Drop
       if (this.enableDraw) {
-        this.data = { ...this.data, x: this.mouse.x, y: this.mouse.y };
-        this.draw(this.data);
+        let offsetX = this.txtWidth / 2;
+        let offsetY = 32;
+        let rectX = (this.data.x ?? 0) - offsetX - 10;
+        let rectY = (this.data.y ?? 0) - 50;
+
+        if (this.mouse.x >= rectX && this.mouse.x <= (rectX + this.txtWidth + 32) &&
+          this.mouse.y >= rectY && this.mouse.y <= (rectY + Number(this.data.size.split('p')[0]) + 5)) {
+          this.data = { ...this.data, x: this.mouse.x, y: this.mouse.y };
+          this.draw(this.data);
+        }
+
       }
     }
   }
 
 
   @HostListener("click", ["$event"]) public onClick(event: MouseEvent) {
-    if (this.mouse.x >= (this.rightTop.x - this.rightTop.offsetX) && this.mouse.x <= (this.rightTop.x - this.rightTop.offsetX + 20) &&
-      this.mouse.y >= (this.rightTop.y - this.rightTop.offsetY) && this.mouse.y <= (this.rightTop.y - this.rightTop.offsetY + 20)) {
+    if (this.mouse.x >= ((this.data.corners?.rightTop.x ?? 0) - (this.data.corners?.rightTop?.offsetX ?? 0)) && this.mouse.x <=
+      ((this.data.corners?.rightTop?.x ?? 0) - (this.data.corners?.rightTop?.offsetX ?? 0) + 20) &&
+      this.mouse.y >= ((this.data.corners?.rightTop?.y ?? 0) - (this.data.corners?.rightTop?.offsetY ?? 0)) &&
+      this.mouse.y <= ((this.data.corners?.rightTop?.y ?? 0) - (this.data.corners?.rightTop?.offsetY ?? 0) + 20)) {
       this.click = true;
       return;
     }
@@ -127,91 +161,106 @@ export class DesignComponent {
 
 
   draw(data: ITextData) {
-    this.ctx.clearRect(0, 0, this.c.width, this.c.height);
+    // this.ctx.clearRect(0, 0, this.c.width, this.c.height);
+    const img = new Image(); // Create new img element
+    img.src = "../assets/images/banner.webp";
+    img.onload = () => {
+      this.ctx.drawImage(img, 0, 0, this.c.width, this.c.height);
 
 
-    this.ctx.font = `bold  ${data.size}  ${data.font}`;
+      //     const canvas = document.getElementById("canvas");
+      // const ctx = canvas.getContext("2d");
+      console.log(data.scaleY, data.scaleX)
+      this.ctx.transform(data.scaleY, 0, 0, data.scaleX, 0, 0);
+      // this.ctx.fillRect(0, 0, 100, 100);
 
-    //Get canvas center
-    let centreX = data.x != null && data.x != undefined ? data.x : this.c.width / 2;
-    let centreY = data.y != null && data.y != undefined ? data.y : this.c.height / 2;
 
-    //Get text width
-    this.txtWidth = data.width != undefined ? data.width : this.ctx.measureText(data.value).width;
+      this.ctx.font = `bold  ${data.size}  ${data.font}`;
 
-    //Setting offset to diplay text in center
-    let offsetX = this.txtWidth / 2;
-    let offsetY = 0;
-    let sX = data.scaleX == null && data.scaleX == undefined ? 1 : data.scaleX;
-    let sY = data.scaleY == null && data.scaleY == undefined ? 1 : data.scaleY;
+      //Get canvas center
+      let centreX = data.x != null && data.x != undefined ? data.x : this.c.width / 2;
+      let centreY = data.y != null && data.y != undefined ? data.y : this.c.height / 2;
 
-    this.ctx.scale(sX, sY);
-    //Displaying text
+      //Get text width
+      this.txtWidth = data.width != undefined ? data.width : this.ctx.measureText(data.value).width;
 
-    this.ctx.save();
-    // Shadow
-    for (let i = 0; i < 7; i++) {
-      this.ctx.fillStyle = data.shadowColor != null && data.shadowColor != undefined ? data.shadowColor : "Black";
-      this.ctx.fillText(data.value, centreX - offsetX + i, centreY + offsetY + i);
+      //Setting offset to diplay text in center
+      let offsetX = this.txtWidth / 2;
+      let offsetY = 32;
+      let sX = data.scaleX == null && data.scaleX == undefined ? 1 : data.scaleX;
+      let sY = data.scaleY == null && data.scaleY == undefined ? 1 : data.scaleY;
+
+      // this.ctx.scale(sX, sY);
+      //Displaying text
+      // this.ctx.transform(0, .2, data.skewY, 0, 1, 0);
+      this.ctx.save();
+      // Shadow
+      for (let i = 0; i < 7; i++) {
+        this.ctx.fillStyle = data.shadowColor != null && data.shadowColor != undefined ? data.shadowColor : "Black";
+        this.ctx.fillText(data.value, centreX - offsetX + i, centreY + offsetY + i);
+      }
+      // boarder/storke
+      for (let i = 0; i < 3; i++) {
+        this.ctx.fillStyle = data.boarderColor != null && data.boarderColor != undefined ? data.boarderColor : "Black";
+        this.ctx.fillText(data.value, centreX - offsetX + i, centreY + offsetY + i);
+      }
+      //text face
+      this.ctx.fillStyle = data.color;
+      this.ctx.fillText(data.value, centreX - offsetX, centreY + offsetY);
+
+      this.ctx.restore();
+
+      // Creating dash line rectangle around the text
+      this.ctx.save();
+      this.ctx.setLineDash([20, 40]);
+      // Setting offset so that "g" and "l" world displays within the rectangle
+      let rectX = centreX - offsetX - 10;
+      let rectY = centreY - 50;
+      if (this.rectOX == undefined || this.rectOX == null) {
+        this.rectOX = rectX;
+      }
+      if (this.rectOY == undefined || this.rectOY == null) {
+        this.rectOY = rectY;
+      }
+      this.ctx.strokeRect(rectX, rectY, this.txtWidth + 32, Number(data.size.split('p')[0]) + 5);
+      // this.ctx.closePath();
+      this.ctx.restore();
+
+      // Getting other 3 corners of rectangle
+      data.corners = {
+        rightTop: {
+          x: rectX + this.txtWidth + 32,
+          y: rectY,
+          offsetX: 15,
+          offsetY: 15,
+        },
+        rightBottom: {
+          x: rectX + this.txtWidth + 32,
+          y: rectY + Number(data.size.split('p')[0]) + 5,
+          offsetX: 15,
+          offsetY: 15,
+        },
+        leftBottom: {
+          x: rectX,
+          y: rectY + Number(data.size.split('p')[0]) + 5,
+          offsetX: 15,
+          offsetY: 15,
+        }
+      }
+
+      //Instead of rectangle get to draw image
+      this.ctx.fillStyle = "green";
+      this.ctx.fillRect(data.corners.rightBottom.x - data.corners.rightBottom.offsetX,
+        data.corners.rightBottom.y - data.corners.rightBottom.offsetY, 20, 20)
+      // this.ctx.restore();
+
+      //Instead of rectangle get to draw image
+      this.ctx.fillStyle = "red";
+      this.ctx.fillRect(data.corners.rightTop.x - data.corners.rightTop.offsetX,
+        data.corners.rightTop.y - data.corners.rightTop.offsetY, 20, 20)
+      // this.ctx.restore();
+
     }
-    // boarder/storke
-    for (let i = 0; i < 3; i++) {
-      this.ctx.fillStyle = data.boarderColor != null && data.boarderColor != undefined ? data.boarderColor : "Black";
-      this.ctx.fillText(data.value, centreX - offsetX + i, centreY + offsetY + i);
-    }
-    //text face
-    this.ctx.fillStyle = data.color;
-    this.ctx.fillText(data.value, centreX - offsetX, centreY + offsetY);
-
-    this.ctx.restore();
-    //  this.ctx.save();
-    // this.ctx.lineWidth = 1.5;
-    // this.ctx.strokeStyle = data.boarderColor != null && data.boarderColor != undefined ? data.boarderColor : "Black";
-    // this.ctx.strokeText(data.value, centreX - offsetX, centreY + offsetY);
-    // this.ctx.restore();
-
-    // Creating dash line rectangle around the text
-    this.ctx.save();
-    this.ctx.beginPath();
-    this.ctx.setLineDash([20, 40]);
-    // Setting offset so that "g" and "l" world displays within the rectangle
-    let rectX = centreX - offsetX - 10;
-    let rectY = centreY - 50;
-    this.ctx.strokeRect(rectX, rectY, this.txtWidth + 32, Number(data.size.split('p')[0]) + 5);
-    this.ctx.closePath();
-    this.ctx.restore();
-
-    // Getting other 3 corners of rectangle
-    this.rightTop = {
-      x: rectX + this.txtWidth + 32,
-      y: rectY,
-      offsetX: 15,
-      offsetY: 15,
-    }
-    let leftBottom = {
-      x: rectX,
-      y: rectY + Number(data.size.split('p')[0]) + 5,
-      offsetX: 15,
-      offsetY: 15,
-    }
-    this.rightBottom = {
-      x: rectX + this.txtWidth + 32,
-      y: rectY + Number(data.size.split('p')[0]) + 5,
-      offsetX: 15,
-      offsetY: 15,
-    }
-
-    //Instead of rectangle get to draw image
-    // this.ctx.fillStyle = "green";
-    // this.ctx.fillRect(this.rightBottom.x - this.rightBottom.offsetX, this.rightBottom.y - this.rightBottom.offsetY, 20, 20)
-    // this.ctx.restore();
-
-    //Instead of rectangle get to draw image
-    // this.ctx.fillStyle = "red";
-    // this.ctx.fillRect(this.rightTop.x - this.rightTop.offsetX, this.rightTop.y - this.rightTop.offsetY, 20, 20)
-    // this.ctx.restore();
-
-
 
   }
 

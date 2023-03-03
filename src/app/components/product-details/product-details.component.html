@@ -273,6 +273,56 @@
         </mat-action-list>
       </div>
     </div>
+    <h1>Choose Type color</h1>
+    <mat-action-list class="d-flex">
+      <ng-container *ngFor="let color of colorArray;">
+        <button mat-list-item [ngStyle]="{backgroundColor: color.name}" [ngClass]="color.name" class="color-box"
+          (click)="colorSelect(color.name,'field')">{{color.name}}</button>
+      </ng-container>
+    </mat-action-list>
+    <h1>Choose border color</h1>
+    <mat-action-list class="d-flex">
+      <ng-container *ngFor="let color of colorArray;">
+        <button mat-list-item [ngStyle]="{backgroundColor: color.name}" [ngClass]="color.name" class="color-box"
+          (click)="colorSelect(color.name,'stroke')">{{color.name}}</button>
+      </ng-container>
+    </mat-action-list>
+    <h1>Choose Shadow color</h1>
+    <mat-action-list class="d-flex">
+      <ng-container *ngFor="let color of colorArray;">
+        <button mat-list-item [ngStyle]="{backgroundColor: color.name}" [ngClass]="color.name" class="color-box"
+          (click)="colorSelect(color.name,'shadow')">{{color.name}}</button>
+      </ng-container>
+    </mat-action-list>
+    <mat-action-list>
+      <mat-accordion multi>
+        <mat-expansion-panel [expanded]="step === 0" (opened)="step = 0" >
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Premium Colors
+            </mat-panel-title>
+            <!-- <mat-panel-description>
+            </mat-panel-description> -->
+          </mat-expansion-panel-header>
+          <ng-container *ngFor="let color of colorArray;">
+            <button  [ngStyle]="{backgroundColor: color.name}" [ngClass]="color.name" class="color-box"
+              (click)="colorSelect(color.name,'stroke')"></button>
+          </ng-container>
+
+        </mat-expansion-panel>
+        <mat-expansion-panel [expanded]="step === 1" (opened)="step = 1" >
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Sherwin Willams
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-container *ngFor="let color of colorArray;">
+            <button  [ngStyle]="{backgroundColor: color.name}" [ngClass]="color.name" class="color-box"
+              (click)="colorSelect(color.name,'stroke')"></button>
+          </ng-container>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-action-list>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>

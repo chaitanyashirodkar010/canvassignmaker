@@ -9,7 +9,23 @@ export interface ITextData {
   shadowColor?: string,
   boarderColor?: string,
   x?: number,
-  y?: number
+  y?: number,
+  skewx?:number,
+  skewY?:number,
+  corners?: position
+}
+
+export interface position{
+  rightTop: positionCoOrd,
+  leftBottom: positionCoOrd,
+  rightBottom: positionCoOrd
+}
+
+export interface positionCoOrd{
+  x: number,
+  y: number,
+  offsetX: number,
+  offsetY: number
 }
 
 export interface Ifont {

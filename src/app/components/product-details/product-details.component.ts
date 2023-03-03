@@ -16,12 +16,13 @@ export class ProductDetailsComponent implements OnInit{
   isLinear: boolean;
   myfont: FontFace;
   data: ITextData = {
-    value: "",
+    value: "LETTERS",
     font: "Tahoma",
     size: "100px",
     color: "red",
   };
   toogleType: string = 'Acrylic Face';
+  step: number = -1;
 
   fontArray: Array<Ifont> = [
     {name: "Tahoma", imgpath: "../../../assets/images/standard.png"},
