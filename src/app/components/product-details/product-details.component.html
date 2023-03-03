@@ -82,6 +82,20 @@
             src="../../../assets/images/letter3.png" alt="">
         </button>
       </li>
+      <!-- race -->
+      <li class="nav-item" role="presentation" *ngIf="selectedProduct == 'race'">
+        <button class="nav-link p-0 m-0" id="contact-tab" data-bs-toggle="tab" data-bs-target="#race-tab-pane"
+          type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false"> <img
+            src="../../../assets/images/letter3.png" alt="">
+        </button>
+      </li>
+      <!-- shadow -->
+      <li class="nav-item" role="presentation" *ngIf="selectedProduct == 'shadow'">
+        <button class="nav-link p-0 m-0" id="contact-tab" data-bs-toggle="tab" data-bs-target="#shadow-tab-pane"
+          type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false"> <img
+            src="../../../assets/images/letter3.png" alt="">
+        </button>
+      </li>
     </ul>
     <div class="tab-content" id="myTabContent">
       <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
@@ -251,29 +265,25 @@
             </ng-container>
           </div>
         </div>
-        <h5 class="desctitle ">Choose shadow color</h5>
-        <div class="sc-fjdhpX fRtSug">
-          <ng-container *ngFor="let color of colorArray;">
-            <button [ngStyle]="{backgroundColor: color.name}" class="color-box"
-              (click)="colorSelect(color.name,'shadow')"></button>
-          </ng-container>
-        </div>
-        <h5 class="desctitle ">Choose shadow color</h5>
-        <div class="sc-fjdhpX fRtSug">
-          <ng-container *ngFor="let color of colorArray;">
-            <button [ngStyle]="{backgroundColor: color.name}" class="color-box"
-              (click)="colorSelect(color.name,'race')"></button>
-          </ng-container>
-        </div>
-
       </div>
-      <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+      <div class="tab-pane fade" id="race-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
         <h5 class="desctitle ">Choose race color</h5>
         <div class="accordion-body">
           <div class="sc-fjdhpX fRtSug">
             <ng-container *ngFor="let color of colorArray;">
               <button [ngStyle]="{backgroundColor: color.name}" class="color-box"
-                (click)="colorSelect(color.name,'side')"></button>
+                (click)="colorSelect(color.name,'race')"></button>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="shadow-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+        <h5 class="desctitle ">Choose race color</h5>
+        <div class="accordion-body">
+          <div class="sc-fjdhpX fRtSug">
+            <ng-container *ngFor="let color of colorArray;">
+              <button [ngStyle]="{backgroundColor: color.name}" class="color-box"
+                (click)="colorSelect(color.name,'shadow')"></button>
             </ng-container>
           </div>
         </div>

@@ -59,6 +59,7 @@ export class ProductDetailsComponent implements OnInit {
     { name: "rgb(255, 0, 153)" },
   ];
 
+  @Input() selectedProduct: string = '';
   @Output() bckEvt = new EventEmitter<boolean>();
   @Output() ValueChange = new EventEmitter<ITextData>();
 

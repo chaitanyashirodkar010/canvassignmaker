@@ -187,11 +187,11 @@ export class DesignComponent {
       if (data.raceColor != undefined && data.raceColor != null) {
         this.ctx.save();
         this.ctx.fillStyle = "black";
-        this.ctx.fillRect(rectX + 1, ((rectY + Number(data.size.split('p')[0]) + 5 + rectY - 30) / 2) + 1, this.txtWidth + 32, 20);
-        this.ctx.fillRect(rectX + 2, ((rectY + Number(data.size.split('p')[0]) + 5 + rectY - 30) / 2) + 2, this.txtWidth + 32, 20);
-        this.ctx.fillRect(rectX + 3, ((rectY + Number(data.size.split('p')[0]) + 5 + rectY - 30) / 2) + 3, this.txtWidth + 32, 20);
+        this.ctx.fillRect(rectX + 1, ((rectY + Number(data.size.split('p')[0]) + 5 + rectY - 20) / 2) + 1, this.txtWidth + 32, 20);
+        this.ctx.fillRect(rectX + 2, ((rectY + Number(data.size.split('p')[0]) + 5 + rectY - 20) / 2) + 2, this.txtWidth + 32, 20);
+        this.ctx.fillRect(rectX + 3, ((rectY + Number(data.size.split('p')[0]) + 5 + rectY - 20) / 2) + 3, this.txtWidth + 32, 20);
         this.ctx.fillStyle = data.raceColor;
-        this.ctx.fillRect(rectX, (rectY + Number(data.size.split('p')[0]) + 5 + rectY - 30) / 2, this.txtWidth + 32, 20);
+        this.ctx.fillRect(rectX, (rectY + Number(data.size.split('p')[0]) + 5 + rectY - 20) / 2, this.txtWidth + 32, 20);
         this.ctx.restore();
       }
 
@@ -200,6 +200,14 @@ export class DesignComponent {
       this.ctx.save();
       // Shadow
       for (let i = 0; i < 7; i++) {
+        if (data.shadowColor != undefined && data.shadowColor != null) {
+          this.ctx.shadowColor = data.shadowColor;
+          this.ctx.shadowBlur = 13;
+          // for (let i = 0; i < 7; i++) {
+            // this.ctx.shadowOffsetX = i;
+            // this.ctx.shadowOffsetY = i;
+          // }
+        }
         this.ctx.fillStyle = data.sideColor != null && data.sideColor != undefined ? data.sideColor : "Black";
         this.ctx.fillText(data.value, centreX - offsetX + i, centreY + offsetY + i);
       }
@@ -209,14 +217,10 @@ export class DesignComponent {
         this.ctx.fillText(data.value, centreX - offsetX + i, centreY + offsetY + i);
       }
       //text face
-      if (data.shadowColor != undefined && data.shadowColor != null) {
-        this.ctx.shadowColor = data.shadowColor;
-        this.ctx.shadowBlur = 50;
-        for (let i = 0; i < 7; i++) {
-          this.ctx.shadowOffsetX = 5 + i;
-          this.ctx.shadowOffsetY = 5 + i;
-        }
-      }
+      // if (data.shadowColor != undefined && data.shadowColor != null) {
+      //   this.ctx.shadowColor = data.shadowColor;
+      //   this.ctx.shadowBlur = 50;
+      // }
 
       this.ctx.fillStyle = data.color ?? '';
       this.ctx.fillText(data.value, centreX - offsetX, centreY + offsetY);

@@ -14,7 +14,7 @@ export interface ITextData {
   skewY?:number,
   corners?: position,
   shadowColor?: string,
-  raceColor?: string,
+  raceColor?: string
 }
 
 export interface position{

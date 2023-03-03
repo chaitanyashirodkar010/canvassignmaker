@@ -20,11 +20,6 @@ export class SignmakerNavBarComponent {
     this.selectedProduct = val ? '' : this.selectedProduct;
   }
 
-  // ngAfterContentInit(){
-  //   this.prdDtls.firstFormGroup.controls['firstCtrl'].valueChanges.subscribe(res => 
-  //     this.ValueChange.emit(res)
-  //   )
-  // }
   ValueChange1(value:ITextData){
     this.ValueChange.emit(value);
   }
