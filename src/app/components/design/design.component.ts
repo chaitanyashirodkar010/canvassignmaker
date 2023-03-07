@@ -61,12 +61,8 @@ export class DesignComponent {
         && this.mouse.y <= ((this.data.corners?.rightTop.y ?? 0) - (this.data.corners?.rightTop.offsetY ?? 0) + 20)) {
         this.c.style.cursor = "pointer";
         if (this.click) {
-          const img = new Image(); // Create new img element
-          img.src = "../assets/images/banner.webp";
-          img.onload = () => {
-            this.ctx.drawImage(img, 0, 0, this.c.width, this.c.height);
-          }
-          return;
+
+          this.draw(null);
         }
         this.click = false;
         return;
@@ -144,7 +140,7 @@ export class DesignComponent {
 
 
   inputChange(data: ITextData) {
-    let {x,y} = this.data;
+    let { x, y } = this.data;
     this.data = data;
     this.data.x = x;
     this.data.y = y;
@@ -152,7 +148,7 @@ export class DesignComponent {
   }
 
 
-  draw(data: ITextData) {
+  draw(data: ITextData | null) {
     // this.ctx.clearRect(0, 0, this.c.width, this.c.height);
     const img = new Image(); // Create new img element
     img.src = "../assets/images/banner.png";
@@ -160,121 +156,121 @@ export class DesignComponent {
       this.ctx.drawImage(img, 0, 0, this.c.width, this.c.height);
 
       // console.log(data.scaleY, data.scaleX)
-      this.ctx.save();
-      // this.ctx.transform((data.scaleY??1), 0, 0, (data.scaleX??1), 0, 0);
-
-
-      this.ctx.font = `bold  ${data.size}  ${data.font}`;
-      //Get canvas center
-      let centreX = data.x != null && data.x != undefined ? data.x : this.c.width / 2;
-      let centreY = data.y != null && data.y != undefined ? data.y : 75;
-
-      //Get text width
-      this.txtWidth = data.width != undefined ? data.width : this.ctx.measureText(data.value).width;
-
-      //Setting offset to diplay text in center
-      let offsetX = this.txtWidth / 2;
-      let offsetY = 32;
-      // let sX = data.scaleX == null && data.scaleX == undefined ? 1 : data.scaleX;
-      // let sY = data.scaleY == null && data.scaleY == undefined ? 1 : data.scaleY;
-
-      // this.ctx.scale(sX, sY);
-      //Displaying text
-      // this.ctx.transform(0, .2, data.skewY, 0, 1, 0);
-      // Displaying Race
-      let rectX = centreX - offsetX - 10;
-      let rectY = centreY - 50;
-      if (data.raceColor != undefined && data.raceColor != null) {
+      if (data != null && data.value != '') {
         this.ctx.save();
-        this.ctx.fillStyle = "black";
-        this.ctx.fillRect(rectX + 1, ((rectY + Number(data.size.split('p')[0]) + 5 + rectY - 20) / 2) + 1, this.txtWidth + 32, 20);
-        this.ctx.fillRect(rectX + 2, ((rectY + Number(data.size.split('p')[0]) + 5 + rectY - 20) / 2) + 2, this.txtWidth + 32, 20);
-        this.ctx.fillRect(rectX + 3, ((rectY + Number(data.size.split('p')[0]) + 5 + rectY - 20) / 2) + 3, this.txtWidth + 32, 20);
-        this.ctx.fillStyle = data.raceColor;
-        this.ctx.fillRect(rectX, (rectY + Number(data.size.split('p')[0]) + 5 + rectY - 20) / 2, this.txtWidth + 32, 20);
-        this.ctx.restore();
-      }
+        this.ctx.transform((data.scaleY ?? 1), 0, 0, (data.scaleX ?? 1), 0, 0);
+
+
+        this.ctx.font = `bold  ${data.size}  ${data.font}`;
+        //Get canvas center
+        let centreX = data.x != null && data.x != undefined ? data.x : this.c.width / 2;
+        let centreY = data.y != null && data.y != undefined ? data.y : 75;
+
+        //Get text width
+        this.txtWidth = data.width != undefined ? data.width : this.ctx.measureText(data.value).width;
+
+        //Setting offset to diplay text in center
+        let offsetX = this.txtWidth / 2;
+        let offsetY = 32;
+        // let sX = data.scaleX == null && data.scaleX == undefined ? 1 : data.scaleX;
+        // let sY = data.scaleY == null && data.scaleY == undefined ? 1 : data.scaleY;
+
+        // this.ctx.scale(sX, sY);
+        //Displaying text
+
+        // Displaying Race
+        // Setting offset so that "g" and "l" world displays within the rectangle
+        let rectX = centreX - offsetX - 10;
+        let rectY = centreY - 50;
+        if (data.raceColor != undefined && data.raceColor != null) {
+          this.ctx.save();
+          this.ctx.fillStyle = "black";
+          this.ctx.fillRect(rectX + 1, ((rectY + Number(data.size.split('p')[0]) + 5 + rectY - 20) / 2) + 1, this.txtWidth + 32, 20);
+          this.ctx.fillRect(rectX + 2, ((rectY + Number(data.size.split('p')[0]) + 5 + rectY - 20) / 2) + 2, this.txtWidth + 32, 20);
+          this.ctx.fillRect(rectX + 3, ((rectY + Number(data.size.split('p')[0]) + 5 + rectY - 20) / 2) + 3, this.txtWidth + 32, 20);
+          this.ctx.fillStyle = data.raceColor;
+          this.ctx.fillRect(rectX, (rectY + Number(data.size.split('p')[0]) + 5 + rectY - 20) / 2, this.txtWidth + 32, 20);
+          this.ctx.restore();
+        }
 
 
 
-      this.ctx.save();
-      // Shadow
-      for (let i = 0; i < 7; i++) {
-        if (data.shadowColor != undefined && data.shadowColor != null) {
-          this.ctx.shadowColor = data.shadowColor;
-          this.ctx.shadowBlur = 13;
-          // for (let i = 0; i < 7; i++) {
+        this.ctx.save();
+
+        // Shadow
+        for (let i = 0; i < 7; i++) {
+          if (data.shadowColor != undefined && data.shadowColor != null) {
+            this.ctx.shadowColor = data.shadowColor;
+            this.ctx.shadowBlur = 13;
+            // for (let i = 0; i < 7; i++) {
             // this.ctx.shadowOffsetX = i;
             // this.ctx.shadowOffsetY = i;
-          // }
+            // }
+          }
+          this.ctx.fillStyle = data.sideColor != null && data.sideColor != undefined ? data.sideColor : "Black";
+          this.ctx.fillText(data.value, centreX - offsetX + i, centreY + offsetY + i);
         }
-        this.ctx.fillStyle = data.sideColor != null && data.sideColor != undefined ? data.sideColor : "Black";
-        this.ctx.fillText(data.value, centreX - offsetX + i, centreY + offsetY + i);
-      }
-      // boarder/storke
-      for (let i = 0; i < 3; i++) {
-        this.ctx.fillStyle = data.boarderColor != null && data.boarderColor != undefined ? data.boarderColor : "Black";
-        this.ctx.fillText(data.value, centreX - offsetX + i, centreY + offsetY + i);
-      }
-      //text face
-      // if (data.shadowColor != undefined && data.shadowColor != null) {
-      //   this.ctx.shadowColor = data.shadowColor;
-      //   this.ctx.shadowBlur = 50;
-      // }
-
-      this.ctx.fillStyle = data.color ?? '';
-      this.ctx.fillText(data.value, centreX - offsetX, centreY + offsetY);
-
-      this.ctx.restore();
-
-      // Creating dash line rectangle around the text
-      this.ctx.save();
-      this.ctx.setLineDash([20, 40]);
-      // Setting offset so that "g" and "l" world displays within the rectangle
-      // let rectX = centreX - offsetX - 10;
-      // let rectY = centreY - 50;
-      if (this.rectOX == undefined || this.rectOX == null) {
-        this.rectOX = rectX;
-      }
-      if (this.rectOY == undefined || this.rectOY == null) {
-        this.rectOY = rectY;
-      }
-      this.ctx.strokeRect(rectX, rectY, this.txtWidth + 32, Number(data.size.split('p')[0]) + 5);
-      // this.ctx.closePath();
-      this.ctx.restore();
-
-      // Getting other 3 corners of rectangle
-      data.corners = {
-        rightTop: {
-          x: rectX + this.txtWidth + 32,
-          y: rectY,
-          offsetX: 15,
-          offsetY: 15,
-        },
-        rightBottom: {
-          x: rectX + this.txtWidth + 32,
-          y: rectY + Number(data.size.split('p')[0]) + 5,
-          offsetX: 15,
-          offsetY: 15,
-        },
-        leftBottom: {
-          x: rectX,
-          y: rectY + Number(data.size.split('p')[0]) + 5,
-          offsetX: 15,
-          offsetY: 15,
+        // boarder/storke
+        for (let i = 0; i < 3; i++) {
+          this.ctx.fillStyle = data.boarderColor != null && data.boarderColor != undefined ? data.boarderColor : "Black";
+          this.ctx.fillText(data.value, centreX - offsetX + i, centreY + offsetY + i);
         }
-      }
-      //Instead of rectangle get to draw image
-      this.ctx.fillStyle = "green";
-      this.ctx.fillRect(data.corners.rightBottom.x - data.corners.rightBottom.offsetX,
-        data.corners.rightBottom.y - data.corners.rightBottom.offsetY, 20, 20)
-      // this.ctx.restore();
+        //text face
 
-      //Instead of rectangle get to draw image
-      this.ctx.fillStyle = "red";
-      this.ctx.fillRect(data.corners.rightTop.x - data.corners.rightTop.offsetX,
-        data.corners.rightTop.y - data.corners.rightTop.offsetY, 20, 20)
-      this.ctx.restore();
+        this.ctx.fillStyle = data.color ?? '';
+        this.ctx.fillText(data.value, centreX - offsetX, centreY + offsetY);
+        this.ctx.fill();
+
+        this.ctx.restore();
+
+        // Creating dash line rectangle around the text
+        this.ctx.save();
+        this.ctx.setLineDash([5, 10]);
+        // let rectX = centreX - offsetX - 10;
+        // let rectY = centreY - 50;
+        if (this.rectOX == undefined || this.rectOX == null) {
+          this.rectOX = rectX;
+        }
+        if (this.rectOY == undefined || this.rectOY == null) {
+          this.rectOY = rectY;
+        }
+        this.ctx.strokeRect(rectX, rectY, this.txtWidth + 32, Number(data.size.split('p')[0]) + 5);
+        // this.ctx.closePath();
+        this.ctx.restore();
+
+        // Getting other 3 corners of rectangle
+        data.corners = {
+          rightTop: {
+            x: rectX + this.txtWidth + 32,
+            y: rectY,
+            offsetX: 15,
+            offsetY: 15,
+          },
+          rightBottom: {
+            x: rectX + this.txtWidth + 32,
+            y: rectY + Number(data.size.split('p')[0]) + 5,
+            offsetX: 15,
+            offsetY: 15,
+          },
+          leftBottom: {
+            x: rectX,
+            y: rectY + Number(data.size.split('p')[0]) + 5,
+            offsetX: 15,
+            offsetY: 15,
+          }
+        }
+        //Instead of rectangle get to draw image
+        this.ctx.fillStyle = "green";
+        this.ctx.fillRect(data.corners.rightBottom.x - data.corners.rightBottom.offsetX,
+          data.corners.rightBottom.y - data.corners.rightBottom.offsetY, 20, 20)
+        // this.ctx.restore();
+
+        //Instead of rectangle get to draw image
+        this.ctx.fillStyle = "red";
+        this.ctx.fillRect(data.corners.rightTop.x - data.corners.rightTop.offsetX,
+          data.corners.rightTop.y - data.corners.rightTop.offsetY, 20, 20)
+        this.ctx.restore();
+      }
 
     }
 
