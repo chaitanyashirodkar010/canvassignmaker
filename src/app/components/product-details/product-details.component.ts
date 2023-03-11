@@ -109,6 +109,15 @@ export class ProductDetailsComponent implements OnInit {
     this.ValueChange.emit(this.data)
   }
 
+  imgSelect(element: string) {
+    const img = new Image();
+    img.onload = () => {
+      this.data.faceImage = img;
+      this.ValueChange.emit(this.data);
+    }
+    img.src = element;
+  }
+
   edValueKeyPress() {
     this.firstFormGroup.controls['firstCtrl'].valueChanges.pipe(debounceTime(500)).subscribe(res => {
       this.data.value = res

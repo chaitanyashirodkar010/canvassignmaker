@@ -35,7 +35,6 @@ export class DesignComponent {
       y: 75,
     };
     this.draw(this.data);
-
   }
 
   @HostListener("mousedown", ["$event"]) public mousedown(event: MouseEvent) {
@@ -50,7 +49,7 @@ export class DesignComponent {
     {
 
       let r = this.c.getBoundingClientRect();
-      // console.log("left:", r.left, " top:", r.top, "right: ", r.right, " bottom:",r.bottom)
+
       this.mouse.x = event.clientX - r.left;
       this.mouse.y = event.clientY - r.top;
 
@@ -69,7 +68,7 @@ export class DesignComponent {
       }
 
       //Expand
-      console.log(this.data.corners)
+      // console.log(this.data.corners)
       if (this.mouse.x >= ((this.data.corners?.rightBottom.x ?? 0) - (this.data.corners?.rightBottom.offsetX ?? 0)) &&
         this.mouse.x <= ((this.data.corners?.rightBottom.x ?? 0) - (this.data.corners?.rightBottom.offsetX ?? 0) + 20) &&
         this.mouse.y >= ((this.data.corners?.rightBottom.y ?? 0) - (this.data.corners?.rightBottom.offsetY ?? 0))
@@ -94,15 +93,24 @@ export class DesignComponent {
         this.c.style.cursor = "move";
       }
 
+      // if (this.mouse.x >= (this.data.corners?.leftTop.x ?? 0) && this.mouse.x <= (this.data.corners?.rightBottom.x ?? 0) &&
+      //   this.mouse.y >= (this.data.corners?.leftTop.y ?? 0) && this.mouse.y <= (this.data.corners?.rightBottom.y ?? 0)) {
+      //   this.data = { ...this.data, x: this.mouse.x, y: this.mouse.y };
+      //   // this.draw(this.data);
+      //   this.c.style.cursor = "move";
+      // } else {
+      //   this.c.style.cursor = "context-menu";
+      // }
+
       //Drag n Drop
       if (this.enableDraw) {
         let offsetX = this.txtWidth / 2;
         let offsetY = 32;
-        let rectX = (this.data.x ?? 0) - offsetX - 10;
-        let rectY = (this.data.y ?? 0) - 50;
+        let rectX = this.data.corners?.leftTop.x ?? 0;
+        let rectY = this.data.corners?.leftTop.y ?? 0;
 
-        if (this.mouse.x >= rectX && this.mouse.x <= (rectX + this.txtWidth + 32) &&
-          this.mouse.y >= rectY && this.mouse.y <= (rectY + Number(this.data.size.split('p')[0]) + 5)) {
+        if (this.mouse.x >= rectX && this.mouse.x <= (this.data.corners?.rightBottom.x ?? 0) &&
+          this.mouse.y >= rectY && this.mouse.y <= (this.data.corners?.rightBottom.y ?? 0)) {
           this.data = { ...this.data, x: this.mouse.x, y: this.mouse.y };
           this.draw(this.data);
         }
@@ -110,6 +118,7 @@ export class DesignComponent {
       }
     }
   }
+
 
 
   @HostListener("click", ["$event"]) public onClick(event: MouseEvent) {
@@ -151,14 +160,16 @@ export class DesignComponent {
   draw(data: ITextData | null) {
     // this.ctx.clearRect(0, 0, this.c.width, this.c.height);
     const img = new Image(); // Create new img element
-    img.src = "../assets/images/banner.png";
+
     img.onload = () => {
+      // this.ctx.save();
       this.ctx.drawImage(img, 0, 0, this.c.width, this.c.height);
 
       // console.log(data.scaleY, data.scaleX)
       if (data != null && data.value != '') {
-        this.ctx.save();
-        this.ctx.transform((data.scaleY ?? 1), 0, 0, (data.scaleX ?? 1), 0, 0);
+        // this.ctx.save();
+        // this.ctx.transform(.8, 0, 0, .8, 0, 0);
+        // this.ctx.transform((data.scaleY ?? 1), 0, 0, (data.scaleX ?? 1), 0, 0);
 
 
         this.ctx.font = `bold  ${data.size}  ${data.font}`;
@@ -196,7 +207,6 @@ export class DesignComponent {
 
 
         this.ctx.save();
-
         // Shadow
         for (let i = 0; i < 7; i++) {
           if (data.shadowColor != undefined && data.shadowColor != null) {
@@ -207,25 +217,39 @@ export class DesignComponent {
             // this.ctx.shadowOffsetY = i;
             // }
           }
-          this.ctx.fillStyle = data.sideColor != null && data.sideColor != undefined ? data.sideColor : "Black";
+          this.ctx.fillStyle = data.sideColor ?? "Black";
           this.ctx.fillText(data.value, centreX - offsetX + i, centreY + offsetY + i);
         }
         // boarder/storke
         for (let i = 0; i < 3; i++) {
-          this.ctx.fillStyle = data.boarderColor != null && data.boarderColor != undefined ? data.boarderColor : "Black";
+          this.ctx.fillStyle = data.boarderColor ?? "Black";
           this.ctx.fillText(data.value, centreX - offsetX + i, centreY + offsetY + i);
         }
         //text face
 
-        this.ctx.fillStyle = data.color ?? '';
+        // this.ctx.beginPath();
+        if (data.faceImage) {
+          const pattern = this.ctx.createPattern(data.faceImage, 'repeat');
+          this.ctx.fillStyle = pattern ?? "";
+        }
+        else {
+          this.ctx.fillStyle = data.color ?? "";
+        }
+
         this.ctx.fillText(data.value, centreX - offsetX, centreY + offsetY);
         this.ctx.fill();
+
+        // this.ctx.beginPath();
+        // this.ctx.globalCompositeOperation = "source-in";
+        // this.ctx.drawImage(img1, 0, 0);
+        // this.ctx.closePath();
+        // this.ctx.restore();
 
         this.ctx.restore();
 
         // Creating dash line rectangle around the text
         this.ctx.save();
-        this.ctx.setLineDash([5, 10]);
+        this.ctx.setLineDash([7, 7]);
         // let rectX = centreX - offsetX - 10;
         // let rectY = centreY - 50;
         if (this.rectOX == undefined || this.rectOX == null) {
@@ -235,13 +259,19 @@ export class DesignComponent {
           this.rectOY = rectY;
         }
         this.ctx.strokeRect(rectX, rectY, this.txtWidth + 32, Number(data.size.split('p')[0]) + 5);
-        // this.ctx.closePath();
+
         this.ctx.restore();
 
-        // Getting other 3 corners of rectangle
+        // Getting all corners of rectangle
         data.corners = {
           rightTop: {
             x: rectX + this.txtWidth + 32,
+            y: rectY,
+            offsetX: 15,
+            offsetY: 15,
+          },
+          leftTop: {
+            x: rectX,
             y: rectY,
             offsetX: 15,
             offsetY: 15,
@@ -260,6 +290,11 @@ export class DesignComponent {
           }
         }
         //Instead of rectangle get to draw image
+        this.ctx.fillStyle = "pink";
+        this.ctx.fillRect(data.corners.leftTop.x - data.corners.leftTop.offsetX,
+          data.corners.leftTop.y - data.corners.leftTop.offsetY, 20, 20)
+
+        //Instead of rectangle get to draw image
         this.ctx.fillStyle = "green";
         this.ctx.fillRect(data.corners.rightBottom.x - data.corners.rightBottom.offsetX,
           data.corners.rightBottom.y - data.corners.rightBottom.offsetY, 20, 20)
@@ -269,10 +304,12 @@ export class DesignComponent {
         this.ctx.fillStyle = "red";
         this.ctx.fillRect(data.corners.rightTop.x - data.corners.rightTop.offsetX,
           data.corners.rightTop.y - data.corners.rightTop.offsetY, 20, 20)
-        this.ctx.restore();
+        // this.ctx.restore();
+
       }
 
     }
+    img.src = "../assets/images/banner.png";
 
   }
 

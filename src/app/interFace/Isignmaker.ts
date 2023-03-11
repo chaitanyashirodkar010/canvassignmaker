@@ -14,10 +14,12 @@ export interface ITextData {
   skewY?:number,
   corners?: position,
   shadowColor?: string,
-  raceColor?: string
+  raceColor?: string,
+  faceImage?: CanvasImageSource
 }
 
 export interface position{
+  leftTop: positionCoOrd,
   rightTop: positionCoOrd,
   leftBottom: positionCoOrd,
   rightBottom: positionCoOrd
