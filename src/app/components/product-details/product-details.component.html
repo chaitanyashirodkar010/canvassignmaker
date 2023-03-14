@@ -1,6 +1,6 @@
 <mat-stepper #stepper>
 
-  <ng-container *ngIf="selectedProduct.type == 'Face Lit Letters'">
+  <ng-container *ngIf="selectedProduct.type == 'Face Lit Letters' || selectedProduct.type == 'Face Lit Letters on Raceway'">
     <mat-step>
       <button mat-button matStepperPrevious (click)="exit()">Back</button>
       <button mat-button matStepperNext>Next</button>
@@ -20,7 +20,7 @@
       </mat-action-list>
     </mat-step>
   </ng-container>
-  <ng-container *ngIf="selectedProduct.type == 'Face Lit Logo Shape'">
+  <ng-container *ngIf="selectedProduct.type == 'Face Lit Logo Shape' || selectedProduct.type == 'Face Lit Logo Shape on Raceway'">
     <mat-step>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button matStepperNext>Next</button>
@@ -61,14 +61,14 @@
         </button>
       </li>
       <!-- race -->
-      <li class="nav-item" role="presentation" *ngIf="selectedProduct.category == 'race'">
+      <li class="nav-item" role="presentation" *ngIf="selectedProduct.type == 'Face Lit Letters on Raceway'">
         <button class="nav-link p-0 m-0" id="contact-tab" data-bs-toggle="tab" data-bs-target="#race-tab-pane"
           type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false"> <img
             src="../../../assets/images/letter3.png" alt="">
         </button>
       </li>
       <!-- shadow -->
-      <li class="nav-item" role="presentation" *ngIf="selectedProduct.category == 'shadow'">
+      <li class="nav-item" role="presentation" *ngIf="selectedProduct.type == 'shadow'">
         <button class="nav-link p-0 m-0" id="contact-tab" data-bs-toggle="tab" data-bs-target="#shadow-tab-pane"
           type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false"> <img
             src="../../../assets/images/letter3.png" alt="">

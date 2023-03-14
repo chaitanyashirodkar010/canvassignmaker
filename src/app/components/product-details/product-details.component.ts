@@ -130,7 +130,6 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   selectedShape(shape: IShapes){
-    debugger
     this.data.shapes = shape;
     this.ValueChange.emit(this.data);
   }

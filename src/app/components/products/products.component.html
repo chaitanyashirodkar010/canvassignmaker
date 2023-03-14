@@ -1,154 +1,147 @@
 <ng-container *ngIf="products.category == ''">
-    <div class="d-flex flex-column justify-content-around h-100">
-
-        <div class="d-flex align-items-center cursor-pointer" (click)="products.category = 'Lit Letters & logos'"><img
-                src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/categories/channel-letters-and-logos.jpg"
+    <div class="d-flex align-items-center cursor-pointer" (click)="products.category = 'Lit Letters & logos'"><img
+            src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/categories/channel-letters-and-logos.jpg"
+            width="180">
+        <div class="mx-3">Lit Letters & logos</div>
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </div>
+    <div class="d-flex align-items-center cursor-pointer" (click)="products.category = 'Lit Shape Sign'"><img
+            src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/categories/lit-shapes.jpg"
+            width="180">
+        <div class="mx-3">Lit Shape Sign</div>
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </div>
+    <div class="d-flex align-items-center cursor-pointer" (click)="products.category = 'Lit Caninet Sign'"><img
+            src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/categories/lit-shapes.jpg"
+            width="180">
+        <div class="mx-3">Lit Caninet Sign</div>
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </div>
+    <div class="d-flex align-items-center cursor-pointer" (click)="products.category = 'Dimensional Letters & Logos'">
+        <img src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/categories/unlit.jpg" width="180">
+        <div class="mx-3">Dimensional Letters & Logos</div>
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </div>
+</ng-container>
+<ng-container *ngIf="products.category != '' && products.subCategory == ''  ">
+    <ng-container *ngIf="products.category == 'Lit Letters & logos'">
+        <button mat-button (click)="products.category = '';products.subCategory =''">Back</button>
+        <div class="d-flex align-items-center cursor-pointer"
+            (click)="products.subCategory = 'Face Lit Channel Letters & Logos'"><img
+                src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-channel-letters-shapes/product.jpg"
                 width="180">
-            <div class="mx-3">Lit Letters & logos</div>
+            <div class="mx-3">Face Lit Channel Letters & Logos</div>
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
         </div>
-        <div class="d-flex align-items-center cursor-pointer" (click)="products.category = 'Lit Shape Sign'"><img
-                src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/categories/lit-shapes.jpg"
+        <div class="d-flex align-items-center cursor-pointer"
+            (click)="products.subCategory = 'Face Lit Channel Letters & Logos on Raceway'"><img
+                src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-channel-letters-shapes-raceway/product.jpg"
+                width="180">
+            <div class="mx-3">Face Lit Channel Letters & Logos on Raceway</div>
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+        <div class="d-flex align-items-center cursor-pointer"
+            (click)="products.subCategory = 'Face & Halo Lit Channel Letters & Logos'"><img
+                src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-halo-channel-letters-shapes/product.jpg"
+                width="180">
+            <div class="mx-3">Face & Halo Lit Channel Letters & Logos</div>
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+        <div class="d-flex align-items-center cursor-pointer"
+            (click)="products.subCategory = 'Face & Halo Lit Channel Letters & Logos on Raceway'"><img
+                src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-halo-channel-letters-shapes-raceway/product.jpg"
+                width="180">
+            <div class="mx-3">Face & Halo Lit Channel Letters & Logos on Raceway</div>
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+        <div class="d-flex align-items-center cursor-pointer"
+            (click)="products.subCategory = 'Halo Lit Channel Letters & Logos'"><img
+                src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/halo-channel-letters-shapes/product.jpg"
+                width="180">
+            <div class="mx-3">Halo Lit Channel Letters & Logos</div>
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+        <div class="d-flex align-items-center cursor-pointer"
+            (click)="products.subCategory = 'Halo Lit Channel Letters & Logos on Raceway'"><img
+                src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/halo-channel-letters-shapes-raceway/product.jpg"
+                width="180">
+            <div class="mx-3">Halo Lit Channel Letters & Logos on Raceway</div>
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="products.category == 'Lit Shape Sign'">
+        <button mat-button (click)="products.category = ''">Back</button>
+        <div class="d-flex align-items-center cursor-pointer" (click)="products.subCategory = 'Lit Shape Sign'"><img
+                src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-shape-sign/product.jpg"
                 width="180">
             <div class="mx-3">Lit Shape Sign</div>
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
         </div>
-        <div class="d-flex align-items-center cursor-pointer" (click)="products.category = 'Lit Caninet Sign'"><img
-                src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/categories/lit-shapes.jpg"
+        <div class="d-flex align-items-center cursor-pointer" (click)="products.subCategory = 'Lit Decor Sign'"><img
+                src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-decor-sign/product.jpg"
                 width="180">
-            <div class="mx-3">Lit Caninet Sign</div>
+            <div class="mx-3">Lit Decor Sign</div>
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="products.category == 'Lit Caninet Sign'">
+        <button mat-button (click)="products.category = ''">Back</button>
+        <div class="d-flex align-items-center cursor-pointer"
+            (click)="products.subCategory = 'Lit Squared Cabinet - Single Faced'"><img
+                src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-cabinet-retainer-single/product.jpg"
+                width="180">
+            <div class="mx-3">Lit Squared Cabinet - Single Faced</div>
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
         </div>
         <div class="d-flex align-items-center cursor-pointer"
-            (click)="products.category = 'Dimensional Letters & Logos'">
-            <img src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/categories/unlit.jpg"
+            (click)="products.subCategory = 'Lit Squared Cabinet - Double Faced'"><img
+                src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-channel-letters-shapes-raceway/product.jpg"
                 width="180">
-            <div class="mx-3">Dimensional Letters & Logos</div>
+            <div class="mx-3">Lit Squared Cabinet - Double Faced</div>
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
         </div>
-    </div>
-</ng-container>
-<ng-container *ngIf="products.category != '' && products.subCategory == ''  ">
-    <div class="d-flex flex-column justify-content-around h-100">
-        <ng-container *ngIf="products.category == 'Lit Letters & logos'">
-            <button mat-button (click)="products.category = '';products.subCategory =''">Back</button>
-            <div class="d-flex align-items-center cursor-pointer"
-                (click)="products.subCategory = 'Face Lit Channel Letters & Logos'"><img
-                    src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-channel-letters-shapes/product.jpg"
-                    width="180">
-                <div class="mx-3">Face Lit Channel Letters & Logos</div>
-                <i class="fa fa-chevron-right" aria-hidden="true"></i>
-            </div>
-            <div class="d-flex align-items-center cursor-pointer"
-                (click)="products.subCategory = 'Face Lit Channel Letters & Logos on Raceway'"><img
-                    src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-channel-letters-shapes-raceway/product.jpg"
-                    width="180">
-                <div class="mx-3">Face Lit Channel Letters & Logos on Raceway</div>
-                <i class="fa fa-chevron-right" aria-hidden="true"></i>
-            </div>
-            <div class="d-flex align-items-center cursor-pointer"
-                (click)="products.subCategory = 'Face & Halo Lit Channel Letters & Logos'"><img
-                    src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-halo-channel-letters-shapes/product.jpg"
-                    width="180">
-                <div class="mx-3">Face & Halo Lit Channel Letters & Logos</div>
-                <i class="fa fa-chevron-right" aria-hidden="true"></i>
-            </div>
-            <div class="d-flex align-items-center cursor-pointer"
-                (click)="products.subCategory = 'Face & Halo Lit Channel Letters & Logos on Raceway'"><img
-                    src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-halo-channel-letters-shapes-raceway/product.jpg"
-                    width="180">
-                <div class="mx-3">Face & Halo Lit Channel Letters & Logos on Raceway</div>
-                <i class="fa fa-chevron-right" aria-hidden="true"></i>
-            </div>
-            <div class="d-flex align-items-center cursor-pointer"
-                (click)="products.subCategory = 'Halo Lit Channel Letters & Logos'"><img
-                    src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/halo-channel-letters-shapes/product.jpg"
-                    width="180">
-                <div class="mx-3">Halo Lit Channel Letters & Logos</div>
-                <i class="fa fa-chevron-right" aria-hidden="true"></i>
-            </div>
-            <div class="d-flex align-items-center cursor-pointer"
-                (click)="products.subCategory = 'Halo Lit Channel Letters & Logos on Raceway'"><img
-                    src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/halo-channel-letters-shapes-raceway/product.jpg"
-                    width="180">
-                <div class="mx-3">Halo Lit Channel Letters & Logos on Raceway</div>
-                <i class="fa fa-chevron-right" aria-hidden="true"></i>
-            </div>
-        </ng-container>
+        <div class="d-flex align-items-center cursor-pointer"
+            (click)="products.subCategory = 'Lit Shape Cabinet – Single Faced'"><img
+                src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-cabinet-shape-single/product.jpg"
+                width="180">
+            <div class="mx-3">Lit Shape Cabinet – Single Faced</div>
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+        <div class="d-flex align-items-center cursor-pointer"
+            (click)="products.subCategory = 'Lit Shape Cabinet – Double Faced'"><img
+                src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-cabinet-shape-double/product.jpg"
+                width="180">
+            <div class="mx-3">Lit Shape Cabinet – Double Faced</div>
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+    </ng-container>
 
-        <ng-container *ngIf="products.category == 'Lit Shape Sign'">
-            <button mat-button (click)="products.category = ''">Back</button>
-            <div class="d-flex align-items-center cursor-pointer" (click)="products.subCategory = 'Lit Shape Sign'"><img
-                    src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-shape-sign/product.jpg"
-                    width="180">
-                <div class="mx-3">Lit Shape Sign</div>
-                <i class="fa fa-chevron-right" aria-hidden="true"></i>
-            </div>
-            <div class="d-flex align-items-center cursor-pointer" (click)="products.subCategory = 'Lit Decor Sign'"><img
-                    src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-decor-sign/product.jpg"
-                    width="180">
-                <div class="mx-3">Lit Decor Sign</div>
-                <i class="fa fa-chevron-right" aria-hidden="true"></i>
-            </div>
-        </ng-container>
-
-        <ng-container *ngIf="products.category == 'Lit Caninet Sign'">
-            <button mat-button (click)="products.category = ''">Back</button>
-            <div class="d-flex align-items-center cursor-pointer"
-                (click)="products.subCategory = 'Lit Squared Cabinet - Single Faced'"><img
-                    src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-cabinet-retainer-single/product.jpg"
-                    width="180">
-                <div class="mx-3">Lit Squared Cabinet - Single Faced</div>
-                <i class="fa fa-chevron-right" aria-hidden="true"></i>
-            </div>
-            <div class="d-flex align-items-center cursor-pointer"
-                (click)="products.subCategory = 'Lit Squared Cabinet - Double Faced'"><img
-                    src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-channel-letters-shapes-raceway/product.jpg"
-                    width="180">
-                <div class="mx-3">Lit Squared Cabinet - Double Faced</div>
-                <i class="fa fa-chevron-right" aria-hidden="true"></i>
-            </div>
-            <div class="d-flex align-items-center cursor-pointer"
-                (click)="products.subCategory = 'Lit Shape Cabinet – Single Faced'"><img
-                    src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-cabinet-shape-single/product.jpg"
-                    width="180">
-                <div class="mx-3">Lit Shape Cabinet – Single Faced</div>
-                <i class="fa fa-chevron-right" aria-hidden="true"></i>
-            </div>
-            <div class="d-flex align-items-center cursor-pointer"
-                (click)="products.subCategory = 'Lit Shape Cabinet – Double Faced'"><img
-                    src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-cabinet-shape-double/product.jpg"
-                    width="180">
-                <div class="mx-3">Lit Shape Cabinet – Double Faced</div>
-                <i class="fa fa-chevron-right" aria-hidden="true"></i>
-            </div>
-        </ng-container>
-
-        <ng-container *ngIf="products.category == 'Dimensional Letters & Logos'">
-            <button mat-button (click)="products.category = ''">Back</button>
-            <div class="d-flex align-items-center cursor-pointer"
-                (click)="products.subCategory = 'Acrylic Letters & Logo Shapes'"><img
-                    src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/acrylic-letters-shapes/product.jpg"
-                    width="180">
-                <div class="mx-3">Acrylic Letters & Logo Shapes</div>
-                <i class="fa fa-chevron-right" aria-hidden="true"></i>
-            </div>
-            <div class="d-flex align-items-center cursor-pointer"
-                (click)="products.subCategory = 'PVC Letters & Logo Shapes'">
-                <img src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/pvc-letters-shapes/product.jpg"
-                    width="180">
-                <div class="mx-3">PVC Letters & Logo Shapes</div>
-                <i class="fa fa-chevron-right" aria-hidden="true"></i>
-            </div>
-            <div class="d-flex align-items-center cursor-pointer"
-                (click)="products.subCategory = 'Metal Fabricated Letters & Logo Shapes'"><img
-                    src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/metal-letters-shapes/product.jpg"
-                    width="180">
-                <div class="mx-3">Metal Fabricated Letters & Logo Shapes</div>
-                <i class="fa fa-chevron-right" aria-hidden="true"></i>
-            </div>
-        </ng-container>
-    </div>
+    <ng-container *ngIf="products.category == 'Dimensional Letters & Logos'">
+        <button mat-button (click)="products.category = ''">Back</button>
+        <div class="d-flex align-items-center cursor-pointer"
+            (click)="products.subCategory = 'Acrylic Letters & Logo Shapes'"><img
+                src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/acrylic-letters-shapes/product.jpg"
+                width="180">
+            <div class="mx-3">Acrylic Letters & Logo Shapes</div>
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+        <div class="d-flex align-items-center cursor-pointer"
+            (click)="products.subCategory = 'PVC Letters & Logo Shapes'">
+            <img src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/pvc-letters-shapes/product.jpg"
+                width="180">
+            <div class="mx-3">PVC Letters & Logo Shapes</div>
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+        <div class="d-flex align-items-center cursor-pointer"
+            (click)="products.subCategory = 'Metal Fabricated Letters & Logo Shapes'"><img
+                src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/metal-letters-shapes/product.jpg"
+                width="180">
+            <div class="mx-3">Metal Fabricated Letters & Logo Shapes</div>
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+    </ng-container>
 </ng-container>
 
 <ng-container *ngIf="products.subCategory != '' && products.category != '' && !isAdd">
@@ -201,20 +194,34 @@
 </ng-container>
 
 <ng-container *ngIf="isAdd">
-    <div class="d-flex flex-column justify-content-around h-100">
-        <ng-container *ngIf="products.category == 'Lit Letters & logos'">
-            <div class="d-flex align-items-center cursor-pointer" (click)="selectedProduct('Face Lit Letters')"><img
-                    src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-letters/icon.jpg"
-                    width="180">
-                <div class="mx-3">Face Lit Letters</div>
-                <i class="fa fa-chevron-right" aria-hidden="true"></i>
-            </div>
-            <div class="d-flex align-items-center cursor-pointer" (click)="selectedProduct('Face Lit Logo Shape')"><img
-                    src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-shape/icon.jpg"
-                    width="180">
-                <div class="mx-3">Face Lit Logo Shape</div>
-                <i class="fa fa-chevron-right" aria-hidden="true"></i>
-            </div>
-        </ng-container>
-    </div>
+    <ng-container
+        *ngIf="products.subCategory == 'Face Lit Channel Letters & Logos' || products.subCategory == 'Face Lit Channel Letters & Logos on Raceway'">
+        <div class="d-flex align-items-center cursor-pointer" (click)="selectedProduct('Face Lit Letters')"><img
+                src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-letters/icon.jpg"
+                width="180">
+            <div class="mx-3">Face Lit Letters</div>
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+        <div class="d-flex align-items-center cursor-pointer" (click)="selectedProduct('Face Lit Logo Shape')"><img
+                src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-shape/icon.jpg"
+                width="180">
+            <div class="mx-3">Face Lit Logo Shape</div>
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="products.subCategory == 'Face Lit Channel Letters & Logos on Raceway'">
+        <div class="d-flex align-items-center cursor-pointer" (click)="selectedProduct('Face Lit Letters on Raceway')">
+            <img src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-letters-raceway/icon.jpg"
+                width="180">
+            <div class="mx-3">Face Lit Letters on Raceway</div>
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+        <div class="d-flex align-items-center cursor-pointer"
+            (click)="selectedProduct('Face Lit Logo Shape on Raceway')"><img
+                src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-shape-raceway/icon.jpg"
+                width="180">
+            <div class="mx-3">Face Lit Logo Shape on Raceway</div>
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+    </ng-container>
 </ng-container>
