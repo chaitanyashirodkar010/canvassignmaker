@@ -10,22 +10,23 @@ export interface ITextData {
   boarderColor?: string,
   x?: number,
   y?: number,
-  skewx?:number,
-  skewY?:number,
+  skewx?: number,
+  skewY?: number,
   corners?: position,
   shadowColor?: string,
   raceColor?: string,
-  faceImage?: CanvasImageSource
+  faceImage?: CanvasImageSource,
+  shapes?: IShapes
 }
 
-export interface position{
+export interface position {
   leftTop: positionCoOrd,
   rightTop: positionCoOrd,
   leftBottom: positionCoOrd,
   rightBottom: positionCoOrd
 }
 
-export interface positionCoOrd{
+export interface positionCoOrd {
   x: number,
   y: number,
   offsetX: number,
@@ -46,4 +47,18 @@ export interface ISize {
   size: string,
   width: string,
   height: string,
+}
+
+export interface IProduct {
+  category: string,
+  subCategory: string,
+  type: string
+}
+
+export interface IShapes {
+  backgroundPath: string,
+  path: string,
+  name: string,
+  code: string,
+  size?: string
 }

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
-import { ITextData } from 'src/app/interface/Isignmaker';
+import { IProduct, ITextData } from 'src/app/interface/Isignmaker';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
 
 @Component({
@@ -8,16 +8,20 @@ import { ProductDetailsComponent } from '../product-details/product-details.comp
   styleUrls: ['./signmaker-nav-bar.component.scss']
 })
 export class SignmakerNavBarComponent {
-  selectedProduct: string = "";
+  selectedProduct: IProduct = {
+    category: '',
+    subCategory: '',
+    type: '',
+  };
   @ViewChild("prdDtls") prdDtls: ProductDetailsComponent;
   @Output() ValueChange = new EventEmitter<ITextData>();
 
-  products(value: string){
+  products(value: IProduct){
     this.selectedProduct = value;
   }
 
-  prodDtls(val: boolean){
-    this.selectedProduct = val ? '' : this.selectedProduct;
+  prodDtls(selectedProduct: IProduct){
+    this.selectedProduct = selectedProduct;
   }
 
   ValueChange1(value:ITextData){

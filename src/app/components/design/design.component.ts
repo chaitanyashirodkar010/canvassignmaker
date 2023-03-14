@@ -1,4 +1,5 @@
 import { Component, HostListener, Input } from '@angular/core';
+import { shapes } from 'src/app/constants/constants';
 import { ITextData } from 'src/app/interface/Isignmaker';
 
 @Component({
@@ -33,6 +34,7 @@ export class DesignComponent {
       color: "orange",
       x: this.c.width / 2,
       y: 75,
+      shapes: shapes.square
     };
     this.draw(this.data);
   }
@@ -158,13 +160,16 @@ export class DesignComponent {
 
 
   draw(data: ITextData | null) {
-    // this.ctx.clearRect(0, 0, this.c.width, this.c.height);
+
     const img = new Image(); // Create new img element
 
     img.onload = () => {
       // this.ctx.save();
       this.ctx.drawImage(img, 0, 0, this.c.width, this.c.height);
 
+      if (data != null && data.shapes != null) {
+        this.drawShapes(data);
+      }
       // console.log(data.scaleY, data.scaleX)
       if (data != null && data.value != '') {
         // this.ctx.save();
@@ -310,6 +315,74 @@ export class DesignComponent {
 
     }
     img.src = "../assets/images/banner.png";
+
+  }
+
+  drawShapes(data: ITextData) {
+    let path = data.shapes?.path.split(" ") ?? [];
+    let startCord = path[1].split(",");
+    let [x, y] = startCord.map(x => Number(x));
+    x += 200;
+    y += 200;
+
+    path[1] = x + "," + y;
+    let pathJoin = path.join(" ");
+      this.ctx.lineWidth = 2;
+
+    // Shadow
+    for (let i = 0; i < 7; i++) {
+      let startCord = path[1].split(",");
+      let [x, y] = startCord.map(x => Number(x));
+      x += i/5;
+      y += i/5;
+
+      path[1] = x + "," + y;
+      let pathJoin = path.join(" ");
+
+      const p = new Path2D(pathJoin);
+      // if (data.shadowColor != undefined && data.shadowColor != null) {
+      //   this.ctx.shadowColor = data.shadowColor;
+      //   this.ctx.shadowBlur = 13;
+      // }
+      this.ctx.strokeStyle = data.sideColor ?? "Orange";
+      this.ctx.stroke(p);
+    }
+    path = data.shapes?.path.split(" ") ?? [];
+    startCord = path[1].split(",");
+    [x, y] = startCord.map(x => Number(x));
+    x += 200;
+    y += 200;
+
+    path[1] = x + "," + y;
+    // boarder/storke
+    for (let i = 0; i < 4; i++) {
+      let startCord = path[1].split(",");
+      let [x, y] = startCord.map(x => Number(x));
+      x +=  i/5;
+      y += i/5;
+
+      path[1] = x + "," + y;
+      let pathJoin = path.join(" ");
+
+      const p = new Path2D(pathJoin);
+      this.ctx.strokeStyle = data.boarderColor ?? "Blue";
+      this.ctx.stroke(p);
+      this.ctx.fillStyle = "White";
+      this.ctx.fill(p);
+    }
+
+    path = data.shapes?.path.split(" ") ?? [];
+    startCord = path[1].split(",");
+    [x, y] = startCord.map(x => Number(x));
+    x += 200;
+    y += 200;
+
+    path[1] = x + "," + y;
+    pathJoin = path.join(" ");
+    const p = new Path2D(pathJoin);
+    this.ctx.strokeStyle = data.boarderColor ?? "Black";
+    this.ctx.stroke(p);
+    // this.ctx.fill(p);
 
   }
 

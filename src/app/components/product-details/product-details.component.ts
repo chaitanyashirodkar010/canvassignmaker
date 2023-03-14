@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime } from 'rxjs';
-import { IColor, Ifont, ITextData } from 'src/app/interface/Isignmaker';
+import { IColor, Ifont, ITextData, IProduct, IShapes } from 'src/app/interface/Isignmaker';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-product-details',
@@ -11,8 +12,8 @@ import { IColor, Ifont, ITextData } from 'src/app/interface/Isignmaker';
 export class ProductDetailsComponent implements OnInit {
   unavailable: boolean = false;
   firstFormGroup: FormGroup;
-  thirdFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
+  // thirdFormGroup: FormGroup;
+  // secondFormGroup: FormGroup;
   isLinear: boolean;
   myfont: FontFace;
   data: ITextData = {
@@ -35,11 +36,6 @@ export class ProductDetailsComponent implements OnInit {
   ];
 
   colorArray: Array<IColor> = [
-    // {name: "green"},
-    // {name: "red"},
-    // {name: "blue"},
-    // {name: "yellow"},
-    // {name: "purple"},
     { name: "rgb(249, 214, 22)" },
     { name: "rgb(0, 140, 66)" },
     { name: "rgb(148, 46, 181)" },
@@ -59,30 +55,34 @@ export class ProductDetailsComponent implements OnInit {
     { name: "rgb(255, 0, 153)" },
   ];
 
-  @Input() selectedProduct: string = '';
-  @Output() bckEvt = new EventEmitter<boolean>();
+  @Input() selectedProduct: IProduct = {
+    category: '',
+    subCategory: '',
+    type: '',
+  };
+  @Output() bckEvt = new EventEmitter<IProduct>();
   @Output() ValueChange = new EventEmitter<ITextData>();
 
   constructor(private _formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    // myFont = new FontFace('myFont', 'url(Praise-Regular.ttf)');
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: ['', Validators.required],
     });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required],
-    });
-    this.thirdFormGroup = this._formBuilder.group({
-      thirdCtrl: ['', Validators.required],
-    });
+    // this.secondFormGroup = this._formBuilder.group({
+    //   firstCtrl: ['', Validators.required],
+    // });
+    // this.thirdFormGroup = this._formBuilder.group({
+    //   thirdCtrl: ['', Validators.required],
+    // });
 
     this.isLinear = false;
     this.edValueKeyPress();
   }
 
   exit() {
-    this.bckEvt.emit(true);
+    this.selectedProduct.category = '';
+    this.bckEvt.emit(this.selectedProduct);
   }
 
   fontSelect(value: string) {
@@ -123,5 +123,15 @@ export class ProductDetailsComponent implements OnInit {
       this.data.value = res
       this.ValueChange.emit(this.data)
     })
+  }
+
+  navigateToNextStep(step: MatStepper){
+    step.next();
+  }
+
+  selectedShape(shape: IShapes){
+    debugger
+    this.data.shapes = shape;
+    this.ValueChange.emit(this.data);
   }
 }
