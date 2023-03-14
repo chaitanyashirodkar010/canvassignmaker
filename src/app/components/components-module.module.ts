@@ -10,12 +10,13 @@ import { SignmakerNavBarComponent } from './signmaker-nav-bar/signmaker-nav-bar.
 import { ProductsComponent } from './products/products.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ShapesSideBarComponent } from './shapes-side-bar/shapes-side-bar.component';
+import { ShapeComponent } from './shape/shape.component';
 
 
 
 @NgModule({
   declarations: [SignmakerComponent,SignmakerNavBarComponent, ProductsComponent, ProductDetailsComponent,DesignComponent,
-    ShapesSideBarComponent
+    ShapesSideBarComponent,ShapeComponent
   ],
   imports: [
     CommonModule,
