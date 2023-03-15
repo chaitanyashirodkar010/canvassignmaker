@@ -34,7 +34,6 @@ export class DesignComponent {
       color: "orange",
       x: this.c.width / 2,
       y: 75,
-      shapes: shapes.square
     };
     this.draw(this.data);
   }

@@ -22,6 +22,9 @@ import { ShapeComponent } from './shape/shape.component';
     CommonModule,
     ComponentsRoutingModule,
     RouterModule,SharedModuleModule,MaterialModuleModule
+  ],
+  entryComponents:[
+    ShapeComponent
   ]
 })
 export class ComponentsModuleModule { }
