@@ -22,7 +22,7 @@
   </ng-container>
   <ng-container *ngIf="selectedProduct.type == 'Face Lit Logo Shape' || selectedProduct.type == 'Face Lit Logo Shape on Raceway'">
     <mat-step>
-      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperPrevious (click)="exit()">Back</button>
       <button mat-button matStepperNext>Next</button>
       <div class="d-flex align-items-center cursor-pointer" (click)="navigateToNextStep(stepper)"><img
           src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/categories/channel-letters-and-logos.jpg"

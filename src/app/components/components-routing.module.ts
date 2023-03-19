@@ -4,9 +4,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { SignmakerComponent } from './signmaker/signmaker.component';
 
 const routes: Routes = [
-  { path: '', component: SignmakerComponent, 
- 
-}
+  {
+    path: '', component: SignmakerComponent,
+
+  }
 ];
 
 
