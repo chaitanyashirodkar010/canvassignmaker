@@ -17,13 +17,19 @@ export class ShapesSideBarComponent {
 
   SelectedShape(code: string): void{
     const shape = shapes.shapesArr.find(m => m.code == code);
-    const dialogRef = this.dialog.open(ShapeComponent,{
-      width: "500px",
-      height: "500px",
-      data: {"shapes" : shape?.data}});
-    dialogRef.afterClosed().subscribe(res => {
-      // this.shapeEmitter.emit(shape?.data);
-    });
-    //  this.shapeEmitter.emit(shape?.data);
+
+    // const dialogRef = this.dialog.open(ShapeComponent,{
+    //   width: "500px",
+    //   height: "500px",
+    //   data: {"shapes" : shape?.data}});
+    // dialogRef.afterClosed().subscribe(res => {
+    //   // this.shapeEmitter.emit(shape?.data);
+    // });
+    if(shape != undefined)
+    {
+      shape.data["popup"] = true;
+    }
+    
+    this.shapeEmitter.emit(shape?.data);
   }
 }

@@ -60,5 +60,6 @@ export interface IShapes {
   path: string,
   name: string,
   code: string,
-  size?: string
+  size?: string,
+  popup?: boolean,
 }

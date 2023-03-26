@@ -19,7 +19,7 @@ export class ProductDetailsComponent implements OnInit {
   data: ITextData = {
     value: "LETTERS",
     font: "Tahoma",
-    size: "100px",
+    size: "100",
     color: "red",
   };
   toogleType: string = 'Acrylic Face';
