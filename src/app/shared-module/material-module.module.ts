@@ -7,16 +7,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule, MatStepperModule, MatSidenavModule, MatFormFieldModule, MatInputModule, MatListModule,
-    MatExpansionModule,MatDialogModule
+    MatExpansionModule,MatDialogModule,MatProgressBarModule
   ],
   exports: [
     MatSidenavModule, MatStepperModule, MatFormFieldModule, MatInputModule, MatListModule,MatExpansionModule,
-    MatDialogModule
+    MatDialogModule,MatProgressBarModule
   ]
 })
 export class MaterialModuleModule { }

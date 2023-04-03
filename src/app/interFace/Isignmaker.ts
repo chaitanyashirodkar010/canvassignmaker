@@ -15,7 +15,7 @@ export interface ITextData {
   corners?: position,
   shadowColor?: string,
   raceColor?: string,
-  faceImage?: CanvasImageSource,
+  faceImage?: string,
   shapes?: IShapes
 }
 

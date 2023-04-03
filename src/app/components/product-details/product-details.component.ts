@@ -19,7 +19,7 @@ export class ProductDetailsComponent implements OnInit {
   data: ITextData = {
     value: "LETTERS",
     font: "Tahoma",
-    size: "100px",
+    size: "100",
     color: "red",
   };
   toogleType: string = 'Acrylic Face';
@@ -94,6 +94,7 @@ export class ProductDetailsComponent implements OnInit {
     this.ValueChange.emit(this.data)
   }
   colorSelect(color: string, element: string) {
+    this.data.faceImage = "";
     switch (element) {
       case "side": this.data.sideColor = color;
         break;
@@ -110,12 +111,14 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   imgSelect(element: string) {
-    const img = new Image();
-    img.onload = () => {
-      this.data.faceImage = img;
-      this.ValueChange.emit(this.data);
-    }
-    img.src = element;
+    // const img = new Image();
+    // img.onload = () => {
+    //   this.data.faceImage = img;
+    //   this.ValueChange.emit(this.data);
+    // }
+    // img.src = element;
+    this.data.faceImage = element;
+    this.ValueChange.emit(this.data);
   }
 
   edValueKeyPress() {

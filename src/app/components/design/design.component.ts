@@ -1,6 +1,8 @@
-import { Component, HostListener, Input } from '@angular/core';
-import { shapes } from 'src/app/constants/constants';
+import { Component, ElementRef, HostListener, Input, Renderer2, ViewChild } from '@angular/core';
+import { Icons, shapes } from 'src/app/constants/constants';
 import { ITextData } from 'src/app/interface/Isignmaker';
+import { fabric } from 'fabric';
+// import 'fabric-customise-controls';
 
 @Component({
   selector: 'app-design',
@@ -18,135 +20,33 @@ export class DesignComponent {
   rectOX: number;
   rectOY: number;
   click: boolean = false;
+  canvas: fabric.Canvas;
+  @ViewChild('workArea') workArea: ElementRef<any>;
+
+  constructor(private renderer: Renderer2, private host: ElementRef) { }
 
   ngOnInit() {
-    this.c = document.getElementById("exampleCanvas");
-    this.ctx = this.c.getContext("2d");
 
-    this.c.width = window.innerWidth;
-    this.c.height = window.innerHeight;
-    // this.c.height = "110";
-    this.c.style.cursor = "move";
+    this.canvas = new fabric.Canvas("exampleCanvas", {
+      width: window.innerWidth,
+      height: window.innerHeight
+    });
+
     this.data = {
       value: "LETTERS",
       font: "Tahoma",
-      size: "100px",
+      size: "100",
       color: "orange",
-      x: this.c.width / 2,
+      raceColor: 'red',
+      x: window.innerWidth / 2,
       y: 75,
+      faceImage: "../assets/images/face-art/O60AC.png",
+      shapes: shapes.star
     };
+    this.setBackgroundImage();
     this.draw(this.data);
+    // this.drawShapes(this.data)
   }
-
-  @HostListener("mousedown", ["$event"]) public mousedown(event: MouseEvent) {
-    this.enableDraw = true;
-  };
-
-  @HostListener("mouseup", ["$event"]) public mouseup(event: MouseEvent) {
-    this.enableDraw = false;
-  };
-
-  @HostListener("mousemove", ["$event"]) public mousemove(event: MouseEvent) {
-    {
-
-      let r = this.c.getBoundingClientRect();
-
-      this.mouse.x = event.clientX - r.left;
-      this.mouse.y = event.clientY - r.top;
-
-      //Close Icon
-      if (this.mouse.x >= ((this.data.corners?.rightTop.x ?? 0) - (this.data.corners?.rightTop.offsetX ?? 0)) &&
-        this.mouse.x <= ((this.data.corners?.rightTop.x ?? 0) - (this.data.corners?.rightTop.offsetX ?? 0) + 20) &&
-        this.mouse.y >= ((this.data.corners?.rightTop.y ?? 0) - (this.data.corners?.rightTop.offsetY ?? 0))
-        && this.mouse.y <= ((this.data.corners?.rightTop.y ?? 0) - (this.data.corners?.rightTop.offsetY ?? 0) + 20)) {
-        this.c.style.cursor = "pointer";
-        if (this.click) {
-
-          this.draw(null);
-        }
-        this.click = false;
-        return;
-      }
-
-      //Expand
-      // console.log(this.data.corners)
-      if (this.mouse.x >= ((this.data.corners?.rightBottom.x ?? 0) - (this.data.corners?.rightBottom.offsetX ?? 0)) &&
-        this.mouse.x <= ((this.data.corners?.rightBottom.x ?? 0) - (this.data.corners?.rightBottom.offsetX ?? 0) + 20) &&
-        this.mouse.y >= ((this.data.corners?.rightBottom.y ?? 0) - (this.data.corners?.rightBottom.offsetY ?? 0))
-        && this.mouse.y <= ((this.data.corners?.rightBottom.y ?? 0) - (this.data.corners?.rightBottom.offsetY ?? 0) + 20)) {
-        this.c.style.cursor = "nw-resize"
-        if (this.enableDraw) {
-          // var scalex = ((this.data.x ?? 0) / (this.rectOX));
-          var scaley = (this.mouse.x / (this.rectOY * 10));
-
-          // var ypos = (this.data.y ?? 0 / (scaley * 1.25));
-          this.mouse.y / this.mouse.x
-          this.data = {
-            ...this.data, scaleX: 1, scaleY: scaley,
-            skewY: 0
-          };
-          this.draw(this.data);
-          // this.enableDraw = false
-          return;
-        }
-      }
-      else {
-        this.c.style.cursor = "move";
-      }
-
-      // if (this.mouse.x >= (this.data.corners?.leftTop.x ?? 0) && this.mouse.x <= (this.data.corners?.rightBottom.x ?? 0) &&
-      //   this.mouse.y >= (this.data.corners?.leftTop.y ?? 0) && this.mouse.y <= (this.data.corners?.rightBottom.y ?? 0)) {
-      //   this.data = { ...this.data, x: this.mouse.x, y: this.mouse.y };
-      //   // this.draw(this.data);
-      //   this.c.style.cursor = "move";
-      // } else {
-      //   this.c.style.cursor = "context-menu";
-      // }
-
-      //Drag n Drop
-      if (this.enableDraw) {
-        let offsetX = this.txtWidth / 2;
-        let offsetY = 32;
-        let rectX = this.data.corners?.leftTop.x ?? 0;
-        let rectY = this.data.corners?.leftTop.y ?? 0;
-
-        if (this.mouse.x >= rectX && this.mouse.x <= (this.data.corners?.rightBottom.x ?? 0) &&
-          this.mouse.y >= rectY && this.mouse.y <= (this.data.corners?.rightBottom.y ?? 0)) {
-          this.data = { ...this.data, x: this.mouse.x, y: this.mouse.y };
-          this.draw(this.data);
-        }
-
-      }
-    }
-  }
-
-
-
-  @HostListener("click", ["$event"]) public onClick(event: MouseEvent) {
-    if (this.mouse.x >= ((this.data.corners?.rightTop.x ?? 0) - (this.data.corners?.rightTop?.offsetX ?? 0)) && this.mouse.x <=
-      ((this.data.corners?.rightTop?.x ?? 0) - (this.data.corners?.rightTop?.offsetX ?? 0) + 20) &&
-      this.mouse.y >= ((this.data.corners?.rightTop?.y ?? 0) - (this.data.corners?.rightTop?.offsetY ?? 0)) &&
-      this.mouse.y <= ((this.data.corners?.rightTop?.y ?? 0) - (this.data.corners?.rightTop?.offsetY ?? 0) + 20)) {
-      this.click = true;
-      return;
-    }
-    this.click = false;
-  }
-
-  // @HostListener("mouseover", ["$event"]) public mouseover(event: MouseEvent) {
-  //   // event.preventDefault();
-  //   // event.stopPropagation();
-  //   let r = this.c.getBoundingClientRect();
-  //   this.mouse.x = event.clientX - r.left;
-  //   this.mouse.y = event.clientY - r.top;
-  //   // this.mouse.x = event.x;
-  //   // this.mouse.y = event.y;
-  //   console.log("x:", this.mouse.x, " y:", this.mouse.y)
-  //   if (this.mouse.x >= (100 - 20) && this.mouse.x <= (300 + 100) &&
-  //     this.mouse.y >= (100 - 50) && this.mouse.y <= (300 + 100)) {
-  //     this.c.style.cursor = "block"
-  //   }
-  // }
 
 
   inputChange(data: ITextData) {
@@ -157,167 +57,245 @@ export class DesignComponent {
     this.draw(data);
   }
 
+  setBackgroundImage() {
+    this.canvas.setBackgroundImage("../assets/images/banner.png", this.canvas.renderAll.bind(this.canvas), {
+      // backgroundImageOpacity: 1,
+      originX: "left",
+      originY: "top",
+      scaleX: 0.3,
+      scaleY: 0.3,
+    });
+  }
+
+  clearCanvas() {
+    this.canvas.getObjects().forEach(element => {
+      if (element !== this.canvas.backgroundImage) {
+        this.canvas.remove(element);
+      }
+    });
+  }
 
   draw(data: ITextData | null) {
+    this.clearCanvas();
+    if (data != null && data.value != '') {
+      let centreX = data.x != null && data.x != undefined ? data.x : this.c.width / 2;
+      let centreY = data.y != null && data.y != undefined ? data.y : 75;
+      // let _this = this;
 
-    const img = new Image(); // Create new img element
+      let text: fabric.Text;
+      let textGroups: Array<fabric.Text> = [];
 
-    img.onload = () => {
-      // this.ctx.save();
-      this.ctx.drawImage(img, 0, 0, this.c.width, this.c.height);
 
-      if (data != null && data.shapes != null) {
-        this.drawShapes(data);
+      //Text Shadow
+      for (let i = 0; i < 7; i++) {
+        if (data.shadowColor != undefined && data.shadowColor != null) {
+          this.ctx.shadowColor = data.shadowColor;
+          this.ctx.shadowBlur = 13;
+        }
+        text = new fabric.Text(data.value, {
+          fill: data.sideColor ?? "Black",
+          fontSize: Number(data.size) ?? 100,
+          left: centreX + i,
+          top: centreY + i,
+          fontFamily: data.font,
+          fontWeight: 'bold',
+        });
+        textGroups.push(text);
       }
-      // console.log(data.scaleY, data.scaleX)
-      if (data != null && data.value != '') {
-        // this.ctx.save();
-        // this.ctx.transform(.8, 0, 0, .8, 0, 0);
-        // this.ctx.transform((data.scaleY ?? 1), 0, 0, (data.scaleX ?? 1), 0, 0);
-
-
-        this.ctx.font = `bold  ${data.size}  ${data.font}`;
-        //Get canvas center
-        let centreX = data.x != null && data.x != undefined ? data.x : this.c.width / 2;
-        let centreY = data.y != null && data.y != undefined ? data.y : 75;
-
-        //Get text width
-        this.txtWidth = data.width != undefined ? data.width : this.ctx.measureText(data.value).width;
-
-        //Setting offset to diplay text in center
-        let offsetX = this.txtWidth / 2;
-        let offsetY = 32;
-        // let sX = data.scaleX == null && data.scaleX == undefined ? 1 : data.scaleX;
-        // let sY = data.scaleY == null && data.scaleY == undefined ? 1 : data.scaleY;
-
-        // this.ctx.scale(sX, sY);
-        //Displaying text
-
-        // Displaying Race
-        // Setting offset so that "g" and "l" world displays within the rectangle
-        let rectX = centreX - offsetX - 10;
-        let rectY = centreY - 50;
-        if (data.raceColor != undefined && data.raceColor != null) {
-          this.ctx.save();
-          this.ctx.fillStyle = "black";
-          this.ctx.fillRect(rectX + 1, ((rectY + Number(data.size.split('p')[0]) + 5 + rectY - 20) / 2) + 1, this.txtWidth + 32, 20);
-          this.ctx.fillRect(rectX + 2, ((rectY + Number(data.size.split('p')[0]) + 5 + rectY - 20) / 2) + 2, this.txtWidth + 32, 20);
-          this.ctx.fillRect(rectX + 3, ((rectY + Number(data.size.split('p')[0]) + 5 + rectY - 20) / 2) + 3, this.txtWidth + 32, 20);
-          this.ctx.fillStyle = data.raceColor;
-          this.ctx.fillRect(rectX, (rectY + Number(data.size.split('p')[0]) + 5 + rectY - 20) / 2, this.txtWidth + 32, 20);
-          this.ctx.restore();
-        }
-
-
-
-        this.ctx.save();
-        // Shadow
-        for (let i = 0; i < 7; i++) {
-          if (data.shadowColor != undefined && data.shadowColor != null) {
-            this.ctx.shadowColor = data.shadowColor;
-            this.ctx.shadowBlur = 13;
-            // for (let i = 0; i < 7; i++) {
-            // this.ctx.shadowOffsetX = i;
-            // this.ctx.shadowOffsetY = i;
-            // }
-          }
-          this.ctx.fillStyle = data.sideColor ?? "Black";
-          this.ctx.fillText(data.value, centreX - offsetX + i, centreY + offsetY + i);
-        }
-        // boarder/storke
-        for (let i = 0; i < 3; i++) {
-          this.ctx.fillStyle = data.boarderColor ?? "Black";
-          this.ctx.fillText(data.value, centreX - offsetX + i, centreY + offsetY + i);
-        }
-        //text face
-
-        // this.ctx.beginPath();
-        if (data.faceImage) {
-          const pattern = this.ctx.createPattern(data.faceImage, 'repeat');
-          this.ctx.fillStyle = pattern ?? "";
-        }
-        else {
-          this.ctx.fillStyle = data.color ?? "";
-        }
-
-        this.ctx.fillText(data.value, centreX - offsetX, centreY + offsetY);
-        this.ctx.fill();
-
-        // this.ctx.beginPath();
-        // this.ctx.globalCompositeOperation = "source-in";
-        // this.ctx.drawImage(img1, 0, 0);
-        // this.ctx.closePath();
-        // this.ctx.restore();
-
-        this.ctx.restore();
-
-        // Creating dash line rectangle around the text
-        this.ctx.save();
-        this.ctx.setLineDash([7, 7]);
-        // let rectX = centreX - offsetX - 10;
-        // let rectY = centreY - 50;
-        if (this.rectOX == undefined || this.rectOX == null) {
-          this.rectOX = rectX;
-        }
-        if (this.rectOY == undefined || this.rectOY == null) {
-          this.rectOY = rectY;
-        }
-        this.ctx.strokeRect(rectX, rectY, this.txtWidth + 32, Number(data.size.split('p')[0]) + 5);
-
-        this.ctx.restore();
-
-        // Getting all corners of rectangle
-        data.corners = {
-          rightTop: {
-            x: rectX + this.txtWidth + 32,
-            y: rectY,
-            offsetX: 15,
-            offsetY: 15,
-          },
-          leftTop: {
-            x: rectX,
-            y: rectY,
-            offsetX: 15,
-            offsetY: 15,
-          },
-          rightBottom: {
-            x: rectX + this.txtWidth + 32,
-            y: rectY + Number(data.size.split('p')[0]) + 5,
-            offsetX: 15,
-            offsetY: 15,
-          },
-          leftBottom: {
-            x: rectX,
-            y: rectY + Number(data.size.split('p')[0]) + 5,
-            offsetX: 15,
-            offsetY: 15,
-          }
-        }
-        //Instead of rectangle get to draw image
-        this.ctx.fillStyle = "pink";
-        this.ctx.fillRect(data.corners.leftTop.x - data.corners.leftTop.offsetX,
-          data.corners.leftTop.y - data.corners.leftTop.offsetY, 20, 20)
-
-        //Instead of rectangle get to draw image
-        this.ctx.fillStyle = "green";
-        this.ctx.fillRect(data.corners.rightBottom.x - data.corners.rightBottom.offsetX,
-          data.corners.rightBottom.y - data.corners.rightBottom.offsetY, 20, 20)
-        // this.ctx.restore();
-
-        //Instead of rectangle get to draw image
-        this.ctx.fillStyle = "red";
-        this.ctx.fillRect(data.corners.rightTop.x - data.corners.rightTop.offsetX,
-          data.corners.rightTop.y - data.corners.rightTop.offsetY, 20, 20)
-        // this.ctx.restore();
-
+      //Text boarder/storke
+      for (let i = 0; i < 3; i++) {
+        text = new fabric.Text(data.value, {
+          fill: data.boarderColor ?? "Black",
+          fontSize: Number(data.size) ?? 100,
+          left: centreX + i,
+          top: centreY + i,
+          fontFamily: data.font,
+          fontWeight: 'bold',
+        });
+        textGroups.push(text);
       }
 
+      // Text Face
+
+      text = new fabric.Text(data.value, {
+        fill: data.color ?? "green",
+        fontSize: Number(data.size) ?? 100,
+        left: centreX,
+        top: centreY,
+        fontFamily: data.font,
+        fontWeight: 'bold',
+      });
+
+      if (data.faceImage != undefined && data.faceImage != '') {
+        fabric.util.loadImage(data.faceImage, function (img) {
+          text.set('fill', new fabric.Pattern({
+            source: img,
+            repeat: 'repeat'
+          }))
+        });
+      }
+      // else {
+      //   text.set('fill',data.color ?? "green");
+      // }
+
+      textGroups.push(text);
+
+      this.txtWidth = text.getScaledWidth();
+      // Displaying Race
+      let rectX = centreX - 10;
+      let rectY = centreY;
+      let rectangleList: Array<fabric.Rect> = [];
+      if (data.raceColor != undefined && data.raceColor != null) {
+        for (let i = 1; i <= 3; i++) {
+          let rect = new fabric.Rect({
+            width: this.txtWidth + 32,
+            height: 20,
+            fill: 'black',
+            left: rectX + i,
+            top: ((Number(data.size) - 20) / 2) + rectY + i,
+          });
+          rectangleList.push(rect);
+        }
+
+        let rect = new fabric.Rect({
+          width: this.txtWidth + 32,
+          height: 20,
+          fill: data.raceColor,
+          left: rectX,
+          top: (Number(data.size) - 20) / 2 + rectY,
+        });
+        rectangleList.push(rect);
+      }
+
+      //Forming group
+      let group = new fabric.Group([...rectangleList, ...textGroups], {
+        useSetOnGroup: false,
+        borderDashArray: [7, 7],
+        borderColor: "black",
+        // hasControls: true,
+      });
+
+
+      fabric.Object.prototype.controls['deleteControl'] = new fabric.Control({
+        x: 0.5,
+        y: -0.5,
+        offsetY: 0,
+        cursorStyle: 'pointer',
+        mouseUpHandler: this.deleteObject(this),
+        render: this.renderIcon(Icons.deleteIcon),
+        // cornerSize: 24
+      });
+
+
+      //Disabling corners
+      fabric.Object.prototype.setControlsVisibility({
+        'ml': false, 'tl': false, 'tr': false,
+        'mr': false, 'mtr': false, 'mb': false, 'bl': false, 'mt': false
+      })
+      // group.setControlsVisibility({
+      //   'ml': false, 'tl': false, 'tr': false,
+      //   'mr': false, 'mtr': false, 'mb': false, 'bl': false, 'mt': false
+      // });
+
+      // Render the Text on Canvas
+      this.canvas.add(group);
     }
-    img.src = "../assets/images/banner.png";
 
   }
 
+  action(eventData: MouseEvent, transform: fabric.Transform, x: number, y: number) {
+    var target = transform.target;
+    var canvas = target.canvas;
+    let rst = canvas?._scaleObject ?? false;
+    // canvas?.requestRenderAll();
+    return true;
+  }
+
+  deleteObject(_this: any) {
+
+    return function (eventData: MouseEvent, transform: fabric.Transform, x: number, y: number) {
+      var target = transform.target;
+      var canvas = target.canvas;
+      // var stage = target.canvas?.toSVG()??"";
+      canvas?.remove(target);
+      canvas?.requestRenderAll();
+      _this.progressBar(target);
+      return true;
+    }
+  }
+
+  progressBar(target: fabric.Object) {
+    let timerLeft = 0;
+    let interval = setInterval(() => {
+      if (timerLeft - 2000 / 1000 <= 0) {
+        timerLeft = 0;
+        clearInterval(interval);
+      } else {
+        timerLeft -= 2000 / 1000;
+
+      }
+      this.workArea.nativeElement
+        .insertAdjacentHTML('beforeend', '<mat-progress-bar mode="determinate" [value]="timerLeft"></mat-progress-bar>');
+
+    }, 2000)
+  }
+
+  renderIcon(icon: string) {
+    return function (ctx: any, left: any, top: any, styleOverride: any, fabricObject: any) {
+      // var deleteIcon = "data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E%3Csvg version='1.1' id='Ebene_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='595.275px' height='595.275px' viewBox='200 215 230 470' xml:space='preserve'%3E%3Ccircle style='fill:%23F44336;' cx='299.76' cy='439.067' r='218.516'/%3E%3Cg%3E%3Crect x='267.162' y='307.978' transform='matrix(0.7071 -0.7071 0.7071 0.7071 -222.6202 340.6915)' style='fill:white;' width='65.545' height='262.18'/%3E%3Crect x='266.988' y='308.153' transform='matrix(0.7071 0.7071 -0.7071 0.7071 398.3889 -83.3116)' style='fill:white;' width='65.544' height='262.179'/%3E%3C/g%3E%3C/svg%3E";
+      var img = document.createElement('img');
+      img.src = icon;
+      var size = 24;
+      ctx.save();
+      ctx.translate(left, top);
+      ctx.rotate(fabric.util.degreesToRadians(fabricObject.angle));
+      ctx.drawImage(img, -size / 2, -size / 2, size, size);
+      ctx.restore();
+    }
+  }
+
+  listObject(_this: any) {
+    return function (eventData: MouseEvent, transform: fabric.Transform, x: number, y: number) {
+      var target = transform.target;
+      eventData.clientX;
+      eventData.clientY;
+      var canvas = target.canvas;
+      _this.workArea.nativeElement
+        .insertAdjacentHTML('beforeend', `<ul class="sc-bdVaJa jgLspe" style="visibility: visible; position:absolute;left: 
+        ${eventData.clientX}px; top: ${eventData.clientY}px;"><li class="sc-bwzfXH haAKrB" (click)=""><a>
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrows-alt" 
+        class="svg-inline--fa fa-arrows-alt fa-w-16 " role="img" xmlns="http://www.w3.org/2000/svg" 
+        viewBox="0 0 512 512"><path fill="currentColor" 
+        d="${shapes.Stretch.backgroundPath}"></path></svg>Stretch</a></li>
+        <li class="sc-bwzfXH haAKrB" (click)="this.stretchObject()"><a>
+        <svg aria-hidden="true"  data-prefix="fas" data-icon="clone" class="svg-inline--fa fa-clone fa-w-16 " 
+        role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" 
+        d="${shapes.Copy.backgroundPath}"></path></svg>Duplicate</a>
+        </li>
+        <li class="sc-bwzfXH haAKrB" (click)="stretchObject()"><a><img 
+        src="https://signmonkey.com/builder-30-03-2023-22/static/media/flip-horizontal.362ab177.svg" 
+        width="15" height="15" alt="Horizontal Mirror">Mirror Horizontal</a></li>
+        <li class="sc-bwzfXH haAKrB"><a>
+        <img src="https://signmonkey.com/builder-30-03-2023-22/static/media/flip-vertical.9ed0dae7.svg" width="15"
+        height="15" alt="Vertical Mirror">Mirror Vertical</a></li></ul>`);
+      return true;
+    }
+  }
+
+  stretchObject() {
+    fabric.Object.prototype.setControlsVisibility({
+      'ml': false, 'tl': false, 'tr': false,
+      'mr': false, 'mtr': false, 'mb': false, 'bl': false, 'mt': false
+    })
+  }
+
   drawShapes(data: ITextData) {
+    let upperCanvas = new fabric.Canvas("upperCanvas", {
+      width: window.innerWidth,
+      height: window.innerHeight,
+      preserveObjectStacking: true
+    });
+
     let path = data.shapes?.path.split(" ") ?? [];
     let startCord = path[1].split(",");
     let [x, y] = startCord.map(x => Number(x));
@@ -326,26 +304,33 @@ export class DesignComponent {
 
     path[1] = x + "," + y;
     let pathJoin = path.join(" ");
-      this.ctx.lineWidth = 2;
+    let groupList: Array<fabric.Path> = [];
 
     // Shadow
-    for (let i = 0; i < 7; i++) {
+
+    for (let i = 5; i < 12; i++) {
       let startCord = path[1].split(",");
       let [x, y] = startCord.map(x => Number(x));
-      x += i/5;
-      y += i/5;
+      x += i / 10;
+      y += i / 12;
 
       path[1] = x + "," + y;
       let pathJoin = path.join(" ");
 
-      const p = new Path2D(pathJoin);
-      // if (data.shadowColor != undefined && data.shadowColor != null) {
-      //   this.ctx.shadowColor = data.shadowColor;
-      //   this.ctx.shadowBlur = 13;
-      // }
-      this.ctx.strokeStyle = data.sideColor ?? "Orange";
-      this.ctx.stroke(p);
+      let shape = new fabric.Path(pathJoin, {
+        stroke: 'black',
+        originY: "center",
+        originX: "center",
+        // fill: 'rgba(0,0,0,0)',
+        selectable: false,
+        scaleX: 3,
+        scaleY: 3
+      });
+
+      upperCanvas.sendBackwards(shape, true);
+      groupList.push(shape);
     }
+
     path = data.shapes?.path.split(" ") ?? [];
     startCord = path[1].split(",");
     [x, y] = startCord.map(x => Number(x));
@@ -354,35 +339,170 @@ export class DesignComponent {
 
     path[1] = x + "," + y;
     // boarder/storke
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 6; i++) {
       let startCord = path[1].split(",");
-      let [x, y] = startCord.map(x => Number(x));
-      x +=  i/5;
-      y += i/5;
+      [x, y] = startCord.map(x => Number(x));
+      x -= i / 10;
+      y -= i / 12;
 
       path[1] = x + "," + y;
       let pathJoin = path.join(" ");
 
-      const p = new Path2D(pathJoin);
-      this.ctx.strokeStyle = data.boarderColor ?? "Blue";
-      this.ctx.stroke(p);
-      this.ctx.fillStyle = "White";
-      this.ctx.fill(p);
-    }
+      let shape = new fabric.Path(pathJoin, {
+        stroke: 'blue',
+        originY: "center",
+        originX: "center",
+        // fill: 'rgba(0,0,0,0)',
+        selectable: false,
+        scaleX: 3,
+        scaleY: 3
+      });
 
+      upperCanvas.sendBackwards(shape, true);
+      groupList.push(shape);
+    }
     path = data.shapes?.path.split(" ") ?? [];
     startCord = path[1].split(",");
-    [x, y] = startCord.map(x => Number(x));
-    x += 200;
-    y += 200;
 
     path[1] = x + "," + y;
     pathJoin = path.join(" ");
-    const p = new Path2D(pathJoin);
-    this.ctx.strokeStyle = data.boarderColor ?? "Black";
-    this.ctx.stroke(p);
-    // this.ctx.fill(p);
+
+    let shape = new fabric.Path(pathJoin, {
+      stroke: 'green',
+      originY: "center",
+      originX: "center",
+      fill: 'green',
+      selectable: false,
+      scaleX: 3,
+      scaleY: 3
+    });
+    upperCanvas.sendBackwards(shape, true);
+
+    groupList.push(shape);
+    shape = new fabric.Path(pathJoin, {
+      stroke: 'green',
+      originY: "center",
+      originX: "center",
+      fill: 'rgba(0,0,0,0)',
+      selectable: false,
+      scaleX: 3,
+      scaleY: 3
+    });
+    upperCanvas.bringForward(shape, true);
+
+    groupList.push(shape);
+    shape.on("mouse:down", Object => {
+      console.log("shape")
+    });
+
+    upperCanvas.add(...groupList);
+
+    var img = new Image();
+    var image: fabric.Image;
+    var isImageClicked = false;
+    img.onload = () => {
+      image = new fabric.Image(img,
+        {
+          name: "image",
+          strokeDashArray: [7, 7],
+          cornerStyle: 'circle',
+        });
+      image.on('mouse:down', evt => {
+        isImageClicked = true;
+      });
+      upperCanvas.add(image);
+      upperCanvas.sendBackwards(image);
+      // upperCanvas.sendBackwards(image,true); //text
+
+    }
+    img.src = "../assets/images/face-art/O60AC.png";
+
+    // let text = new fabric.Text(data.value, {
+    //   fill: data.color ?? "green",
+    //   fontSize: Number(data.size) ?? 100,
+    //   // left: centreX,
+    //   // top: centreY,
+    //   fontFamily: data.font,
+    //   fontWeight: 'bold',
+    // });
+    // upperCanvas.add(text);
+    // upperCanvas.sendBackwards(text);
+
+    //Disabling corners
+    fabric.Object.prototype.setControlsVisibility({
+      'ml': false, 'tl': false, 'tr': false,
+      'mr': false, 'mb': false, 'bl': false, 'mt': false
+    });
+    let isImageRemoved = false;
+    let imageCanvas: fabric.Object | undefined;
+    upperCanvas.on("mouse:down", object => {
+      console.log(object)
+      let canvas = object.target?.canvas ?? upperCanvas;
+      if (object.target?.name != "image" && object.target?.name != "clipped") {
+        if (object.target != undefined && object.target?.name == "image") {
+          imageCanvas = object.target;
+        }
+        else {
+          imageCanvas = upperCanvas.getObjects().find(m => m.name == "image");
+        }
+        if (imageCanvas) {
+          canvas?.remove(imageCanvas);
+          canvas?.requestRenderAll();
+          isImageRemoved = true;
+        }
+
+        this.clippingImage(canvas, img, shape);
+      }
+      else {
+        if (isImageRemoved) {
+          let obj = imageCanvas ?? image;
+          canvas?.add(obj);
+          shape.set('fill', 'rgba(0,0,0,0)');
+          shape.set('name', 'shape');
+          isImageRemoved = false;
+          canvas?.requestRenderAll();
+        }
+      }
+    });
+
+    fabric.Object.prototype.controls['deleteControl'] = new fabric.Control({
+      x: 0.5,
+      y: -0.5,
+      offsetY: 0,
+      cursorStyle: 'pointer',
+      mouseUpHandler: this.deleteObject(this),
+      render: this.renderIcon(Icons.deleteIcon),
+      // cornerSize: 24
+    });
+
+    fabric.Object.prototype.controls['listControl'] = new fabric.Control({
+      x: -0.5,
+      y: -0.5,
+      offsetY: 0,
+      cursorStyle: 'pointer',
+      mouseUpHandler: this.listObject(this),
+      render: this.renderIcon(Icons.ListIcon),
+    });
+
+
+    // groupList.push(shape);
+
+    // let grp = new fabric.Group(groupList, {
+    //   useSetOnGroup: false,
+    //   borderDashArray: [7, 7],
+    //   borderColor: "black",
+    // });
+
+    // upperCanvas.add(grp);
 
   }
 
+  clippingImage(canvas: fabric.Canvas, img: any, shape: fabric.Object) {
+    shape.set('fill', new fabric.Pattern({
+      source: img,
+      repeat: 'repeat'
+    }));
+    shape.set('name', 'clipped');
+    canvas.requestRenderAll();
+  }
 }
