@@ -44,40 +44,40 @@
     <!-- Need To create separate component -->
     <ul class="nav nav-tabs mt-3 justify-content-between mt-3 mb-5" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
-        <button class="nav-link p-0 m-0 active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
-          type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">
+        <button class="nav-link p-0 m-0 active" id="face-tab" data-bs-toggle="tab" data-bs-target="#face-tab-pane"
+          type="button" role="tab" aria-controls="face-tab-pane" aria-selected="true">
           <img src="../../../assets/images/letter1.png" alt="">
         </button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link p-0 m-0" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
-          type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false"> <img
+        <button class="nav-link p-0 m-0" id="trim-tab" data-bs-toggle="tab" data-bs-target="#trim-tab-pane"
+          type="button" role="tab" aria-controls="trim-tab-pane" aria-selected="false"> <img
             src="../../../assets/images/letter2.png" alt="">
         </button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link p-0 m-0" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane"
-          type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false"> <img
+        <button class="nav-link p-0 m-0" id="boarder-tab" data-bs-toggle="tab" data-bs-target="#boarder-tab-pane"
+          type="button" role="tab" aria-controls="boarder-tab-pane" aria-selected="false"> <img
             src="../../../assets/images/letter3.png" alt="">
         </button>
       </li>
       <!-- race -->
       <li class="nav-item" role="presentation" *ngIf="selectedProduct.type == 'Face Lit Letters on Raceway'">
-        <button class="nav-link p-0 m-0" id="contact-tab" data-bs-toggle="tab" data-bs-target="#race-tab-pane"
-          type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false"> <img
+        <button class="nav-link p-0 m-0" id="race-tab" data-bs-toggle="tab" data-bs-target="#race-tab-pane"
+          type="button" role="tab" aria-controls="race-tab-pane" aria-selected="false"> <img
             src="../../../assets/images/letter3.png" alt="">
         </button>
       </li>
       <!-- shadow -->
       <li class="nav-item" role="presentation" *ngIf="selectedProduct.type == 'shadow'">
-        <button class="nav-link p-0 m-0" id="contact-tab" data-bs-toggle="tab" data-bs-target="#shadow-tab-pane"
-          type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false"> <img
+        <button class="nav-link p-0 m-0" id="shadow-tab" data-bs-toggle="tab" data-bs-target="#shadow-tab-pane"
+          type="button" role="tab" aria-controls="shadow-tab-pane" aria-selected="false"> <img
             src="../../../assets/images/letter3.png" alt="">
         </button>
       </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-      <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+      <div class="tab-pane fade show active" id="face-tab-pane" role="tabpanel" aria-labelledby="face-tab" tabindex="0">
 
         <div class="accordion" id="accordionExample">
           <div class="accordion-item">
@@ -250,8 +250,8 @@
           </div>
         </div>
       </div>
-      <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-        <h5 class="desctitle ">Choose border color</h5>
+      <div class="tab-pane fade" id="trim-tab-pane" role="tabpanel" aria-labelledby="trim-tab" tabindex="0">
+        <h5 class="desctitle ">Choose trim color</h5>
         <div class="accordion-body">
           <div class="sc-fjdhpX fRtSug">
             <ng-container *ngFor="let color of colorArray;">
@@ -261,7 +261,18 @@
           </div>
         </div>
       </div>
-      <div class="tab-pane fade" id="race-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+      <div class="tab-pane fade" id="boarder-tab-pane" role="tabpanel" aria-labelledby="boarder-tab" tabindex="0">
+        <h5 class="desctitle ">Choose border color</h5>
+        <div class="accordion-body">
+          <div class="sc-fjdhpX fRtSug">
+            <ng-container *ngFor="let color of colorArray;">
+              <button [ngStyle]="{backgroundColor: color.name}" class="color-box"
+                (click)="colorSelect(color.name,'side')"></button>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="race-tab-pane" role="tabpanel" aria-labelledby="race-tab" tabindex="0">
         <h5 class="desctitle ">Choose race color</h5>
         <div class="accordion-body">
           <div class="sc-fjdhpX fRtSug">
@@ -272,7 +283,7 @@
           </div>
         </div>
       </div>
-      <div class="tab-pane fade" id="shadow-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+      <div class="tab-pane fade" id="shadow-tab-pane" role="tabpanel" aria-labelledby="shadow-tab" tabindex="0">
         <h5 class="desctitle ">Choose shadow color</h5>
         <div class="accordion-body">
           <div class="sc-fjdhpX fRtSug">

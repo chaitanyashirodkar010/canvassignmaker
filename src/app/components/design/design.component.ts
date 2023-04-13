@@ -22,6 +22,7 @@ export class DesignComponent {
   click: boolean = false;
   canvas: fabric.Canvas;
   @ViewChild('workArea') workArea: ElementRef<any>;
+  upperCanvas: fabric.Canvas;
 
   constructor(private renderer: Renderer2, private host: ElementRef) { }
 
@@ -30,6 +31,12 @@ export class DesignComponent {
     this.canvas = new fabric.Canvas("exampleCanvas", {
       width: window.innerWidth,
       height: window.innerHeight
+    });
+
+    this.upperCanvas = new fabric.Canvas("upperCanvas", {
+      width: window.innerWidth,
+      height: window.innerHeight,
+      preserveObjectStacking: true
     });
 
     this.data = {
@@ -41,11 +48,11 @@ export class DesignComponent {
       x: window.innerWidth / 2,
       y: 75,
       faceImage: "../assets/images/face-art/O60AC.png",
-      shapes: shapes.star
+      shapes: shapes.FlagR1Img
     };
-    this.setBackgroundImage();
-    this.draw(this.data);
-    // this.drawShapes(this.data)
+    // this.setBackgroundImage();
+    // this.draw(this.data);
+    // this.drawShapes(this.data);
   }
 
 
@@ -55,28 +62,31 @@ export class DesignComponent {
     this.data.x = x;
     this.data.y = y;
     this.draw(data);
+    // this.drawShapes(data);
   }
 
-  setBackgroundImage() {
-    this.canvas.setBackgroundImage("../assets/images/banner.png", this.canvas.renderAll.bind(this.canvas), {
+  setBackgroundImage(canvas: fabric.Canvas) {
+    canvas.setBackgroundImage("../assets/images/banner.png", this.canvas.renderAll.bind(this.canvas), {
       // backgroundImageOpacity: 1,
       originX: "left",
       originY: "top",
       scaleX: 0.3,
       scaleY: 0.3,
+      // opacity: 0.1
     });
   }
 
-  clearCanvas() {
-    this.canvas.getObjects().forEach(element => {
+  clearCanvas(canvas: fabric.Canvas) {
+    canvas.getObjects().forEach(element => {
       if (element !== this.canvas.backgroundImage) {
-        this.canvas.remove(element);
+        canvas.remove(element);
       }
     });
+    canvas.off("mouse:down");
   }
 
   draw(data: ITextData | null) {
-    this.clearCanvas();
+    this.clearCanvas(this.canvas);
     if (data != null && data.value != '') {
       let centreX = data.x != null && data.x != undefined ? data.x : this.c.width / 2;
       let centreY = data.y != null && data.y != undefined ? data.y : 75;
@@ -192,23 +202,11 @@ export class DesignComponent {
         'ml': false, 'tl': false, 'tr': false,
         'mr': false, 'mtr': false, 'mb': false, 'bl': false, 'mt': false
       })
-      // group.setControlsVisibility({
-      //   'ml': false, 'tl': false, 'tr': false,
-      //   'mr': false, 'mtr': false, 'mb': false, 'bl': false, 'mt': false
-      // });
 
       // Render the Text on Canvas
       this.canvas.add(group);
     }
 
-  }
-
-  action(eventData: MouseEvent, transform: fabric.Transform, x: number, y: number) {
-    var target = transform.target;
-    var canvas = target.canvas;
-    let rst = canvas?._scaleObject ?? false;
-    // canvas?.requestRenderAll();
-    return true;
   }
 
   deleteObject(_this: any) {
@@ -222,6 +220,16 @@ export class DesignComponent {
       _this.progressBar(target);
       return true;
     }
+  }
+
+  cloneObject(eventData: MouseEvent, transform: fabric.Transform) {
+    var target = transform.target;
+    var canvas = target.canvas;
+    target.clone(function (cloned: fabric.Object) {
+      cloned.left = cloned.left ?? 0 + 10;
+      cloned.top = cloned.top ?? 0 + 10;
+      canvas?.add(cloned);
+    });
   }
 
   progressBar(target: fabric.Object) {
@@ -262,45 +270,48 @@ export class DesignComponent {
       var canvas = target.canvas;
       _this.workArea.nativeElement
         .insertAdjacentHTML('beforeend', `<ul class="sc-bdVaJa jgLspe" style="visibility: visible; position:absolute;left: 
-        ${eventData.clientX}px; top: ${eventData.clientY}px;"><li class="sc-bwzfXH haAKrB" (click)=""><a>
+        ${eventData.clientX}px; top: ${eventData.clientY}px;"><li class="sc-bwzfXH haAKrB"><a (click)="stretchObject()">
         <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrows-alt" 
         class="svg-inline--fa fa-arrows-alt fa-w-16 " role="img" xmlns="http://www.w3.org/2000/svg" 
         viewBox="0 0 512 512"><path fill="currentColor" 
         d="${shapes.Stretch.backgroundPath}"></path></svg>Stretch</a></li>
-        <li class="sc-bwzfXH haAKrB" (click)="this.stretchObject()"><a>
+        <li class="sc-bwzfXH haAKrB" (click)="stretchObject()"><a>
         <svg aria-hidden="true"  data-prefix="fas" data-icon="clone" class="svg-inline--fa fa-clone fa-w-16 " 
         role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" 
         d="${shapes.Copy.backgroundPath}"></path></svg>Duplicate</a>
         </li>
-        <li class="sc-bwzfXH haAKrB" (click)="stretchObject()"><a><img 
-        src="https://signmonkey.com/builder-30-03-2023-22/static/media/flip-horizontal.362ab177.svg" 
-        width="15" height="15" alt="Horizontal Mirror">Mirror Horizontal</a></li>
-        <li class="sc-bwzfXH haAKrB"><a>
-        <img src="https://signmonkey.com/builder-30-03-2023-22/static/media/flip-vertical.9ed0dae7.svg" width="15"
-        height="15" alt="Vertical Mirror">Mirror Vertical</a></li></ul>`);
+        </ul>`);
+
+
+      // _this.workArea.nativeElement.on({})
       return true;
     }
+
   }
 
   stretchObject() {
     fabric.Object.prototype.setControlsVisibility({
-      'ml': false, 'tl': false, 'tr': false,
-      'mr': false, 'mtr': false, 'mb': false, 'bl': false, 'mt': false
+      'ml': true, 'tl': true, 'tr': true,
+      'mr': true, 'mtr': true, 'mb': true, 'bl': true, 'mt': true
     })
   }
 
   drawShapes(data: ITextData) {
-    let upperCanvas = new fabric.Canvas("upperCanvas", {
-      width: window.innerWidth,
-      height: window.innerHeight,
-      preserveObjectStacking: true
-    });
+    // this.upperCanvas.remove.apply(this.upperCanvas, this.upperCanvas.getObjects())
+    // this.upperCanvas.getObjects().forEach(m => {
+
+    // });
+    // this.upperCanvas.clear();
+    // this.upperCanvas.dispose();
+    this.clearCanvas(this.upperCanvas);
+
+    // this.setBackgroundImage(this.upperCanvas);
 
     let path = data.shapes?.path.split(" ") ?? [];
     let startCord = path[1].split(",");
     let [x, y] = startCord.map(x => Number(x));
-    x += 200;
-    y += 200;
+    // x += 100;
+    // y += 100;
 
     path[1] = x + "," + y;
     let pathJoin = path.join(" ");
@@ -318,24 +329,25 @@ export class DesignComponent {
       let pathJoin = path.join(" ");
 
       let shape = new fabric.Path(pathJoin, {
-        stroke: 'black',
+        stroke: data.sideColor,
         originY: "center",
         originX: "center",
-        // fill: 'rgba(0,0,0,0)',
         selectable: false,
-        scaleX: 3,
-        scaleY: 3
+        evented: false,
+        scaleX: 4,
+        scaleY: 4,
+        absolutePositioned: true,
       });
 
-      upperCanvas.sendBackwards(shape, true);
+      this.upperCanvas.sendBackwards(shape, true);
       groupList.push(shape);
     }
 
     path = data.shapes?.path.split(" ") ?? [];
     startCord = path[1].split(",");
     [x, y] = startCord.map(x => Number(x));
-    x += 200;
-    y += 200;
+    // x += 100;
+    // y += 100;
 
     path[1] = x + "," + y;
     // boarder/storke
@@ -349,16 +361,17 @@ export class DesignComponent {
       let pathJoin = path.join(" ");
 
       let shape = new fabric.Path(pathJoin, {
-        stroke: 'blue',
+        stroke: data.boarderColor ?? "black",
         originY: "center",
         originX: "center",
-        // fill: 'rgba(0,0,0,0)',
         selectable: false,
-        scaleX: 3,
-        scaleY: 3
+        evented: false,
+        scaleX: 4,
+        scaleY: 4,
+        absolutePositioned: true,
       });
 
-      upperCanvas.sendBackwards(shape, true);
+      this.upperCanvas.sendBackwards(shape, true);
       groupList.push(shape);
     }
     path = data.shapes?.path.split(" ") ?? [];
@@ -368,54 +381,65 @@ export class DesignComponent {
     pathJoin = path.join(" ");
 
     let shape = new fabric.Path(pathJoin, {
-      stroke: 'green',
+      stroke: data.color ?? "green",
       originY: "center",
       originX: "center",
-      fill: 'green',
+      fill: data.color ?? "green",
       selectable: false,
-      scaleX: 3,
-      scaleY: 3
+      evented: false,
+      scaleX: 4,
+      scaleY: 4,
+      absolutePositioned: true,
     });
-    upperCanvas.sendBackwards(shape, true);
+    this.upperCanvas.sendBackwards(shape, true);
 
     groupList.push(shape);
-    shape = new fabric.Path(pathJoin, {
-      stroke: 'green',
+    let shape1 = new fabric.Path(pathJoin, {
+      stroke: data.boarderColor ?? data.color,
       originY: "center",
       originX: "center",
       fill: 'rgba(0,0,0,0)',
       selectable: false,
-      scaleX: 3,
-      scaleY: 3
-    });
-    upperCanvas.bringForward(shape, true);
+      evented: false,
+      scaleX: 4,
+      scaleY: 4,
+      absolutePositioned: true,
 
-    groupList.push(shape);
-    shape.on("mouse:down", Object => {
-      console.log("shape")
     });
+    // this.upperCanvas.bringForward(shape, true);
 
-    upperCanvas.add(...groupList);
+    groupList.push(shape1);
+
+    this.upperCanvas.add(...groupList);
 
     var img = new Image();
     var image: fabric.Image;
-    var isImageClicked = false;
+
+
     img.onload = () => {
       image = new fabric.Image(img,
         {
           name: "image",
           strokeDashArray: [7, 7],
           cornerStyle: 'circle',
+          left: x - (data.shapes?.offsetX ?? 0),
+          top: y - (data.shapes?.offsetY ?? 0),
+          absolutePositioned: true,
+          scaleX: data.shapes?.scaleFactorx,
+          scaleY: data.shapes?.scaleFactorx,
         });
-      image.on('mouse:down', evt => {
-        isImageClicked = true;
-      });
-      upperCanvas.add(image);
-      upperCanvas.sendBackwards(image);
-      // upperCanvas.sendBackwards(image,true); //text
+
+      // this.upperCanvas.add(image);
+      // this.upperCanvas.sendBackwards(image);
+      // imageCanvas = image;
+      // this.upperCanvas.remove(image);
+      // this.upperCanvas.requestRenderAll();
+      this.clippingImage(this.upperCanvas, image, shape, x, y, img);
+      // this.upperCanvas.sendBackwards(image,true); //text
 
     }
-    img.src = "../assets/images/face-art/O60AC.png";
+    img.src = data.shapes?.img ?? "";
+
 
     // let text = new fabric.Text(data.value, {
     //   fill: data.color ?? "green",
@@ -425,42 +449,57 @@ export class DesignComponent {
     //   fontFamily: data.font,
     //   fontWeight: 'bold',
     // });
-    // upperCanvas.add(text);
-    // upperCanvas.sendBackwards(text);
+    // this.upperCanvas.add(text);
+    // this.upperCanvas.sendBackwards(text);
 
     //Disabling corners
     fabric.Object.prototype.setControlsVisibility({
       'ml': false, 'tl': false, 'tr': false,
       'mr': false, 'mb': false, 'bl': false, 'mt': false
     });
-    let isImageRemoved = false;
-    let imageCanvas: fabric.Object | undefined;
-    upperCanvas.on("mouse:down", object => {
-      console.log(object)
-      let canvas = object.target?.canvas ?? upperCanvas;
-      if (object.target?.name != "image" && object.target?.name != "clipped") {
-        if (object.target != undefined && object.target?.name == "image") {
-          imageCanvas = object.target;
-        }
-        else {
-          imageCanvas = upperCanvas.getObjects().find(m => m.name == "image");
-        }
-        if (imageCanvas) {
-          canvas?.remove(imageCanvas);
-          canvas?.requestRenderAll();
-          isImageRemoved = true;
-        }
 
-        this.clippingImage(canvas, img, shape);
+    let isImageRemoved = true;
+    this.upperCanvas.on("mouse:down", object => {
+
+      let selectedImage = this.upperCanvas.getObjects().find(m => m.name == "image");
+
+      let clippedImage = this.upperCanvas.getObjects().find(m => m.name == "clippedImage");
+
+      let canvas = object.target?.canvas ?? this.upperCanvas;
+      let objName = object.target?.name;
+
+
+      if (((selectedImage?.aCoords?.bl.x ?? 0) + 5 <= (object.absolutePointer?.x ?? 0) && (selectedImage?.aCoords?.br.x ?? 0) + 5 >= (object.absolutePointer?.x ?? 0) &&
+        (selectedImage?.aCoords?.tl.y ?? 0) + 5 <= (object.absolutePointer?.y ?? 0) && (selectedImage?.aCoords?.bl.y ?? 0) + 5 >= (object.absolutePointer?.y ?? 0))
+        || ((clippedImage?.aCoords?.bl.x ?? 0) + 5 <= (object.absolutePointer?.x ?? 0) && (clippedImage?.aCoords?.br.x ?? 0) + 5 >= (object.absolutePointer?.x ?? 0) &&
+          (clippedImage?.aCoords?.tl.y ?? 0) + 5 <= (object.absolutePointer?.y ?? 0) && (clippedImage?.aCoords?.bl.y ?? 0) + 5 >= (object.absolutePointer?.y ?? 0))) {
+
+        if (isImageRemoved) {
+          // let clippedImg = this.upperCanvas.getObjects().find(m => m.name == "clippedImage");
+          if (clippedImage) {
+            canvas?.remove(clippedImage);
+            canvas?.requestRenderAll();
+          }
+          let obj = selectedImage ?? image;
+          canvas?.add(obj);
+          canvas?.sendBackwards(obj);
+          canvas?.requestRenderAll();
+          isImageRemoved = false;
+        }
       }
       else {
-        if (isImageRemoved) {
-          let obj = imageCanvas ?? image;
-          canvas?.add(obj);
-          shape.set('fill', 'rgba(0,0,0,0)');
-          shape.set('name', 'shape');
-          isImageRemoved = false;
+        // if (object.target != undefined && objName == "image") {
+        //   imageCanvas = object.target;
+        // }
+        // else {
+        //   imageCanvas = this.upperCanvas.getObjects().find(m => m.name == "image");
+        // }
+        if (selectedImage) {
+          canvas?.remove(selectedImage);
           canvas?.requestRenderAll();
+          isImageRemoved = true;
+
+          this.clippingImage(canvas, image, shape, x, y, img);
         }
       }
     });
@@ -485,24 +524,104 @@ export class DesignComponent {
     });
 
 
-    // groupList.push(shape);
+    // fabric.util.object.extend(fabric.Object.prototype, {
+    //   hasRotatingPoint: true,
+    //   // cornerSize: 0,
+    //   _drawControl: function (control:any, ctx:any, methodName:any, left:any, top:any) {
+    //     if (!this.isControlVisible(control)) {
+    //       return;
+    //     }
+    //     var size = this.cornerSize,
+    //       size2 = size / 2,
+    //       scaleOffsetY = size2 / this.scaleY,
+    //       scaleOffsetX = size2 / this.scaleX,
+    //       height = this.height,
+    //       width = this.width
+    //     //	left = (this.width / 2),
+    //     //		top = (this.height / 2)
 
-    // let grp = new fabric.Group(groupList, {
-    //   useSetOnGroup: false,
-    //   borderDashArray: [7, 7],
-    //   borderColor: "black",
+    //     // isVML() || this.transparentCorners || ctx.clearRect(left, top, size / this.scaleX, size / this.scaleY);
+
+    //     if (control !== 'br')
+    //       ctx['fillRect'](left, top, size / this.scaleX, size / this.scaleY);
+
+    //     var SelectedIconImage = new Image();
+    //     if (control === 'br') {
+    //       SelectedIconImage.src = 'http://cdn.flaticon.com/svg/56/56433.svg';
+    //       //   ctx.drawImage(SelectedIconImage, left, top, size, size);
+
+    //       //   left = left + scaleOffsetX;
+    //       //   top = top + scaleOffsetY;
+
+    //       ctx.drawImage(SelectedIconImage, left, top, size / this.scaleX, size / this.scaleY);
+
+    //       this.setControlsVisibility({
+    //         bl: false,
+    //         br: true,
+    //         tl: true,
+    //         tr: false,
+    //         mt: false,
+    //         mb: false,
+    //         ml: false,
+    //         mr: false,
+    //         mtr: false,
+    //       });
+
+    //     }
+
+    //   }
+
     // });
 
-    // upperCanvas.add(grp);
+    // fabric.Object.prototype.controls['expend'] = new fabric.Control({
+    //   x: 0.5,
+    //   y: 0.5,
+    //   offsetY: 0,
+    //   cursorStyle: 'pointer',
+    //   // actionHandler:
+
+
+    //     // mouseUpHandler: this.listObject(this),
+    //     render: this.renderIcon(Icons.ListIcon),
+    // });
 
   }
 
-  clippingImage(canvas: fabric.Canvas, img: any, shape: fabric.Object) {
-    shape.set('fill', new fabric.Pattern({
-      source: img,
-      repeat: 'repeat'
-    }));
-    shape.set('name', 'clipped');
+  updateMeasures(evt: fabric.IEvent<MouseEvent>) {
+    var obj = evt.target;
+    // if (obj.type != 'group') {
+    // return;
+    // }
+    var width = obj?.getScaledWidth();
+    var height = obj?.getScaledHeight();
+    // obj?.oCoords?.br = width.toFixed(2) + 'px';
+    // obj._objects[1].scaleX= 1 / obj.scaleX;
+    // obj._objects[1].scaleY= 1 / obj.scaleY;
+    // obj._objects[2].text = height.toFixed(2) + 'px';
+    // obj._objects[2].scaleX= 1 / obj.scaleY;
+    // obj._objects[2].scaleY= 1 / obj.scaleX;
+  }
+
+
+  clippingImage(canvas: fabric.Canvas, img: fabric.Image, shape: fabric.Object, x: number, y: number, imagePath: HTMLImageElement) {
+
+    if (img) {
+
+      img.cloneAsImage(function (Img: fabric.Image) {
+        Img.set({
+          clipPath: shape,
+          name: "clippedImage",
+          left: img.left,
+          top: img.top,
+          strokeDashArray: img.strokeDashArray
+        });
+        canvas.add(Img);
+        canvas.requestRenderAll();
+      });
+
+    }
+    // shape.set('name', 'clipped');
+    shape.set('selectable', false);
     canvas.requestRenderAll();
   }
 }

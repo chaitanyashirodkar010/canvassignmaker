@@ -61,4 +61,9 @@ export interface IShapes {
   name: string,
   code: string,
   size?: string
+  img?: string,
+  scaleFactorx?: number,
+  scaleFactorY?: number,
+  offsetX?: number,
+  offsetY?: number,
 }
