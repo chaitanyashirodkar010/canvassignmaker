@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { IProduct, ITextData } from 'src/app/interface/Isignmaker';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
 
@@ -14,6 +14,8 @@ export class SignmakerNavBarComponent {
     type: '',
   };
   @ViewChild("prdDtls") prdDtls: ProductDetailsComponent;
+  @ViewChild("close") close: ElementRef;
+
   @Output() ValueChange = new EventEmitter<ITextData>();
 
   products(value: IProduct){
@@ -25,6 +27,9 @@ export class SignmakerNavBarComponent {
   }
 
   ValueChange1(value:ITextData){
+    if(value.completed){
+      this.close.nativeElement.click();
+    }
     this.ValueChange.emit(value);
   }
 }

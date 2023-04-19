@@ -298,10 +298,9 @@
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
-    <p>You are now done.</p>
     <div>
       <button mat-button matStepperPrevious>Back</button>
-      <button mat-button class="Reset" (click)="stepper.reset()">Reset</button>
+      <button mat-button class="Reset" (click)="completed()">Done</button>
     </div>
   </mat-step>
 </mat-stepper>

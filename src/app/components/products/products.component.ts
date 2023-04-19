@@ -22,7 +22,6 @@ export class ProductsComponent {
   }
 
   selectP(value: string) {
-    console.log("sdfd")
     this.products.subCategory = value;
 
   }

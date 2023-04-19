@@ -1,4 +1,4 @@
-export interface ITextData {
+export interface ITextData  {
   value: string,
   font: string,
   size: string,
@@ -16,7 +16,10 @@ export interface ITextData {
   shadowColor?: string,
   raceColor?: string,
   faceImage?: string,
-  shapes?: IShapes
+  shapes?: IShapes,
+  opacity?: number,
+  completed?: boolean
+  selectable?: boolean
 }
 
 export interface position {

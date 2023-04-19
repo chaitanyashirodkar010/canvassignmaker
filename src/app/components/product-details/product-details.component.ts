@@ -122,11 +122,22 @@ export class ProductDetailsComponent implements OnInit {
     })
   }
 
-  navigateToNextStep(step: MatStepper){
+  completed() {
+    this.data.completed = true;
+    this.ValueChange.emit(this.data);
+    this.data = {
+      value: "",
+      font: "Tahoma",
+      size: "100",
+      color: "red",
+    }
+  }
+
+  navigateToNextStep(step: MatStepper) {
     step.next();
   }
 
-  selectedShape(shape: IShapes){
+  selectedShape(shape: IShapes) {
     this.data.shapes = shape;
     this.ValueChange.emit(this.data);
   }
