@@ -18,6 +18,10 @@ export class SignmakerNavBarComponent {
 
   @Output() ValueChange = new EventEmitter<ITextData>();
 
+  ngAfterViewInit(){
+    this.close.nativeElement.click();
+  }
+
   products(value: IProduct){
     this.selectedProduct = value;
   }

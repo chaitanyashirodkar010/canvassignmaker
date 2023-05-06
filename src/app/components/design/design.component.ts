@@ -2,6 +2,7 @@ import { Component, ElementRef, HostListener, Input, Renderer2, ViewChild } from
 import { Icons, shapes } from 'src/app/constants/constants';
 import { ITextData } from 'src/app/interface/Isignmaker';
 import { fabric } from 'fabric';
+import { Path } from 'fabric/fabric-impl';
 // import 'fabric-customise-controls';
 
 @Component({
@@ -17,33 +18,34 @@ export class DesignComponent {
   txtWidth: number;
   enableDraw: boolean;
   // data: Array<ITextData> = [];
-  data: Array< {type: string, obj: { version: string; objects: Object[]; }}> = [];
+  data: Array<{ type: string, obj: { version: string; objects: fabric.Object[]; } }> = [];
   rectOX: number;
   rectOY: number;
   click: boolean = false;
   canvas: fabric.Canvas;
   @ViewChild('workArea') workArea: ElementRef<any>;
   upperCanvas: fabric.Canvas;
-  currentObjects: {type: string, obj: { version: string; objects: Object[]; }};
+  currentObjects: { type: string, obj: { version: string; objects: fabric.Object[]; } } | undefined;
+  width: number = 0;
+  height: number = 0;
 
   constructor(private renderer: Renderer2, private host: ElementRef) { }
 
   ngOnInit() {
-
+    this.width = window.innerWidth;
+    this.height = window.innerHeight;
     this.canvas = new fabric.Canvas("exampleCanvas", {
       width: window.innerWidth,
       height: window.innerHeight
     });
 
     this.upperCanvas = new fabric.Canvas("upperCanvas", {
-      width: window.innerWidth,
-      height: window.innerHeight,
+      width: this.width,
+      height: this.height,
       preserveObjectStacking: true
     });
 
-
     this.setBackgroundImage(this.canvas);
-
   }
 
 
@@ -63,12 +65,13 @@ export class DesignComponent {
     if (data.completed) {
       this.upperCanvas.setDimensions({ width: 0, height: 0 });
       this.upperCanvas.requestRenderAll();
-      this.data.push(this.currentObjects);
+      if (this.currentObjects)
+        this.data.push(this.currentObjects);
       // this.data.push(data);
       this.canvasDraw();
     }
     else if (data?.shapes) {
-      this.upperCanvas.setDimensions({ width: window.innerWidth, height: window.innerHeight });
+      this.upperCanvas.setDimensions({ width: this.width, height: this.height });
 
       data.opacity = 0.1;
       this.setBackgroundImage(this.canvas, data.opacity);
@@ -77,11 +80,13 @@ export class DesignComponent {
 
     }
     else {
-      this.upperCanvas.setDimensions({ width: window.innerWidth, height: window.innerHeight });
+      this.upperCanvas.setDimensions({ width: this.width, height: this.height });
       data.opacity = 1;
       data.x = 0;
       data.y = 0;
       this.draw(this.upperCanvas, data);
+
+      // this.setBackgroundImage(this.canvas);
     }
     // this.draw(data);
     // this.canvas.calcOffset()
@@ -91,9 +96,62 @@ export class DesignComponent {
 
     this.clearCanvas(this.canvas);
     // this.canvas.loadFromJSON(this.data);
-    let dt:Object[] = [];
+    let dt: Object[] = [];
     this.data.forEach(m => {
-      dt.push(...m.obj.objects);
+      if (m.type == "Shape") {
+        // var group = new fabric.Group([...m.obj.objects]);
+        // m.obj.objects.forEach(x => {
+
+        // })
+        // group.add([...m.obj.objects])
+        var gp = new fabric.Group();
+        m.obj.objects.forEach(x => {
+          x.selectable = true; x.evented = true;
+          if (x.name == "clippedImage") {
+            // x.selectable = false;
+          }
+          gp.addWithUpdate(x);
+        });
+        this.canvas.add(gp);
+        //   // temp.forEach(m => m.visible == true);
+        // dt.push(...m.obj.objects);
+
+        // Get all the objects as selection
+        //   var sel = new fabric.ActiveSelection(m.obj.objects, { 
+        //     canvas: this.canvas,
+        //  });
+
+        // Make the objects active
+        //  this.canvas.setActiveObject(sel);
+
+        // Group the objects
+        //  sel.toGroup();
+        // var pathArray: Array<fabric.Path> = [];
+        // temp.forEach(x => {
+        //   pathArray.push(x as fabric.Path);
+        // })
+        // let gp = new fabric.Group();
+
+        // //Forming group
+        // // gp.addWithUpdate(temp[0]);
+        // let group = new fabric.Group(temp, {
+        //   useSetOnGroup: false,
+        //   borderDashArray: [7, 7],
+        //   borderColor: "black",
+        //   // hasControls: true,
+        // });
+
+        // // dt.push(group);
+        // var image =  m.obj.objects.find(m => m.type == "image");
+        // if(image != undefined){
+        //   image.selectable = false;
+        //   dt.push(image);
+        // }
+      }
+      else {
+        dt.push(...m.obj.objects);
+      }
+
       // if (m?.shapes) {
       //   m.selectable = true;
       //   this.drawShapes1(this.canvas, m);
@@ -102,12 +160,15 @@ export class DesignComponent {
 
     });
 
-    let tp: {version: string; objects: Object[];} = {
-      version: this.data[0].obj.version,
-      objects: dt
+    if (dt != null && dt != undefined && dt.length > 0) {
+      let tp: { version: string; objects: Object[]; } = {
+        version: this.data[0].obj.version,
+        objects: dt
+      }
+
+      this.canvas.loadFromJSON(tp, this.canvas.renderAll.bind(this.canvas));
     }
-    
-    this.canvas.loadFromJSON(tp,this.canvas.renderAll.bind(this.canvas));
+
     this.setBackgroundImage(this.canvas);
   }
 
@@ -271,7 +332,7 @@ export class DesignComponent {
 
       this.setSelectable(canvas, data?.completed ?? false);
 
-      this.currentObjects = {type: "Text", obj: canvas.toJSON()};
+      this.currentObjects = { type: "Text", obj: canvas.toJSON() };
     }
 
   }
@@ -365,8 +426,11 @@ export class DesignComponent {
   drawShapes(shapeCanvas: fabric.Canvas, data: ITextData) {
     if (shapeCanvas) {
 
-      if (!data.selectable)
+      if (!data.selectable) {
         this.clearCanvas(shapeCanvas);
+        this.currentObjects = undefined;
+      }
+
 
       let path = data.shapes?.path.split(" ") ?? [];
       let startCord = path[1].split(",");
@@ -377,6 +441,7 @@ export class DesignComponent {
       path[1] = x + "," + y;
       let pathJoin = path.join(" ");
       let groupList: Array<fabric.Path> = [];
+      let groupList1: Array<fabric.Path> = [];
 
       // Shadow
 
@@ -399,9 +464,19 @@ export class DesignComponent {
           scaleY: 4,
           absolutePositioned: true,
         });
+        let shape5 = new fabric.Path(pathJoin, {
+          stroke: data.sideColor,
+          originY: "center",
+          originX: "center",
+          scaleX: 4,
+          scaleY: 4,
+          absolutePositioned: true,
+        });
 
+        // shapeCanvas.sendToBack(shape);
         shapeCanvas.sendBackwards(shape, true);
         groupList.push(shape);
+        groupList1.push(shape5);
       }
 
       path = data.shapes?.path.split(" ") ?? [];
@@ -431,9 +506,19 @@ export class DesignComponent {
           scaleY: 4,
           absolutePositioned: true,
         });
+        let shape4 = new fabric.Path(pathJoin, {
+          stroke: data.boarderColor ?? "black",
+          originY: "center",
+          originX: "center",
+          scaleX: 4,
+          scaleY: 4,
+          absolutePositioned: true,
+        });
 
+        // shapeCanvas.sendToBack(shape);
         shapeCanvas.sendBackwards(shape, true);
         groupList.push(shape);
+        groupList1.push(shape4);
       }
       path = data.shapes?.path.split(" ") ?? [];
       startCord = path[1].split(",");
@@ -452,9 +537,20 @@ export class DesignComponent {
         scaleY: 4,
         absolutePositioned: true,
       });
+      let shape3 = new fabric.Path(pathJoin, {
+        stroke: data.color ?? "green",
+        originY: "center",
+        originX: "center",
+        fill: data.color ?? "green",
+        scaleX: 4,
+        scaleY: 4,
+        absolutePositioned: true,
+      });
+      // shapeCanvas.sendToBack(shape);
       shapeCanvas.sendBackwards(shape, true);
 
       groupList.push(shape);
+      groupList1.push(shape3);
       let shape1 = new fabric.Path(pathJoin, {
         stroke: data.boarderColor ?? data.color,
         originY: "center",
@@ -467,20 +563,43 @@ export class DesignComponent {
         absolutePositioned: true,
 
       });
-      // shapeCanvas.bringForward(shape, true);
+      let shape2 = new fabric.Path(pathJoin, {
+        stroke: data.boarderColor ?? data.color,
+        originY: "center",
+        originX: "center",
+        fill: 'rgba(0,0,0,0)',
+        scaleX: 4,
+        scaleY: 4,
+        absolutePositioned: true,
+
+      });
+      // shapeCanvas.bringToFront(shape1);
 
       groupList.push(shape1);
+      groupList1.push(shape2);
+
+      // groupList.forEach(m => {m.selectable = true; m.evented = true,m.left = 20})
+
+      // var grp = new fabric.Group(groupList);
 
       shapeCanvas.add(...groupList);
 
+      // var tempGroup = JSON.parse(JSON.stringify(groupList));
+      groupList1.forEach(m => { m.selectable = true; m.evented = true });
+
+      var gp = new fabric.Group(groupList1);
+      // shapeCanvas.add(gp);
+      var tempShape: Array<fabric.Object> = [gp];
+
       var img = new Image();
       var image: fabric.Image;
+      var image1: fabric.Image | undefined;
 
 
       img.onload = () => {
         image = new fabric.Image(img,
           {
-            name: "image",
+            name: "clipped",
             strokeDashArray: [7, 7],
             cornerStyle: 'circle',
             left: 50,
@@ -488,6 +607,9 @@ export class DesignComponent {
             absolutePositioned: true,
             scaleX: data.shapes?.scaleFactorx,
             scaleY: data.shapes?.scaleFactorx,
+            type: "Image",
+            clipPath: shape
+
           });
 
         // shapeCanvas.add(image);
@@ -495,26 +617,42 @@ export class DesignComponent {
         // imageCanvas = image;
         // shapeCanvas.remove(image);
         // shapeCanvas.requestRenderAll();
-        this.clippingImage(shapeCanvas, image, shape, x, y, img);
-        this.currentObjects = {type: "Shape", obj: shapeCanvas.toJSON()};
+        // this.clippingImage(shapeCanvas, image, shape);
+        // shapeCanvas.sendBackwards(image);
+        // image1 = this.clippingImage(shapeCanvas, image, shape, shape3);
+        if (image1 != undefined) {
+          tempShape.push(image1);
+        }
 
-        // shapeCanvas.sendBackwards(image,true); //text
+        shapeCanvas.add(image);
+
+        // this.clippingImage(shapeCanvas, image, shape3);
+        var version = shapeCanvas.toJSON().version;
+        this.currentObjects = { type: "Shape", obj: { version: version, objects: tempShape } };
+        // this.currentObjects = {type: "Shape", obj:  shapeCanvas.toJSON()};
+
+        shapeCanvas.sendBackwards(image,true); //text
+        let text = new fabric.Text(data.value, {
+          fill: "green",
+          fontSize: Number(data.size) ?? 100,
+          left: 50,
+          top: 100,
+          fontFamily: data.font,
+          fontWeight: 'bold',
+          clipPath: shape,
+          name: "clipped",
+          type: "Text"
+        });
+        shapeCanvas.add(text);
+        // shapeCanvas?.bringForward(text, true);
+        shapeCanvas.sendBackwards(text,true);
+  
 
       }
       img.src = data.shapes?.img ?? "";
 
 
-      // let text = new fabric.Text(data.value, {
-      //   fill: data.color ?? "green",
-      //   fontSize: Number(data.size) ?? 100,
-      //   // left: centreX,
-      //   // top: centreY,
-      //   fontFamily: data.font,
-      //   fontWeight: 'bold',
-      // });
-      // shapeCanvas.add(text);
-      // shapeCanvas.sendBackwards(text);
-
+      
       //Disabling corners
       fabric.Object.prototype.setControlsVisibility({
         'ml': false, 'tl': false, 'tr': false,
@@ -523,50 +661,92 @@ export class DesignComponent {
 
       if (!data.selectable) {
         let isImageRemoved = true;
+        let prevObject: fabric.Object | undefined;
         shapeCanvas.on("mouse:down", object => {
 
           let selectedImage = shapeCanvas?.getObjects().find(m => m.name == "image");
-
           let clippedImage = shapeCanvas?.getObjects().find(m => m.name == "clippedImage");
 
           let canvas = object.target?.canvas ?? shapeCanvas;
           let objName = object.target?.name;
+          let i =0;
 
-
-          if (((selectedImage?.aCoords?.bl.x ?? 0) + 5 <= (object.absolutePointer?.x ?? 0) && (selectedImage?.aCoords?.br.x ?? 0) + 5 >= (object.absolutePointer?.x ?? 0) &&
-            (selectedImage?.aCoords?.tl.y ?? 0) + 5 <= (object.absolutePointer?.y ?? 0) && (selectedImage?.aCoords?.bl.y ?? 0) + 5 >= (object.absolutePointer?.y ?? 0))
-            || ((clippedImage?.aCoords?.bl.x ?? 0) + 5 <= (object.absolutePointer?.x ?? 0) && (clippedImage?.aCoords?.br.x ?? 0) + 5 >= (object.absolutePointer?.x ?? 0) &&
-              (clippedImage?.aCoords?.tl.y ?? 0) + 5 <= (object.absolutePointer?.y ?? 0) && (clippedImage?.aCoords?.bl.y ?? 0) + 5 >= (object.absolutePointer?.y ?? 0))) {
-
-            if (isImageRemoved) {
-              // let clippedImg = shapeCanvas.getObjects().find(m => m.name == "clippedImage");
-              if (clippedImage) {
-                canvas?.remove(clippedImage);
-                canvas?.requestRenderAll();
-              }
-              let obj = selectedImage ?? image;
-              canvas?.add(obj);
-              canvas?.sendBackwards(obj);
-              canvas?.requestRenderAll();
-              isImageRemoved = false;
+          if (objName == "clipped" && object.target) {
+            // object.target.name = "Object";
+            // object.target.clipPath = undefined;
+            object.target.set("clipPath", undefined);
+            object.target.set("name", "Object");
+            if (prevObject){
+              // canvas?.bringForward(prevObject, true);
+              prevObject?.set("clipPath", shape);
+              prevObject?.set("name", "clipped");
+              prevObject = undefined;
             }
+              
+            prevObject = object.target;
+            // if( object.target.type == "Image")
+            // canvas?.sendBackwards(object.target,true);
+            // canvas.requestRenderAll();
           }
-          else {
-            // if (object.target != undefined && objName == "image") {
-            //   imageCanvas = object.target;
-            // }
-            // else {
-            //   imageCanvas = shapeCanvas.getObjects().find(m => m.name == "image");
-            // }
-            if (selectedImage) {
-              canvas?.remove(selectedImage);
-              canvas?.requestRenderAll();
-              isImageRemoved = true;
+          else if (object.target == null || object.target == undefined || object.target != prevObject) {
+            // debugger
+            // var object1 = shapeCanvas?.getActiveObject();
+            if (prevObject)
+              // canvas?.bringForward(prevObject, true);
+            prevObject?.set("clipPath", shape);
+            prevObject?.set("name", "clipped");
+            prevObject = undefined;
+            
+            canvas.requestRenderAll();
+          }
+          else if (object.target) {
+            prevObject = object.target;
+          }
 
-              this.clippingImage(canvas, image, shape, x, y, img);
-            }
-          }
-          this.currentObjects ={type: "Shape", obj: shapeCanvas.toJSON()};
+
+          // if (((selectedImage?.aCoords?.bl.x ?? 0) + 5 <= (object.absolutePointer?.x ?? 0) && (selectedImage?.aCoords?.br.x ?? 0) + 5 >= (object.absolutePointer?.x ?? 0) &&
+          //   (selectedImage?.aCoords?.tl.y ?? 0) + 5 <= (object.absolutePointer?.y ?? 0) && (selectedImage?.aCoords?.bl.y ?? 0) + 5 >= (object.absolutePointer?.y ?? 0))
+          //   || ((clippedImage?.aCoords?.bl.x ?? 0) + 5 <= (object.absolutePointer?.x ?? 0) && (clippedImage?.aCoords?.br.x ?? 0) + 5 >= (object.absolutePointer?.x ?? 0) &&
+          //     (clippedImage?.aCoords?.tl.y ?? 0) + 5 <= (object.absolutePointer?.y ?? 0) && (clippedImage?.aCoords?.bl.y ?? 0) + 5 >= (object.absolutePointer?.y ?? 0))) {
+
+          //   if (isImageRemoved) {
+          //     // let clippedImg = shapeCanvas.getObjects().find(m => m.name == "clippedImage");
+          //     if (clippedImage) {
+          //       canvas?.remove(clippedImage);
+          //       canvas?.requestRenderAll();
+          //     }
+          //     let obj = selectedImage ?? image;
+          //     canvas?.add(obj);
+          //     // canvas?.sendBackwards(obj);
+          //     canvas?.sendBackwards(obj,true);
+          //     // canvas.sendBackwards(text,true);
+          //     canvas?.requestRenderAll();
+          //     isImageRemoved = false;
+          //   }
+          // }
+          // else {
+          //   // if (object.target != undefined && objName == "image") {
+          //   //   imageCanvas = object.target;
+          //   // }
+          //   // else {
+          //   //   imageCanvas = shapeCanvas.getObjects().find(m => m.name == "image");
+          //   // }
+          //   if (selectedImage) {
+          //     canvas?.remove(selectedImage);
+          //     canvas?.requestRenderAll();
+          //     isImageRemoved = true;
+
+          //     image1 = this.clippingImage(canvas, image, shape,shape3);
+          //     if(image1 != undefined){
+          //       tempShape.pop();
+          //       tempShape.push(image1);
+          //     }
+
+          //   }
+          // }
+          var version = shapeCanvas.toJSON().version;
+          this.currentObjects = { type: "Shape", obj: { version: version, objects: tempShape } };
+          // this.currentObjects ={type: "Shape", obj: shapeCanvas.toJSON()};
           // this.manipulateObjects("shape");
         });
       }
@@ -659,7 +839,7 @@ export class DesignComponent {
   //   if(this.currentObjects != undefined){
   //     this.currentObjects.objects.forEach(m => {
   //       if(type == "shape"){
-          
+
   //       }
   //     });
   //   }
@@ -845,20 +1025,41 @@ export class DesignComponent {
   }
 
 
-  clippingImage(canvas: fabric.Canvas | undefined, img: fabric.Image, shape: fabric.Object, x: number, y: number, imagePath: HTMLImageElement) {
+  clippingImage(canvas: fabric.Canvas | undefined, img: fabric.Image, shape: fabric.Object, gp: fabric.Object) {
+    let newImage;
     if (canvas) {
       if (img) {
-
+        newImage = img;
         img.cloneAsImage(function (Img: fabric.Image) {
           Img.set({
             clipPath: shape,
-            name: "clippedImage",
+            name: "clipped",
             left: img.left,
             top: img.top,
             strokeDashArray: img.strokeDashArray
           });
           canvas.add(Img);
+          // if(tempShape.some(m => m.name == "clippedImage"))
+          // tempShape.push(Img);
           canvas.requestRenderAll();
+        });
+        img.cloneAsImage(function (Img: fabric.Image) {
+          Img.set({
+            clipPath: gp,
+            name: "clippedImage",
+            left: img.left,
+            top: img.top,
+            selectable: false,
+            // strokeDashArray: img.strokeDashArray
+          });
+          // gp.set('fill', new fabric.Pattern({
+          //   source: image,
+          //   left: img.left,
+          //   top: img.top,
+          //   repeat: 'no-repeat'
+          // }))
+
+          newImage = Img;
         });
 
       }
@@ -866,6 +1067,8 @@ export class DesignComponent {
       shape.set('selectable', false);
       canvas.requestRenderAll();
     }
+
+    return newImage;
 
   }
 }

@@ -122,7 +122,8 @@ export class ProductDetailsComponent implements OnInit {
     })
   }
 
-  completed() {
+  completed(step: MatStepper) {
+    step.reset();
     this.data.completed = true;
     this.ValueChange.emit(this.data);
     this.data = {
