@@ -1,0 +1,329 @@
+<div class="subpanel overflow  sc-hqyNC fmMFPB">
+    <div class="sc-iELTvK kWWMt">
+        <div class="sc-cmTdod fqcxCf"><canvas class="lower-canvas" width="125" height="125"
+                style="width: 100px; height: 100px;" id="canvas-main"></canvas></div>
+        <div class="buttons"><button label="Flip Shape" color="orange" class="sc-htoDjs eqtwmP">Flip
+                Shape</button><button label="Rotate Shape" color="orange" class="sc-htoDjs eqtwmP">Rotate Shape</button>
+        </div>
+    </div>
+    <div class="sc-kafWEX eyTfhD">
+        <div class="expanded sc-feJyhm jtoMWd">
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h5 class="accordion-header" id="headingPopular">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#Popular" aria-expanded="true" aria-controls="Popular">
+                            Popular
+                        </button>
+                    </h5>
+                    <div id="Popular" class="accordion-collapse collapse show" aria-labelledby="headingPopular"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="sc-ktHwxA fQmqEs" *ngFor="let shape of popularShapes;let index=index">
+                                <div class="sc-cIShpX jHUTXT" title="{{shape.name}}" (click)="selectedShape(shape)"><canvas class="lower-canvas" width="87.5"
+                                        height="87.5" style="width: 70px; height: 70px;" id="canvas-{{shape.id}}"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h5 class="accordion-header" id="headingBasic">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#Basic" aria-expanded="true" aria-controls="Basic">
+                            Basic
+                        </button>
+                    </h5>
+                    <div id="Basic" class="accordion-collapse collapse show" aria-labelledby="headingBasic"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="sc-ktHwxA fQmqEs">
+                                <div class="sc-cIShpX jHUTXT" title="Circle"><canvas class="lower-canvas" width="87.5"
+                                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Square"><canvas class="lower-canvas" width="87.5"
+                                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="active sc-cIShpX jHUTXT" title="Oval Horizontal 1"><canvas
+                                        class="lower-canvas" width="87.5" height="87.5"
+                                        style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Oval Vertical 1"><canvas class="lower-canvas"
+                                        width="87.5" height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Rectangle Vertical 1"><canvas class="lower-canvas"
+                                        width="87.5" height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h5 class="accordion-header" id="headingLines">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#Lines" aria-expanded="true" aria-controls="Lines">
+                            Lines
+                        </button>
+                    </h5>
+                    <div id="Lines" class="accordion-collapse collapse show" aria-labelledby="headingLines"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="sc-ktHwxA fQmqEs">
+                                <div class="sc-cIShpX jHUTXT" title="Capsule Horizontal 1"><canvas class="lower-canvas"
+                                        width="87.5" height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Capsule Horizontal 4"><canvas class="lower-canvas"
+                                        width="150" height="87.5" style="width: 120px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Rectangle Horizontal 3"><canvas
+                                        class="lower-canvas" width="150" height="87.5"
+                                        style="width: 120px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Capsule Half Left 1"><canvas class="lower-canvas"
+                                        width="150" height="87.5" style="width: 120px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Capsule Half Right 1"><canvas class="lower-canvas"
+                                        width="150" height="87.5" style="width: 120px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Capsule Vertical 1"><canvas class="lower-canvas"
+                                        width="87.5" height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h5 class="accordion-header" id="headingLetters">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#Letters" aria-expanded="true" aria-controls="Letters">
+                            Letters Shapes
+                        </button>
+                    </h5>
+                    <div id="Letters" class="accordion-collapse collapse show" aria-labelledby="headingLetters"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="sc-ktHwxA fQmqEs">
+                                <div class="sc-cIShpX jHUTXT" title="Dollar Sign"><canvas class="lower-canvas"
+                                        width="87.5" height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Plus1"><canvas class="lower-canvas" width="87.5"
+                                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="@"><canvas class="lower-canvas" width="87.5"
+                                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="#"><canvas class="lower-canvas" width="87.5"
+                                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h5 class="accordion-header" id="headingShapes">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#Shapes" aria-expanded="true" aria-controls="Shapes">
+                            Shapes
+                        </button>
+                    </h5>
+                    <div id="Shapes" class="accordion-collapse collapse show" aria-labelledby="headingShapes"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="sc-ktHwxA fQmqEs">
+                                <div class="sc-cIShpX jHUTXT" title="Heart 1"><canvas class="lower-canvas" width="87.5"
+                                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Donuts 1"><canvas class="lower-canvas" width="87.5"
+                                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Shield 2"><canvas class="lower-canvas" width="87.5"
+                                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Pizza 1"><canvas class="lower-canvas" width="87.5"
+                                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Rectangle Horizontal 2"><canvas
+                                        class="lower-canvas" width="87.5" height="87.5"
+                                        style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Star 5 Pointed"><canvas class="lower-canvas"
+                                        width="87.5" height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Flag Right 1"><canvas class="lower-canvas"
+                                        width="87.5" height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Shield1"><canvas class="lower-canvas" width="87.5"
+                                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Diamond"><canvas class="lower-canvas" width="87.5"
+                                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Percent"><canvas class="lower-canvas" width="87.5"
+                                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Arrow Right 1"><canvas class="lower-canvas"
+                                        width="87.5" height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Caduceus 1"><canvas class="lower-canvas"
+                                        width="87.5" height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Drip"><canvas class="lower-canvas" width="87.5"
+                                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Methodist Cross 1"><canvas class="lower-canvas"
+                                        width="87.5" height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Mortar &amp; Pestle 1"><canvas class="lower-canvas"
+                                        width="87.5" height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Palm Tree Left 1"><canvas class="lower-canvas"
+                                        width="87.5" height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="T Shirt 1"><canvas class="lower-canvas"
+                                        width="87.5" height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Tooth 1"><canvas class="lower-canvas" width="87.5"
+                                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Foot Right"><canvas class="lower-canvas"
+                                        width="87.5" height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Foot Left"><canvas class="lower-canvas"
+                                        width="87.5" height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Eyeglasses 1"><canvas class="lower-canvas"
+                                        width="150" height="87.5" style="width: 120px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="IceCream1"><canvas class="lower-canvas"
+                                        width="87.5" height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                                <div class="sc-cIShpX jHUTXT" title="Cross 1"><canvas class="lower-canvas" width="87.5"
+                                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <h2>Popular<svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M7 14l5-5 5 5z"></path>
+                </svg></h2>
+            <div class="sc-ktHwxA fQmqEs">
+                <div class="sc-cIShpX jHUTXT" title="Circle"><canvas class="lower-canvas" width="87.5" height="87.5"
+                        style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT"><canvas class="lower-canvas" width="87.5" height="87.5"
+                        style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT"><canvas class="lower-canvas" width="87.5" height="87.5"
+                        style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Star 5 Pointed"><canvas class="lower-canvas" width="87.5"
+                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Diamond"><canvas class="lower-canvas" width="87.5" height="87.5"
+                        style="width: 70px; height: 70px;"></canvas></div>
+            </div> -->
+        </div>
+        <!-- <div class="sc-feJyhm jtoMWd">
+            <h2>Basic<svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M7 10l5 5 5-5z"></path>
+                </svg></h2>
+            <div class="sc-ktHwxA fQmqEs">
+                <div class="sc-cIShpX jHUTXT" title="Circle"><canvas class="lower-canvas" width="87.5" height="87.5"
+                        style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Square"><canvas class="lower-canvas" width="87.5" height="87.5"
+                        style="width: 70px; height: 70px;"></canvas></div>
+                <div class="active sc-cIShpX jHUTXT" title="Oval Horizontal 1"><canvas class="lower-canvas" width="87.5"
+                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Oval Vertical 1"><canvas class="lower-canvas" width="87.5"
+                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Rectangle Vertical 1"><canvas class="lower-canvas" width="87.5"
+                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+            </div>
+        </div>
+        <div class="sc-feJyhm jtoMWd">
+            <h2>Lines<svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M7 10l5 5 5-5z"></path>
+                </svg></h2>
+            <div class="sc-ktHwxA fQmqEs">
+                <div class="sc-cIShpX jHUTXT" title="Capsule Horizontal 1"><canvas class="lower-canvas" width="87.5"
+                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Capsule Horizontal 4"><canvas class="lower-canvas" width="150"
+                        height="87.5" style="width: 120px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Rectangle Horizontal 3"><canvas class="lower-canvas" width="150"
+                        height="87.5" style="width: 120px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Capsule Half Left 1"><canvas class="lower-canvas" width="150"
+                        height="87.5" style="width: 120px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Capsule Half Right 1"><canvas class="lower-canvas" width="150"
+                        height="87.5" style="width: 120px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Capsule Vertical 1"><canvas class="lower-canvas" width="87.5"
+                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+            </div>
+        </div>
+        <div class="sc-feJyhm jtoMWd">
+            <h2>Shapes<svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M7 10l5 5 5-5z"></path>
+                </svg></h2>
+            <div class="sc-ktHwxA fQmqEs">
+                <div class="sc-cIShpX jHUTXT" title="Heart 1"><canvas class="lower-canvas" width="87.5" height="87.5"
+                        style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Donuts 1"><canvas class="lower-canvas" width="87.5" height="87.5"
+                        style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Shield 2"><canvas class="lower-canvas" width="87.5" height="87.5"
+                        style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Pizza 1"><canvas class="lower-canvas" width="87.5" height="87.5"
+                        style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Rectangle Horizontal 2"><canvas class="lower-canvas" width="87.5"
+                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Star 5 Pointed"><canvas class="lower-canvas" width="87.5"
+                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Flag Right 1"><canvas class="lower-canvas" width="87.5"
+                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Shield1"><canvas class="lower-canvas" width="87.5" height="87.5"
+                        style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Diamond"><canvas class="lower-canvas" width="87.5" height="87.5"
+                        style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Percent"><canvas class="lower-canvas" width="87.5" height="87.5"
+                        style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Arrow Right 1"><canvas class="lower-canvas" width="87.5"
+                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Caduceus 1"><canvas class="lower-canvas" width="87.5" height="87.5"
+                        style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Drip"><canvas class="lower-canvas" width="87.5" height="87.5"
+                        style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Methodist Cross 1"><canvas class="lower-canvas" width="87.5"
+                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Mortar &amp; Pestle 1"><canvas class="lower-canvas" width="87.5"
+                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Palm Tree Left 1"><canvas class="lower-canvas" width="87.5"
+                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="T Shirt 1"><canvas class="lower-canvas" width="87.5" height="87.5"
+                        style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Tooth 1"><canvas class="lower-canvas" width="87.5" height="87.5"
+                        style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Foot Right"><canvas class="lower-canvas" width="87.5" height="87.5"
+                        style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Foot Left"><canvas class="lower-canvas" width="87.5" height="87.5"
+                        style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Eyeglasses 1"><canvas class="lower-canvas" width="150"
+                        height="87.5" style="width: 120px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="IceCream1"><canvas class="lower-canvas" width="87.5" height="87.5"
+                        style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Cross 1"><canvas class="lower-canvas" width="87.5" height="87.5"
+                        style="width: 70px; height: 70px;"></canvas></div>
+            </div>
+        </div>
+        <div class="sc-feJyhm jtoMWd">
+            <h2>Letters Shapes<svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M7 10l5 5 5-5z"></path>
+                </svg></h2>
+            <div class="sc-ktHwxA fQmqEs">
+                <div class="sc-cIShpX jHUTXT" title="Dollar Sign"><canvas class="lower-canvas" width="87.5"
+                        height="87.5" style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="Plus1"><canvas class="lower-canvas" width="87.5" height="87.5"
+                        style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="@"><canvas class="lower-canvas" width="87.5" height="87.5"
+                        style="width: 70px; height: 70px;"></canvas></div>
+                <div class="sc-cIShpX jHUTXT" title="#"><canvas class="lower-canvas" width="87.5" height="87.5"
+                        style="width: 70px; height: 70px;"></canvas></div>
+            </div>
+        </div>
+        <div class="sc-feJyhm jtoMWd">
+            <h2><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user"
+                    class="svg-inline--fa fa-user fa-w-14 " role="img" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 448 512">
+                    <path fill="currentColor"
+                        d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z">
+                    </path>
+                </svg>&nbsp; My Shapes<svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24"
+                    aria-hidden="true">
+                    <path d="M7 10l5 5 5-5z"></path>
+                </svg></h2>
+            <div class="custom">
+                <form class="sc-gzVnrw fRnxZh">
+                    <div class="sc-bxivhb htaOUd">
+                        <div class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"><label
+                                class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+                                data-shrink="false"><label class="sc-ifAKCX bmKgXx">Your Email Address</label></label>
+                            <div
+                                class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl">
+                                <input aria-invalid="false" autocomplete="email" type="email"
+                                    class="MuiInputBase-input MuiOutlinedInput-input" value="">
+                                <fieldset aria-hidden="true" class="jss273 MuiOutlinedInput-notchedOutline">
+                                    <legend class="jss275"><span><label class="sc-ifAKCX bmKgXx">Your Email
+                                                Address</label></span></legend>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div><button color="grey" disabled="" class="sc-EHOje enYduW"><svg aria-hidden="true"
+                            focusable="false" data-prefix="fas" data-icon="search"
+                            class="svg-inline--fa fa-search fa-w-16 " role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512">
+                            <path fill="currentColor"
+                                d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z">
+                            </path>
+                        </svg></button>
+                </form>
+            </div>
+        </div> -->
+    </div>
+</div>

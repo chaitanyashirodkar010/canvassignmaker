@@ -11,20 +11,23 @@ import { ProductsComponent } from './products/products.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ShapesSideBarComponent } from './shapes-side-bar/shapes-side-bar.component';
 import { ShapeComponent } from './shape/shape.component';
+import { PopupComponent } from './popup/popup.component';
+import { FilterComponentsModule } from '../filter-components/filter-components.module';
 
 
 
 @NgModule({
   declarations: [SignmakerComponent,SignmakerNavBarComponent, ProductsComponent, ProductDetailsComponent,DesignComponent,
-    ShapesSideBarComponent,ShapeComponent
+    ShapesSideBarComponent,ShapeComponent,PopupComponent
   ],
   imports: [
     CommonModule,
     ComponentsRoutingModule,
-    RouterModule,SharedModuleModule,MaterialModuleModule
+    RouterModule,SharedModuleModule,MaterialModuleModule,
+    FilterComponentsModule
   ],
   entryComponents:[
-    ShapeComponent
+    ShapeComponent,PopupComponent
   ]
 })
 export class ComponentsModuleModule { }
