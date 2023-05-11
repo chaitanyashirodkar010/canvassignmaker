@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {fabric } from 'fabric';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-popup',
@@ -15,7 +16,9 @@ export class PopupComponent {
   width: number = 0;
   height: number = 0;
   selectedType: string = 'Shape';
+  selectedObject: fabric.Object | undefined;
   clippedShape: fabric.Object | undefined;
+  tempObj: Array<{ type: string, obj: { version: string; objects: fabric.Object[]; } }>;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: Array<{ type: string, obj: { version: string; objects: fabric.Object[]; } }>, public dialogRef: MatDialogRef<PopupComponent>)
   {}
@@ -39,12 +42,17 @@ export class PopupComponent {
     // this.ContainerCanvas.loadFromJSON(this.data);
     let dt: Object[] = [];
     // let shape: fabric.Object | undefined;
+    this.tempObj = _.cloneDeep(this.data)
     this.data.forEach(m => {
       if (m.type == "Shape") {
         let clipPath = m.obj.objects.find(x => x.name == "ShapeToClip");
         this.clippedShape = m.obj.objects.find(x => x.name == "shapeFace");
+        this.selectedObject = m.obj.objects.at(m.obj.objects.length - 1);
         m.obj.objects.forEach(x => {
           x.selectable = false; x.evented = false;
+          
+          // x.left=  (this.ContainerCanvas.width??0)/2 - 600;
+          // x.top= (this.ContainerCanvas.height??0)/2 -80 ;
           if (x.name == "clipped") {
             x.selectable = true; x.evented = true;
             // x.clipPath = undefined;
@@ -52,7 +60,7 @@ export class PopupComponent {
             // clipArray.push(x);
           }
           this.ContainerCanvas.add(x);
-          this.ContainerCanvas.centerObject(x);
+          // this.ContainerCanvas.centerObject(x);
           if(x.name != "ShapeToClip" && x.name != "shapeFace"){
             this.ContainerCanvas.sendBackwards(x,true);
           }
@@ -60,8 +68,13 @@ export class PopupComponent {
           
         });
 
+        // this.ContainerCanvas.on("mouse:up", object => {
+
+        // });
+
         let prevObject: fabric.Object | undefined;
       this.ContainerCanvas.on("mouse:down", object => {
+        this.selectedObject = object.target != undefined ? object.target : this.selectedObject;
           let objName = object.target?.name;
 
           if (objName == "clipped" && object.target) {
@@ -122,11 +135,15 @@ export class PopupComponent {
     // this.setBackgroundImage(this.ContainerCanvas);
   }
 
-  clearCanvas(canvas: fabric.Canvas) {
+  clearCanvas(canvas: fabric.Canvas): {"clippedObjects": Array<fabric.Object>, "shapeProperties": Array<{key: string, value: any}>} {
     let clippedObjects: Array<fabric.Object> = [];
+    let shapeProperties: Array<{key: string, value: any}> = [];
     canvas.getObjects().forEach(element => {
       if (element.name !== "clipped" && element.name !== "Object") {
         // canvas.bringForward(element,true);
+        if(!shapeProperties.some(m => m.key == element.name)){
+          shapeProperties.push({key: element.name??"", value: element});
+        }
       }
       else{
         element.clipPath = undefined;
@@ -135,7 +152,7 @@ export class PopupComponent {
       }
       canvas.remove(element);
     });
-    return clippedObjects;
+    return {"clippedObjects": clippedObjects, "shapeProperties": shapeProperties};
     // canvas.off("mouse:down");
   }
 
@@ -181,22 +198,21 @@ export class PopupComponent {
   drawShapes(shapeCanvas: fabric.Canvas, selectedShape: any) {
     if (shapeCanvas) {
       // let ctx  =  shapeCanvas.getContext();
-      let clippedObjects = this.clearCanvas(shapeCanvas);
-      
-
+      let {clippedObjects,shapeProperties} = this.clearCanvas(shapeCanvas);
+  
+      // Shadow
+      let shadow = shapeProperties.find(m => m.key == "shadow")?.value;
 
       let path = selectedShape.path.split(" ") ?? [];
       let startCord: Array<string> = path[1].split(",");
       let [x, y] = startCord.map(x => Number(x));
-      // x += 100;
-      // y += 100;
+      x = (shapeCanvas.width??0)/2 - 400;
+      y = (shapeCanvas.height??0)/2 -80 ;
 
       path[1] = x + "," + y;
       let pathJoin = path.join(" ");
       let groupList: Array<fabric.Path> = [];
       let groupList1: Array<fabric.Path> = [];
-
-      // Shadow
 
       for (let i = 5; i < 12; i++) {
         let startCord: Array<string> = path[1].split(",");
@@ -208,7 +224,7 @@ export class PopupComponent {
         let pathJoin = path.join(" ");
 
         let shape = new fabric.Path(pathJoin, {
-          stroke: selectedShape.sideColor,
+          stroke: shadow?.stroke?? "black",
           originY: "center",
           originX: "center",
           selectable: selectedShape.selectable,
@@ -218,7 +234,7 @@ export class PopupComponent {
           absolutePositioned: true,
         });
         let shape5 = new fabric.Path(pathJoin, {
-          stroke: selectedShape.sideColor,
+          stroke: shadow?.stroke?? "black",
           originY: "center",
           originX: "center",
           scaleX: 4,
@@ -235,11 +251,12 @@ export class PopupComponent {
       path = selectedShape.path.split(" ") ?? [];
       startCord = path[1].split(",");
       [x, y] = startCord.map(x => Number(x));
-      // x += 100;
-      // y += 100;
+      x = (shapeCanvas.width??0)/2 - 400;
+      y = (shapeCanvas.height??0)/2 -80 ;
 
       path[1] = x + "," + y;
       // boarder/storke
+      let border = shapeProperties.find(m => m.key == "shadow")?.value;
       for (let i = 0; i < 6; i++) {
         let startCord: Array<string> = path[1].split(",");
         [x, y] = startCord.map(x => Number(x));
@@ -250,7 +267,7 @@ export class PopupComponent {
         let pathJoin = path.join(" ");
 
         let shape = new fabric.Path(pathJoin, {
-          stroke: selectedShape.boarderColor ?? "black",
+          stroke: border?.stroke ?? "black",
           originY: "center",
           originX: "center",
           selectable: selectedShape.selectable,
@@ -260,7 +277,7 @@ export class PopupComponent {
           absolutePositioned: true,
         });
         let shape4 = new fabric.Path(pathJoin, {
-          stroke: selectedShape.boarderColor ?? "black",
+          stroke: border?.stroke ?? "black",
           originY: "center",
           originX: "center",
           scaleX: 4,
@@ -279,12 +296,13 @@ export class PopupComponent {
       path[1] = x + "," + y;
       pathJoin = path.join(" ");
 
+      let shapeFace = shapeProperties.find(m => m.key == "shapeFace")?.value;
       let shape = new fabric.Path(pathJoin, {
         name: "shapeFace",
-        stroke: selectedShape.color ?? "green",
+        stroke: shapeFace?.stroke,
         originY: "center",
         originX: "center",
-        fill: selectedShape.color ?? "green",
+        fill: shapeFace.fill,
         selectable: selectedShape.selectable,
         evented: false,
         scaleX: 4,
@@ -293,10 +311,10 @@ export class PopupComponent {
       });
       let shape3 = new fabric.Path(pathJoin, {
         name: "shapeFace",
-        stroke: selectedShape.color ?? "green",
+        stroke: shapeFace?.stroke,
         originY: "center",
         originX: "center",
-        fill: selectedShape.color ?? "green",
+        fill: shapeFace.fill,
         scaleX: 4,
         scaleY: 4,
         absolutePositioned: true,
@@ -307,9 +325,11 @@ export class PopupComponent {
 
       groupList.push(shape);
       groupList1.push(shape3);
+
+      let ShapeToClip = shapeProperties.find(m => m.key == "ShapeToClip")?.value;
       let shape1 = new fabric.Path(pathJoin, {
         name: "ShapeToClip",
-        stroke: selectedShape.boarderColor ?? selectedShape.color,
+        stroke: ShapeToClip?.stroke,
         originY: "center",
         originX: "center",
         fill: 'rgba(0,0,0,0)',
@@ -322,7 +342,7 @@ export class PopupComponent {
       });
       let shape2 = new fabric.Path(pathJoin, {
         name: "ShapeToClip",
-        stroke: selectedShape.boarderColor ?? selectedShape.color,
+        stroke: ShapeToClip?.stroke,
         originY: "center",
         originX: "center",
         fill: 'rgba(0,0,0,0)',
@@ -336,13 +356,16 @@ export class PopupComponent {
       groupList1.push(shape2);
 
       shapeCanvas.add(...groupList);
-      groupList.forEach(m => {
-        shapeCanvas.centerObject(m);
-      })
+      // groupList.forEach(m => {
+      //   shapeCanvas.centerObject(m);
+      // })
       
 
       clippedObjects.forEach(m => {
         m.clipPath = shape;
+        
+        m.left=  (shapeCanvas.width??0)/2 - 600,
+        m.top = (shapeCanvas.height??0)/2 -80 ,
         shapeCanvas.add(m);
       });
       // ctx.clip();

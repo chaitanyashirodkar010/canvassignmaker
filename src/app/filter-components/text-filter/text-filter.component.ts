@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-text-filter',
@@ -6,5 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./text-filter.component.scss']
 })
 export class TextFilterComponent {
+
+  @Input() text: fabric.Object;
+  @Output() emit: ElementRef<any>;
+
+  ngOnInit(){
+    
+  }
 
 }
