@@ -50,14 +50,7 @@ export class DesignComponent {
 
     this.setBackgroundImage(this.canvas);
 
-    this.dialog.open(PopupComponent,{
-      maxWidth: '100vw',
-      maxHeight: '100vh',
-      height: '100%',
-      width: '100%',
-      panelClass: 'full-screen-modal',
-      data: this.data,
-    })
+   
   }
 
 
