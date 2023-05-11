@@ -1,26 +1,26 @@
-<div class="d-flex align-items-start">
+<div class="d-flex align-items-start h-100">
     <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
         <div class="d-flex align-items-start">
             <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <ul class="sc-gojNiO nYhtN">
-                    <li class="sc-daURTG kGdeYi" (click)="selectedType= 'Product'"><img
+                <ul class="sc-gojNiO nYhtN h100vh">
+                    <li class="sc-daURTG kGdeYi"[ngClass]="{'active': selectedType=='Product'}" (click)="selectedType= 'Product'"><img
                             src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-cabinet-retainer-double/icon.jpg"><label>Product</label>
                     </li>
-                    <li class="sc-daURTG kGdeYi"  (click)="selectedType= 'Shape'"><canvas class="lower-canvas" width="37.5" height="32.5"
+                    <li class="sc-daURTG kGdeYi" [ngClass]="{'active': selectedType=='Shape'}" (click)="selectedType= 'Shape'"><canvas class="lower-canvas" width="37.5" height="32.5"
                             style="width: 30px; height: 26px;" id="canvas-shape"></canvas><label>Shape</label></li>
-                    <li class="active sc-daURTG kGdeYi" (click)="selectedType= 'FaceText'"><img
+                    <li class="sc-daURTG kGdeYi"[ngClass]="{'active': selectedType=='FaceText'}" (click)="selectedType= 'FaceText'"><img
                             src="../assets/images/face-art/facetext.black.svg"><label>Face Text</label></li>
-                    <li class="sc-daURTG kGdeYi"  (click)="selectedType= 'FaceArt'"><img src="../assets/images/face-art/facearts.black.svg"><label>Face
+                    <li class="sc-daURTG kGdeYi" [ngClass]="{'active': selectedType=='FaceArt'}" (click)="selectedType= 'FaceArt'"><img src="../assets/images/face-art/facearts.black.svg"><label>Face
                             Art</label></li>
-                    <li class="sc-daURTG kGdeYi"  (click)="selectedType= 'Upload'"><img
+                    <li class="sc-daURTG kGdeYi" [ngClass]="{'active': selectedType=='Upload'}" (click)="selectedType= 'Upload'"><img
                             src="../assets/images/face-art/faceupload.black.svg"><label>Upload Art</label></li>
-                    <li class="sc-daURTG kGdeYi"  (click)="selectedType= 'Colors'"><img
+                    <li class="sc-daURTG kGdeYi" [ngClass]="{'active': selectedType=='Colors'}" (click)="selectedType= 'Colors'"><img
                             src="../assets/images/face-art/colors.black.svg"><label>Colors</label></li>
-                    <li class="sc-daURTG kGdeYi"  (click)="selectedType= 'Size'"><img
+                    <li class="sc-daURTG kGdeYi" [ngClass]="{'active': selectedType=='Size'}" (click)="selectedType= 'Size'"><img
                             src="../assets/images/face-art/size.black.svg"><label>Size</label></li>
-                    <li class="sc-daURTG kGdeYi"  (click)="selectedType= 'Lighting'"><img
+                    <li class="sc-daURTG kGdeYi" [ngClass]="{'active': selectedType=='Lighting'}" (click)="selectedType= 'Lighting'"><img
                             src="../assets/images/face-art/lighting.black.svg"><label>Lighting</label></li>
-                    <li class="sc-daURTG kGdeYi"  (click)="selectedType= 'Options'"><img
+                    <li class="sc-daURTG kGdeYi" [ngClass]="{'active': selectedType=='Options'}" (click)="selectedType= 'Options'"><img
                             src="../assets/images/face-art/options.black.svg"><label>Options</label></li>
                 </ul>
             </div>

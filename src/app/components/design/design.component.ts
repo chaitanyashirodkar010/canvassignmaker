@@ -34,6 +34,7 @@ export class DesignComponent {
   constructor(private renderer: Renderer2, private host: ElementRef,private dialog: MatDialog) { }
 
   ngOnInit() {
+    
     this.width = window.innerWidth;
     this.height = window.innerHeight;
     this.canvas = new fabric.Canvas("exampleCanvas", {
@@ -48,6 +49,8 @@ export class DesignComponent {
     });
 
     this.setBackgroundImage(this.canvas);
+
+   
   }
 
 
