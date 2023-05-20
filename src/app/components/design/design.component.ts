@@ -463,8 +463,8 @@ export class DesignComponent {
       let path = data.shapes?.path.split(" ") ?? [];
       let startCord = path[1].split(",");
       let [x, y] = startCord.map(x => Number(x));
-      // x += 100;
-      // y += 100;
+      x = (shapeCanvas.width??0)/2 - 600;
+      y = (shapeCanvas.height??0)/2 -80;
 
       path[1] = x + "," + y;
       let pathJoin = path.join(" ");
@@ -483,6 +483,7 @@ export class DesignComponent {
         let pathJoin = path.join(" ");
 
         let shape = new fabric.Path(pathJoin, {
+          name: "shadow",
           stroke: data.sideColor,
           originY: "center",
           originX: "center",
@@ -493,6 +494,7 @@ export class DesignComponent {
           absolutePositioned: true,
         });
         let shape5 = new fabric.Path(pathJoin, {
+          name: "shadow",
           stroke: data.sideColor,
           originY: "center",
           originX: "center",
@@ -510,8 +512,8 @@ export class DesignComponent {
       path = data.shapes?.path.split(" ") ?? [];
       startCord = path[1].split(",");
       [x, y] = startCord.map(x => Number(x));
-      // x += 100;
-      // y += 100;
+      x = (shapeCanvas.width??0)/2 - 600;
+      y = (shapeCanvas.height??0)/2 -80 ;
 
       path[1] = x + "," + y;
       // boarder/storke
@@ -525,6 +527,7 @@ export class DesignComponent {
         let pathJoin = path.join(" ");
 
         let shape = new fabric.Path(pathJoin, {
+          name: "boarder",
           stroke: data.boarderColor ?? "black",
           originY: "center",
           originX: "center",
@@ -535,6 +538,7 @@ export class DesignComponent {
           absolutePositioned: true,
         });
         let shape4 = new fabric.Path(pathJoin, {
+          name: "boarder",
           stroke: data.boarderColor ?? "black",
           originY: "center",
           originX: "center",
@@ -627,8 +631,8 @@ export class DesignComponent {
             name: "clipped",
             strokeDashArray: [7, 7],
             cornerStyle: 'circle',
-            left: 50,
-            top: 100,
+            left:  (shapeCanvas.width??0)/2 - 600,
+            top: (shapeCanvas.height??0)/2 -80 ,
             absolutePositioned: true,
             scaleX: data.shapes?.scaleFactorx,
             scaleY: data.shapes?.scaleFactorx,
@@ -648,8 +652,8 @@ export class DesignComponent {
         let text = new fabric.Text(data.value, {
           fill: "green",
           fontSize: Number(data.size) ?? 100,
-          left: 50,
-          top: 100,
+          left:  (shapeCanvas.width??0)/2 - 600,
+          top: (shapeCanvas.height??0)/2 -80 ,
           fontFamily: data.font,
           fontWeight: 'bold',
           // clipPath: shape,

@@ -25,9 +25,9 @@
                 </ul>
             </div>
             <div class="tab-content" id="v-pills-tabContent" style="width: 370px;">
-              <app-shape-filter *ngIf="selectedType == 'Shape'" (shapeEmitter)="shapeEmitter($event)"></app-shape-filter>
-              <app-text-filter *ngIf="selectedType == 'FaceText'"></app-text-filter>
-              <app-text-art-filter *ngIf="selectedType == 'FaceArt'"></app-text-art-filter>
+              <app-shape-filter *ngIf="selectedType == 'Shape'" (shapeEmitter)="shapeEmitter($event)" ></app-shape-filter>
+              <app-text-filter *ngIf="selectedType == 'FaceText'" [selectedObject]="selectedObject"></app-text-filter>
+              <app-text-art-filter *ngIf="selectedType == 'FaceArt'" [selectedObject]="selectedObject"></app-text-art-filter>
             </div>
         </div>
     </div>
