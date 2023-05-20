@@ -179,7 +179,7 @@
 }
 
 .jtxUHf {
-  background-color: #fe0305;
+  background-color: #fe0002;
   border: 0px;
   color: white;
   font-size: 15px;
@@ -232,17 +232,15 @@ button {
 
 .crmGkW {
   position: relative;
-  background-image: url(/images/Jose-Banners-layout-FRONt.jpg);
+  background-image: url(https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/hero/building7.jpg);
   background-repeat: no-repeat;
   background-position: center top;
-  height: 100vh;
-  background-size: contain;
+  height: 500px;
 }
 
 .jdgwtp {
   margin: 0px 0px 30px;
   color: white;
-  margin-top: -189px;
   text-align: right;
 }
 
@@ -319,7 +317,7 @@ svg:not(:root).svg-inline--fa {
 }
 
 .jtxUHf {
-  background-color: #fe0305;
+  background-color: #fe0002;
   border: 0px;
   color: white;
   font-size: 15px;
@@ -343,7 +341,7 @@ svg:not(:root).svg-inline--fa {
 }
 
 .iSfTPd li.design {
-  background-color: #dc3545;
+  background-color: #fe0002;
 }
 
 .iSfTPd li.design a {
@@ -549,8 +547,8 @@ a {
 
 .igWpfW {
   background-color: transparent;
-  border: 1px solid #dc3545;
-  color: #dc3545;
+  border: 1px solid #fe0002;
+  color: #fe0002;
   padding: 5px 10px;
   font-size: 12px;
   border-radius: 5px;
@@ -974,7 +972,7 @@ svg:not(:root).svg-inline--fa {
 }
 
 .jtxUHf {
-  background-color: #fe0305;
+  background-color: #fe0002;
   border: 0px;
   color: white;
   font-size: 15px;
