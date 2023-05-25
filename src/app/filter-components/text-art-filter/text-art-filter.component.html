@@ -1,4 +1,20 @@
-<div class="subpanel overflow  sc-hqyNC kaXjBM" style="background-color: white;">
+<div class="subpanels sc-lkqHmb frmgHG" *ngIf="!isNewArt">
+    <div class="subpanel overflow text sc-hqyNC kaXjBM">
+        <div style="padding: 10px 40px 5px;"><button label="Add New Text" color="burgundy" class="sc-EHOje fFTDTg"
+                (click)="isNewArt = true">Add
+                New Art</button></div>
+        <div label="Opacity" class="sc-eerKOB ekAxWx" style="padding-top: 15px;">
+            <div class="sc-emmjRN eDOXIf">Opacity</div>
+            <div class="sc-cpmLhU jhojzM">
+                <mat-slider min="0" max="1.1" step="0.1" discrete [displayWith]="formatLabel">
+                    <input matSliderThumb (input)="onInputChange($event)">
+                </mat-slider>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="subpanel overflow  sc-hqyNC kaXjBM" style="background-color: white;" *ngIf="isNewArt">
     <div class="sc-lhVmIH jUvqhF">
         <div class="sc-bYSBpT fcnjTq">Search:</div><input class="sc-elJkPf caRYDT" value="Popular"><button
             class="sc-jtRfpW elRzds"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down"
@@ -10,9 +26,14 @@
             </svg></button>
     </div>
     <div>
-        <div class="sc-kTUwUJ exoAQC"><button data-id="100120" class="sc-dqBHgY eYqUzi"><img
-                    src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/files/graphics/blacklineargradient-thumb.GCb2WSmp36.png"
-                    style="margin: 2px; border-radius: 3px;"></button><button data-id="100099"
+        <div class="sc-kTUwUJ exoAQC" >
+            <ng-container *ngFor="let art of faceArtList">
+            <button data-id="{{art.id}}" class="sc-dqBHgY eYqUzi" (click)="AddImage(art)"><img [src]="getUrl(art.url)"
+                    style="margin: 2px; border-radius: 3px;">
+            </button>
+
+            </ng-container>
+            <!-- <button data-id="100099"
                 class="sc-dqBHgY eYqUzi"><img
                     src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/files/graphics/seal05.HoyImpXg9t.svg"
                     style="margin: 2px; border-radius: 3px;"></button><button data-id="100112"
@@ -39,6 +60,7 @@
                     style="margin: 2px; border-radius: 3px;"></button><button data-id="100013"
                 class="sc-dqBHgY eYqUzi"><img
                     src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/files/graphics/carswoop.zCvUS99kwE.svg"
-                    style="margin: 2px; border-radius: 3px;"></button></div>
+                    style="margin: 2px; border-radius: 3px;"></button> -->
+        </div>
     </div>
 </div>

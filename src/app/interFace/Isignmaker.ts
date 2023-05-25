@@ -1,4 +1,4 @@
-export interface ITextData  {
+export interface ITextData {
   value: string,
   font: string,
   size: string,
@@ -19,7 +19,46 @@ export interface ITextData  {
   shapes?: IShapes,
   opacity?: number,
   completed?: boolean
-  selectable?: boolean
+  selectable?: boolean,
+  graphics?: Array<IGraphic>,
+  product?: any
+}
+
+export interface IGraphic {
+  align?: string,
+  angle?: number,
+  color_hex?: string,
+  diameter?: number,
+  face?: number,
+  faceart_id?: string,
+  faceart_url?: string,
+  faceart_url_thumb?: string,
+  filename?: string,
+  flip_h?: number,
+  flip_v?: number,
+  font_name?: string,
+  font_size?: number,
+  font_style?: string,
+  height?: number,
+  id?: number,
+  kerning?: string,
+  line_height?: number
+  opacity?: string,
+  position_x?: number,
+  position_y?: number,
+  scale_x?: number,
+  scale_y?: number,
+  shadow_color_hex?: string,
+  shadow_size?: string,
+  signgroup_id?: number,
+  stack_order?: number,
+  stroke_color_hex?: string,
+  stroke_size?: number,
+  text?: string,
+  text_max_height_percent?: number,
+  text_max_width_percent?: number,
+  type?: string,
+  width?: number,
 }
 
 export interface position {
@@ -59,6 +98,7 @@ export interface IProduct {
 }
 
 export interface IShapes {
+  id?: number,
   backgroundPath: string,
   path: string,
   name: string,
@@ -69,4 +109,5 @@ export interface IShapes {
   scaleFactorY?: number,
   offsetX?: number,
   offsetY?: number,
+  faceArtId?: number,
 }

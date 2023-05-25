@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { IColor, Ifont, ITextData, IProduct, IShapes } from 'src/app/interface/Isignmaker';
 import { MatStepper } from '@angular/material/stepper';
+import { FaceArts } from 'src/app/constants/constants';
 
 @Component({
   selector: 'app-product-details',
@@ -22,7 +23,6 @@ export class ProductDetailsComponent implements OnInit {
     size: "100",
     color: "red",
   };
-  toogleType: string = 'Acrylic Face';
   step: number = -1;
 
   fontArray: Array<Ifont> = [
@@ -55,11 +55,7 @@ export class ProductDetailsComponent implements OnInit {
     { name: "rgb(255, 0, 153)" },
   ];
 
-  @Input() selectedProduct: IProduct = {
-    category: '',
-    subCategory: '',
-    type: '',
-  };
+  @Input() selectedProduct: any;
   @Output() bckEvt = new EventEmitter<IProduct>();
   @Output() ValueChange = new EventEmitter<ITextData>();
 
@@ -69,6 +65,7 @@ export class ProductDetailsComponent implements OnInit {
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: ['', Validators.required],
     });
+    this.data.product = this.selectedProduct;
 
     this.isLinear = false;
     this.edValueKeyPress();
@@ -140,6 +137,24 @@ export class ProductDetailsComponent implements OnInit {
 
   selectedShape(shape: IShapes) {
     this.data.shapes = shape;
+    let faceArts = FaceArts.faceArt[0].facearts?.filter(m => m.signgroup_id == shape.faceArtId);
+    this.data.graphics = [];
+    faceArts?.forEach(m => {
+      this.data.graphics?.push({
+        faceart_url: m.url??"",
+        faceart_url_thumb: m.url_thumb??"",
+        scale_x: 0.1,
+        scale_y: 0.1,
+        text: m.text?? "",
+        font_name: m.font_name??"",
+        font_size: m.font_size??20,
+        font_style: m.font_style??"",
+        position_x: m.position_x,
+        position_y: m.position_y,
+        color_hex: m.color_hex,
+        opacity: m.opacity,
+      })
+    })
     this.ValueChange.emit(this.data);
   }
 }

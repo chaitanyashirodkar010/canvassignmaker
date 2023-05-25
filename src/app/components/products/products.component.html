@@ -12,7 +12,7 @@
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
     </div>
     <div class="d-flex align-items-center cursor-pointer" (click)="products.category = 'Lit Caninet Sign'"><img
-            src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/categories/lit-shapes.jpg"
+            src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/categories/lit-cabinets.jpg"
             width="180">
         <div class="mx-3">Lit Caninet Sign</div>
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
@@ -25,44 +25,44 @@
 </ng-container>
 <ng-container *ngIf="products.category != '' && products.subCategory == ''  ">
     <ng-container *ngIf="products.category == 'Lit Letters & logos'">
-        <button mat-button (click)="products.category = '';products.subCategory =''">Back</button>
+        <button mat-button (click)="products.category = '';products.subCategory =''; isAdd = false">Back</button>
         <div class="d-flex align-items-center cursor-pointer"
-            (click)="products.subCategory = 'Face Lit Channel Letters & Logos'"><img
+            (click)="products.subCategory = 'Face Lit Channel Letters & Logos';getProductfeatures()"><img
                 src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-channel-letters-shapes/product.jpg"
                 width="180">
             <div class="mx-3">Face Lit Channel Letters & Logos</div>
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
         </div>
         <div class="d-flex align-items-center cursor-pointer"
-            (click)="products.subCategory = 'Face Lit Channel Letters & Logos on Raceway'"><img
+            (click)="products.subCategory = 'Face Lit Channel Letters & Logos on Raceway';getProductfeatures()"><img
                 src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-channel-letters-shapes-raceway/product.jpg"
                 width="180">
             <div class="mx-3">Face Lit Channel Letters & Logos on Raceway</div>
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
         </div>
         <div class="d-flex align-items-center cursor-pointer"
-            (click)="products.subCategory = 'Face & Halo Lit Channel Letters & Logos'"><img
+            (click)="products.subCategory = 'Face & Halo Lit Channel Letters & Logos';getProductfeatures()"><img
                 src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-halo-channel-letters-shapes/product.jpg"
                 width="180">
             <div class="mx-3">Face & Halo Lit Channel Letters & Logos</div>
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
         </div>
         <div class="d-flex align-items-center cursor-pointer"
-            (click)="products.subCategory = 'Face & Halo Lit Channel Letters & Logos on Raceway'"><img
-                src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-halo-channel-letters-shapes-raceway/product.jpg"
+            (click)="products.subCategory = 'Face & Halo Lit Channel Letters & Logos on Raceway';getProductfeatures()">
+            <img src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-halo-channel-letters-shapes-raceway/product.jpg"
                 width="180">
             <div class="mx-3">Face & Halo Lit Channel Letters & Logos on Raceway</div>
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
         </div>
         <div class="d-flex align-items-center cursor-pointer"
-            (click)="products.subCategory = 'Halo Lit Channel Letters & Logos'"><img
+            (click)="products.subCategory = 'Halo Lit Channel Letters & Logos';getProductfeatures()"><img
                 src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/halo-channel-letters-shapes/product.jpg"
                 width="180">
             <div class="mx-3">Halo Lit Channel Letters & Logos</div>
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
         </div>
         <div class="d-flex align-items-center cursor-pointer"
-            (click)="products.subCategory = 'Halo Lit Channel Letters & Logos on Raceway'"><img
+            (click)="products.subCategory = 'Halo Lit Channel Letters & Logos on Raceway';getProductfeatures()"><img
                 src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/halo-channel-letters-shapes-raceway/product.jpg"
                 width="180">
             <div class="mx-3">Halo Lit Channel Letters & Logos on Raceway</div>
@@ -71,14 +71,16 @@
     </ng-container>
 
     <ng-container *ngIf="products.category == 'Lit Shape Sign'">
-        <button mat-button (click)="products.category = ''">Back</button>
-        <div class="d-flex align-items-center cursor-pointer" (click)="products.subCategory = 'Lit Shape Sign'"><img
+        <button mat-button (click)="products.category = ''; isAdd = false">Back</button>
+        <div class="d-flex align-items-center cursor-pointer"
+            (click)="products.subCategory = 'Lit Shape Sign';getProductfeatures()"><img
                 src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-shape-sign/product.jpg"
                 width="180">
             <div class="mx-3">Lit Shape Sign</div>
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
         </div>
-        <div class="d-flex align-items-center cursor-pointer" (click)="products.subCategory = 'Lit Decor Sign'"><img
+        <div class="d-flex align-items-center cursor-pointer"
+            (click)="products.subCategory = 'Lit Decor Sign';getProductfeatures()"><img
                 src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-decor-sign/product.jpg"
                 width="180">
             <div class="mx-3">Lit Decor Sign</div>
@@ -87,30 +89,30 @@
     </ng-container>
 
     <ng-container *ngIf="products.category == 'Lit Caninet Sign'">
-        <button mat-button (click)="products.category = ''">Back</button>
+        <button mat-button (click)="products.category = ''; isAdd = false">Back</button>
         <div class="d-flex align-items-center cursor-pointer"
-            (click)="products.subCategory = 'Lit Squared Cabinet - Single Faced'"><img
+            (click)="products.subCategory = 'Lit Squared Cabinet - Single Faced';getProductfeatures()"><img
                 src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-cabinet-retainer-single/product.jpg"
                 width="180">
             <div class="mx-3">Lit Squared Cabinet - Single Faced</div>
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
         </div>
         <div class="d-flex align-items-center cursor-pointer"
-            (click)="products.subCategory = 'Lit Squared Cabinet - Double Faced'"><img
-                src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-channel-letters-shapes-raceway/product.jpg"
+            (click)="products.subCategory = 'Lit Squared Cabinet - Double Faced';getProductfeatures()"><img
+                src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-cabinet-retainer-double/product.jpg"
                 width="180">
             <div class="mx-3">Lit Squared Cabinet - Double Faced</div>
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
         </div>
         <div class="d-flex align-items-center cursor-pointer"
-            (click)="products.subCategory = 'Lit Shape Cabinet – Single Faced'"><img
+            (click)="products.subCategory = 'Lit Shape Cabinet – Single Faced';getProductfeatures()"><img
                 src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-cabinet-shape-single/product.jpg"
                 width="180">
             <div class="mx-3">Lit Shape Cabinet – Single Faced</div>
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
         </div>
         <div class="d-flex align-items-center cursor-pointer"
-            (click)="products.subCategory = 'Lit Shape Cabinet – Double Faced'"><img
+            (click)="products.subCategory = 'Lit Shape Cabinet – Double Faced';getProductfeatures()"><img
                 src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-cabinet-shape-double/product.jpg"
                 width="180">
             <div class="mx-3">Lit Shape Cabinet – Double Faced</div>
@@ -119,23 +121,23 @@
     </ng-container>
 
     <ng-container *ngIf="products.category == 'Dimensional Letters & Logos'">
-        <button mat-button (click)="products.category = ''">Back</button>
+        <button mat-button (click)="products.category = ''; isAdd = false">Back</button>
         <div class="d-flex align-items-center cursor-pointer"
-            (click)="products.subCategory = 'Acrylic Letters & Logo Shapes'"><img
+            (click)="products.subCategory = 'Acrylic Letters & Logo Shapes';getProductfeatures()"><img
                 src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/acrylic-letters-shapes/product.jpg"
                 width="180">
             <div class="mx-3">Acrylic Letters & Logo Shapes</div>
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
         </div>
         <div class="d-flex align-items-center cursor-pointer"
-            (click)="products.subCategory = 'PVC Letters & Logo Shapes'">
+            (click)="products.subCategory = 'PVC Letters & Logo Shapes';getProductfeatures()">
             <img src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/pvc-letters-shapes/product.jpg"
                 width="180">
             <div class="mx-3">PVC Letters & Logo Shapes</div>
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
         </div>
         <div class="d-flex align-items-center cursor-pointer"
-            (click)="products.subCategory = 'Metal Fabricated Letters & Logo Shapes'"><img
+            (click)="products.subCategory = 'Metal Fabricated Letters & Logo Shapes';getProductfeatures()"><img
                 src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/metal-letters-shapes/product.jpg"
                 width="180">
             <div class="mx-3">Metal Fabricated Letters & Logo Shapes</div>
@@ -147,54 +149,52 @@
 <ng-container *ngIf="products.subCategory != '' && products.category != '' && !isAdd">
 
     <div class="d-flex flex-column justify-content-around h-100">
-        <button mat-button (click)="products.category = ''">Back</button>
+        <button mat-button (click)="products.subCategory = ''; isAdd = false">Back</button>
         <button mat-button (click)="isAdd = true">Add</button>
         <div class="subpanel overflow  sc-hqyNC fmMFPB">
             <div class="mt-3">
-                <h5>Face Lit Channel Letters Logos</h5>
-                <p>Our patented LED Lit plug-n-play channel letter system allows non-electricians to install UL listed
-                    Lit
-                    Channel Letters. The fastest and simplest installation available.</p>
+                <h3>{{title}}</h3>
+                <p>{{description}}</p>
+                <ng-container *ngIf="selectedFeature">
+                    <h5>Sign Features</h5>
+                    <div class="sc-jqCOkK bsmNqF d-flex">
+                        <div class="parts">
 
-                <h5>Sign Features</h5>
-                <div class="sc-jqCOkK bsmNqF d-flex">
-                    <div class="parts">
+                            <ul *ngFor="let ft of features">
+                                <li class="active" *ngIf="ft.status == 'Required'" (click)="selectedFeature = ft">
+                                    {{ft.title}}<div class="line"></div>
+                                </li>
+                            </ul>
+                            <ng-container *ngIf="isOptional">
+                                <h5>Optional</h5>
+                                <ul *ngFor="let ft of features">
+                                    <li class="" *ngIf="ft.status == 'Optional'" (click)="selectedFeature = ft">
+                                        {{ft.title}}</li>
+                                </ul>
 
-                        <ul>
-                            <li class="active" (click)="toogleType='Acrylic Face'">Acrylic Face<div class="line"></div>
-                            </li>
-                            <li class="" (click)="toogleType='trim'">Trim</li>
-                            <li class="" (click)="toogleType='sides'">Sides</li>
-                            <li class="" (click)="toogleType='led'">LEDs Face Lights</li>
-                        </ul>
-                        <h5>Optional</h5>
-                        <ul>
-                            <li class="">Background</li>
-                        </ul>
+                            </ng-container>
+                        </div>
+                        <div class="image">
+                            <img class="w-100" [src]="getImg()" alt="">
+                        </div>
                     </div>
-                    <div class="image">
-                        <img class="w-100"
-                            src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-channel-letters-shapes/breakdown-face.jpg?v2"
-                            alt="" *ngIf="toogleType=='Acrylic Face'">
-                        <img class="w-100" src="../../../assets/images/breakdown-trim.jpg" alt=""
-                            *ngIf="toogleType=='trim'">
-                        <img class="w-100" src="../../../assets/images/breakdown-side.jpg" alt=""
-                            *ngIf="toogleType=='sides'">
-                        <img class="w-100" src="../../../assets/images/breakdown-leds.jpg" alt=""
-                            *ngIf="toogleType=='led'">
-                    </div>
-                </div>
-                <div class="sc-uJMKN ixrctb">High impact acrylic to withstand years of harsh weather and resist the
-                    sun's
-                    fading,
-                    Available in almost any color or full color graphic</div>
+                    <div class="sc-uJMKN ixrctb">{{selectedFeature?.description??""}}</div>
+                </ng-container>
+
             </div>
         </div>
     </div>
 </ng-container>
 
-<ng-container *ngIf="isAdd">
-    <ng-container
+<ng-container *ngIf="isAdd && products.category != ''&& products.subCategory !=''">
+    <ng-container *ngFor="let pt of ProductsList">
+        <div class="d-flex align-items-center cursor-pointer" (click)="selectedProduct(pt)"><img
+                [src]="getSelImg(pt.name)" width="180">
+            <div class="mx-3">{{pt.title}}</div>
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+    </ng-container>
+    <!-- <ng-container
         *ngIf="products.subCategory == 'Face Lit Channel Letters & Logos' || products.subCategory == 'Face Lit Channel Letters & Logos on Raceway'">
         <div class="d-flex align-items-center cursor-pointer" (click)="selectedProduct('Face Lit Letters')"><img
                 src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/products/lit-letters/icon.jpg"
@@ -223,5 +223,7 @@
             <div class="mx-3">Face Lit Logo Shape on Raceway</div>
             <i class="fa fa-chevron-right" aria-hidden="true"></i>
         </div>
-    </ng-container>
+    </ng-container> -->
+    <button *ngIf="products.category != ''&& products.subCategory !=''"
+        (click)="products.category = '';products.subCategory =''; isAdd = false">Add Other Products</button>
 </ng-container>

@@ -1,34 +1,7 @@
-
 <div class="sc-kTUwUJ exoAQC">
-    <button data-id="313117" class="sc-dqBHgY kZLXmX" (click)="SelectedShape('SQUARE')"><img
-        src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/files/signs/sign.313117.v2.png"
-        style="margin: 2px; border-radius: 3px;" width="100px" height="100px"></button>
-
-    <button data-id="313116" class="sc-dqBHgY kZLXmX" (click)="SelectedShape('CIRCLE')"><img
-        src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/files/signs/sign.313116.v3.png"
-        style="margin: 2px; border-radius: 3px;" width="100px" height="100px"></button>
-
-    <button data-id="313118" class="sc-dqBHgY kZLXmX" (click)="SelectedShape('SQUARE')"><img
-        src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/files/signs/sign.313118.v2.png"
-        style="margin: 2px; border-radius: 3px;" width="100px" height="100px"></button>
-
-    <button data-id="313119" class="sc-dqBHgY kZLXmX" (click)="SelectedShape('FLAGRAMERICA')"><img
-        src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/files/signs/sign.313119.v2.png"
-        style="margin: 2px; border-radius: 3px;" width="100px" height="100px"></button>
-
-    <button data-id="300995" class="sc-dqBHgY kZLXmX" (click)="SelectedShape('STAR')"><img
-        src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/files/signs/sign.300995.v2.png"
-        style="margin: 2px; border-radius: 3px;" width="100px" height="100px"></button>
-
-    <button data-id="313120" class="sc-dqBHgY kZLXmX" (click)="SelectedShape('SQUARE')"><img
-        src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/files/signs/sign.313120.v4.png"
-        style="margin: 2px; border-radius: 3px;" width="100px" height="100px"></button>
-
-    <button data-id="300981" class="sc-dqBHgY kZLXmX" (click)="SelectedShape('PIZZA')"><img
-        src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/files/signs/sign.300981.v1.png"
-        style="margin: 2px; border-radius: 3px;" width="100px" height="100px"></button>
-
-    <button data-id="300987" class="sc-dqBHgY kZLXmX" (click)="SelectedShape('SUN')"><img
-        src="https://storage.googleapis.com/signmonkey-148101.appspot.com/2020/files/signs/sign.300987.v1.png"
-        style="margin: 2px; border-radius: 3px;" width="100px" height="100px"></button>
-  </div>
+    <ng-container *ngFor="let shape of shapeLst">
+        <button data-id="{{shape.id}}" class="sc-dqBHgY kZLXmX" (click)="SelectedShape(shape.groups)"><img
+                src="{{'https://storage.googleapis.com/signmonkey-148101.appspot.com/' + shape.url}}"
+                style="margin: 2px; border-radius: 3px;" width="100px" height="100px"></button>
+    </ng-container>
+</div>

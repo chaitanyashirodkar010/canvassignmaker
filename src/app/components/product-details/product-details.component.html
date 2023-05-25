@@ -1,6 +1,6 @@
 <mat-stepper #stepper>
 
-  <ng-container *ngIf="selectedProduct.type == 'Face Lit Letters' || selectedProduct.type == 'Face Lit Letters on Raceway'">
+  <ng-container *ngIf="selectedProduct.title.toLowerCase().includes('letter')">
     <mat-step>
       <button mat-button matStepperPrevious (click)="exit()">Back</button>
       <button mat-button matStepperNext>Next</button>
@@ -20,7 +20,7 @@
       </mat-action-list>
     </mat-step>
   </ng-container>
-  <ng-container *ngIf="selectedProduct.type == 'Face Lit Logo Shape' || selectedProduct.type == 'Face Lit Logo Shape on Raceway'">
+  <ng-container *ngIf="!selectedProduct.title.toLowerCase().includes('letter')">
     <mat-step>
       <button mat-button matStepperPrevious (click)="exit()">Back</button>
       <button mat-button matStepperNext>Next</button>
@@ -34,7 +34,7 @@
     <mat-step>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button matStepperNext>Next</button>
-      <app-shapes-side-bar (shapeEmitter)="selectedShape($event)"></app-shapes-side-bar>
+      <app-shapes-side-bar (shapeEmitter)="selectedShape($event)" [product]="selectedProduct"></app-shapes-side-bar>
     </mat-step>
 
   </ng-container>
@@ -62,14 +62,14 @@
         </button>
       </li>
       <!-- race -->
-      <li class="nav-item" role="presentation" *ngIf="selectedProduct.type == 'Face Lit Letters on Raceway'">
+      <li class="nav-item" role="presentation" *ngIf="selectedProduct.title.toLowerCase().includes('raceway')">
         <button class="nav-link p-0 m-0" id="race-tab" data-bs-toggle="tab" data-bs-target="#race-tab-pane"
           type="button" role="tab" aria-controls="race-tab-pane" aria-selected="false"> <img
             src="../../../assets/images/letter3.png" alt="">
         </button>
       </li>
       <!-- shadow -->
-      <li class="nav-item" role="presentation" *ngIf="selectedProduct.type == 'shadow'">
+      <li class="nav-item" role="presentation" *ngIf="selectedProduct.title.toLowerCase().includes('halo')">
         <button class="nav-link p-0 m-0" id="shadow-tab" data-bs-toggle="tab" data-bs-target="#shadow-tab-pane"
           type="button" role="tab" aria-controls="shadow-tab-pane" aria-selected="false"> <img
             src="../../../assets/images/letter3.png" alt="">

@@ -17,8 +17,10 @@ export class PopupComponent {
   height: number = 0;
   selectedType: string = 'Shape';
   selectedObject: fabric.Object | undefined;
+  selectedProduct: fabric.Object | undefined;
   clippedShape: fabric.Object | undefined;
   tempObj: Array<{ type: string, obj: { version: string; objects: fabric.Object[]; } }>;
+  navClick: boolean = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: Array<{ type: string, obj: { version: string; objects: fabric.Object[]; } }>, public dialogRef: MatDialogRef<PopupComponent>)
   {}
@@ -75,6 +77,10 @@ export class PopupComponent {
         let prevObject: fabric.Object | undefined;
       this.ContainerCanvas.on("mouse:down", object => {
         this.selectedObject = object.target != undefined ? object.target : this.selectedObject;
+        this.selectedType = object.target != undefined ? object.target.type??"" : this.selectedType;
+        this.navClick = false;
+        // this.selectedProduct = bject.target != undefined ? object.target : this.selectedObject;
+        
           let objName = object.target?.name;
 
           if (objName == "clipped" && object.target) {
@@ -364,9 +370,10 @@ export class PopupComponent {
       clippedObjects.forEach(m => {
         m.clipPath = shape;
         
-        m.left=  (shapeCanvas.width??0)/2 - 600,
+        m.left =  (shapeCanvas.width??0)/2 - 600,
         m.top = (shapeCanvas.height??0)/2 -80 ,
         shapeCanvas.add(m);
+        shapeCanvas.sendBackwards(m);
       });
       // ctx.clip();
 
@@ -486,5 +493,66 @@ export class PopupComponent {
       // });
 
     }
+  }
+
+  textEmitter(data: any){
+    if(data["isNewText"]){
+      let text = new fabric.Text("Add Your Text Here", {
+        fill: "white",
+        stroke: "black",
+        fontSize: 100,
+        left:  (this.ContainerCanvas.width??0)/2 - 600,
+        top: (this.ContainerCanvas.height??0)/2 -80 ,
+        fontFamily: "Arial",
+        fontWeight: 'bold',
+        // clipPath: shape,
+        // name: "clipped",
+        type: "FaceText"
+      });
+      this.ContainerCanvas.add(text);
+      this.ContainerCanvas.sendBackwards(text,true);
+      this.ContainerCanvas.requestRenderAll();
+    }
+    else{
+      this.ContainerCanvas.getActiveObject()?.set(data);
+      this.ContainerCanvas.requestRenderAll();
+    }
+  }
+
+  textArtEmitter(data: any){
+    if(data['isNewArt']){
+      var img = new Image();
+      var image: fabric.Image;
+
+
+      img.onload = () => {
+        image = new fabric.Image(img,
+          {
+            name: "image",
+            strokeDashArray: [7, 7],
+            cornerStyle: 'circle',
+            left:  (this.ContainerCanvas.width??0)/2 - 600,
+            top: (this.ContainerCanvas.height??0)/2 -80 ,
+            absolutePositioned: true,
+            scaleX: 0.1,
+            scaleY: 0.1,
+            type: "FaceArt",
+          });
+          this.ContainerCanvas.add(image);
+          this.ContainerCanvas.sendBackwards(image,true);
+          this.ContainerCanvas.requestRenderAll();
+
+      }
+      img.src = "https://storage.googleapis.com/signmonkey-148101.appspot.com/"+ (data.art?.url ?? "");
+    }
+    else{
+      this.ContainerCanvas.getActiveObject()?.set(data);
+      this.ContainerCanvas.requestRenderAll();
+    }
+  }
+
+
+  closePopUp(){
+    this.dialogRef.close();
   }
 }
