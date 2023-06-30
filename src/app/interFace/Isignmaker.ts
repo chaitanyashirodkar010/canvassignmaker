@@ -43,7 +43,7 @@ export interface IGraphic {
   id?: number,
   kerning?: string,
   line_height?: number
-  opacity?: string,
+  opacity?: number,
   position_x?: number,
   position_y?: number,
   scale_x?: number,

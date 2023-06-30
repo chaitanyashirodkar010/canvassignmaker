@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from '../popup/popup.component';
 // import 'fabric-customise-controls';
 import * as _ from 'lodash';
+import { LoaderService } from 'src/app/service/loader.service';
 @Component({
   selector: 'app-design',
   templateUrl: './design.component.html',
@@ -33,7 +34,8 @@ export class DesignComponent {
   width: number = 0;
   height: number = 0;
 
-  constructor(private renderer: Renderer2, private host: ElementRef, private dialog: MatDialog) { }
+  constructor(private renderer: Renderer2, private host: ElementRef, private dialog: MatDialog,
+    private loadService: LoaderService) { }
 
   ngOnInit() {
 
@@ -644,8 +646,10 @@ export class DesignComponent {
       shapeCanvas.add(...groupList);
       // groupList.forEach(m => { shapeCanvas.centerObject(m);});
 
-      data.graphics?.sort((a,b) => {return (a.stack_order??0) - (b.stack_order??0)});
+      // data.graphics?.sort((a,b) => {return (a.stack_order??0) - (b.stack_order??0)});
+      var obj: Array<{stackOrder?: number, obj: fabric.Object}> = [];
       data.graphics?.forEach(grp => {
+        this.loadService.status.next(true);
         if (grp.faceart_url) {
           var img = new Image();
           var image: fabric.Image;
@@ -662,11 +666,13 @@ export class DesignComponent {
                 scaleX: grp.scale_x ?? 4,
                 scaleY: grp.scale_y ?? 4,
                 clipPath: shape,
+                opacity: grp.opacity,
               });
 
             shapeCanvas.add(image);
-
-            shapeCanvas.sendBackwards(image, true); //text
+            obj.push({stackOrder: grp.stack_order, obj: image});
+            this.loadService.status.next(false);
+            // shapeCanvas.sendBackwards(image, true); //text
             this.currentObjects = { type: "Shape", obj: data };
           }
           img.src = ("https://storage.googleapis.com/signmonkey-148101.appspot.com/" + grp.faceart_url) ?? "";
@@ -682,16 +688,23 @@ export class DesignComponent {
             fontWeight: grp.font_style,
             clipPath: shape,
             name: "clipped",
-            strokeDashArray: [7, 7],
-            cornerStyle: 'circle',
+            borderDashArray: [7, 7],
           });
           shapeCanvas.add(text);
-          shapeCanvas.sendBackwards(text, true);
+          obj.push({stackOrder: grp.stack_order, obj: text});
+          this.loadService.status.next(false);
+          // shapeCanvas.sendBackwards(text, true);
           this.currentObjects = { type: "Shape", obj: data };
         }
       });
 
-
+      this.loadService.status.subscribe(val => {
+        if(val == false && obj.length == data.graphics?.length){
+          obj.sort((a,b) => {return (a.stackOrder??0) - (b.stackOrder??0)});
+          obj.forEach(m => {shapeCanvas.sendBackwards(m.obj, true);});
+          obj = [];
+        }
+      })
       // fabric.Image.prototype._render = function(ctx) {
       //   // custom clip code
       //   if (this.clipPath) {

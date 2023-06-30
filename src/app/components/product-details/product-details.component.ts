@@ -152,7 +152,8 @@ export class ProductDetailsComponent implements OnInit {
         position_x: m.position_x,
         position_y: m.position_y,
         color_hex: m.color_hex,
-        opacity: m.opacity,
+        opacity: Number(m.opacity),
+        stack_order: m.stack_order
       })
     })
     this.ValueChange.emit(this.data);
